@@ -70,20 +70,16 @@ matches_2022 %>%
 4. How many total corner kicks has Maryland had so far and how many have its opponents have? Calculate the difference between the two totals for every team.
 
 ```{r}
-maryland_corners <- matches_2022 %>% 
+corners <- matches_2022 %>% 
   filter(team == "Maryland Terrapins, Terps") %>%
-  summarize(total_corners = sum(corners))
+  group_by(team) %>%
+  summarize(md_corners = sum(corners), opp_corners = sum(defensive_corners)) %>%
+  mutate(difference = md_corners - opp_corners)
 
-md_opponent_corners <- matches_2022 %>%
-  filter(team == "Maryland Terrapins, Terps") %>%
-  group_by(opponent) %>%
-  summarize(total_opponent_corners = sum(defensive_corners))
-
-total_md_opponent_corners <- md_opponent_corners %>%
-  summarize(total_corners = sum(total_opponent_corners))
-
-corner_differential_per_game <- 
-  mutate(percent_quality_shots = (corner_kick_differential = total_opponent_corners-corners))
-
-  
+all_teams_corners <- matches_2022 %>% 
+  #filter(team == "Maryland Terrapins, Terps") %>%
+  group_by(team) %>%
+  summarize(team_corners = sum(corners), other_team_corners = sum(defensive_corners)) %>%
+  mutate(difference = team_corners - other_team_corners) %>%
+  arrange(desc(difference))
 ```
