@@ -1,0 +1,35 @@
+---
+title: "significance"
+output: html_document
+date: "2022-09-13"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+library(tidyverse)
+```
+
+```{r}
+logs <- read_csv("/Users/Ian/Documents/772/jour479x_fall_2022/data/nbabubble.csv")
+```
+
+```{r}
+points <- logs %>% mutate(totalpoints = TeamScore + OpponentScore )
+```
+
+```{r}
+t.test(totalpoints ~ COVID, data=points)
+```
+
+```{r}
+homecourt <- logs %>% filter(is.na(HomeAway) == TRUE) %>% mutate(differential = TeamScore - OpponentScore)
+```
+
+```{r}
+t.test(differential ~ COVID, data=homecourt)
+```
+
+
