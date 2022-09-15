@@ -13,7 +13,7 @@ We'll want to start with 2022 match data, which is located in [this GitHub repos
 
 
 ```{r}
-matches_2022 <- read_csv("https://raw.githubusercontent.com/dwillis/NCAAWomensSoccerData/main/data/ncaa_womens_soccer_matchstats_2022.csv")
+correlations <- read_csv("https://raw.githubusercontent.com/dwillis/NCAAWomensSoccerData/main/data/ncaa_womens_soccer_matchstats_2022.csv")
 ```
 
 Let's take a look at this data to see what it contains, using `head` and `glimpse`:
@@ -83,3 +83,35 @@ all_teams_corners <- matches_2022 %>%
   mutate(difference = team_corners - other_team_corners) %>%
   arrange(desc(difference))
 ```
+
+```{r}
+newcorrelations <- correlations %>% 
+  mutate(
+    differential = goals - defensive_goals
+    )
+```
+
+```{r}
+newcorrelations %>% summarise(correlation = cor(differential, fouls, method="pearson"))
+```
+
+```{r}
+newcorrelations %>% 
+  summarise(correlation = cor(differential, yellow_cards, method="pearson"))
+```
+
+```{r}
+fit <- lm(differential ~ fouls, data = newcorrelations)
+summary(fit)
+```
+
+```{r}
+newcorrelations %>% 
+  summarise(correlation = cor(differential, so_g, method="pearson"))
+```
+
+```{r}
+net <- lm(differential ~ so_g, data = newcorrelations)
+summary(net)
+```
+
