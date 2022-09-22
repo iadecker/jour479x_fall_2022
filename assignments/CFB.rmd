@@ -45,6 +45,25 @@ pbp %>%
   arrange(desc(plays))
 ```
 
+```{r}
+logs <- read_csv("http://mattwaite.github.io/sportsdatafiles/footballlogs1121.csv")
+  
+head(logs)
+
+logs <- logs %>%
+  mutate(PointDifferential = TeamScore - OpponentScore)
+
+#Create a regression investigating whether the number of penalties can predict the score differential.
+fit <- lm(PointDifferential ~ Penalties, data = logs)
+summary(fit)
+```
+  
+#In a paragraph below this code block, describe the results: what is the p-value, and does it mean the results are random? Using the r-squared value, how much of the differential can be explained by penalty yards? How useful is this regression?
+
+p-value: 0.01856
+R-squared: 0.0002627 
+Because our p-value is less than 0.05, we know that 
+
 
 
 
