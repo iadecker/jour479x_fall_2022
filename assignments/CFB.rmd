@@ -67,10 +67,34 @@ R-squared: 0.0002627
 Because our p-value is less than 0.05, we know that the relationship between point differential and penalties is statistically significant. But when we turn to the r-squared value, which measures the percent of how much the two are related, we see that it is less than 1%, so they point differential and penalties aren't related at all. In conclusion, this regression is not that helpful because it turns out that our two variables in this case are not that related to each other.
 
 ```{r}
+logs <- logs %>%
+  mutate(
+    TotalFirstDownPen = FirstDownPen - DefFirstDownPen,
+    TotalPenYds = PenaltyYds - DefFirstDownPen,
+    TotalPenalties = Penalties - OpponentScore,
+    PointDifferential = TeamScore - OpponentScore,
+    PointDifferential = TeamScore - OpponentScore,
+    PointDifferential = TeamScore - OpponentScore)
 
+
+
+Penalties
+Fumbles
+Interceptions
+TotalTurnovers
+
+
+DefPenalties
+DefPenaltyYds
+DefFumbles
+DefInterceptions
+DefTotalTurnovers
 ```
 
-#Next, create a multiple regression model following the examples in this chapter (Links to an external site.). Instead of using the number of penalties alone, combine other numeric columns that describe mistakes/bad outcomes to try and predict the score differential with a higher degree of confidence. Look at the same values in the results you did before, but also take into account the residual standard error and the risk of multicollinearity - are you adding columns that explain each other instead of the differential? Below this code block, explain your choices and what you think the results say.
+#Next, create a multiple regression model. Instead of using the number of penalties alone, combine other numeric columns that describe mistakes/bad outcomes to try and predict the score differential with a higher degree of confidence. Look at the same values in the results you did before, but also take into account the residual standard error and the risk of multicollinearity - are you adding columns that explain each other instead of the differential? Below this code block, explain your choices and what you think the results say.
+
+
+#At the end of all that code, summarize what you've learned about the relationship between penalties and point differential and whether you think there's a story there or whether it's useful in adding context within a larger story. Would you use this in journalism and, if so, how?
 
 
 
