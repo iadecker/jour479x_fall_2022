@@ -77,8 +77,15 @@ logs <- logs %>%
     InterceptionsDifferential = Interceptions - DefInterceptions,
     TurnoverDifferential = TotalTurnovers - DefTotalTurnovers)
 
-model1 <- lm(PointDifferential ~ NetRebounds + TurnoverMargin, data=logs)
+model1 <- lm(PointDifferential ~ TurnoverDifferential + PenDifferential, data=logs)
 summary(model1)
+
+close_games <- logs %>%
+  filter(PointDifferential < 9, PointDifferential >-9)
+
+model_close_games <- lm(PointDifferential ~ FumbleDifferential + InterceptionsDifferential, data=close_games)
+summary(model1)
+
 
 ```
 
