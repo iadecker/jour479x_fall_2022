@@ -45,6 +45,8 @@ pbp %>%
   arrange(desc(plays))
 ```
 
+#College Football Regression Analysis Assignment
+
 ```{r}
 logs <- read_csv("http://mattwaite.github.io/sportsdatafiles/footballlogs1121.csv")
   
@@ -63,6 +65,12 @@ summary(fit)
 p-value: 0.01856
 R-squared: 0.0002627 
 Because our p-value is less than 0.05, we know that the relationship between point differential and penalties is statistically significant. But when we turn to the r-squared value, which measures the percent of how much the two are related, we see that it is less than 1%, so they point differential and penalties aren't related at all. In conclusion, this regression is not that helpful because it turns out that our two variables in this case are not that related to each other.
+
+```{r}
+
+```
+
+#Next, create a multiple regression model following the examples in this chapter (Links to an external site.). Instead of using the number of penalties alone, combine other numeric columns that describe mistakes/bad outcomes to try and predict the score differential with a higher degree of confidence. Look at the same values in the results you did before, but also take into account the residual standard error and the risk of multicollinearity - are you adding columns that explain each other instead of the differential? Below this code block, explain your choices and what you think the results say.
 
 
 
