@@ -1,0 +1,44 @@
+---
+title: "cbb"
+output: html_document
+date: "2022-09-22"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+```{r}
+library(tidyverse)
+```
+
+```{r}
+logs <- read_csv("/Users/Ian/Documents/772/jour479x_fall_2022/data/cbblogs1521.csv")
+```
+
+```{r}
+residualmodel <- logs %>% mutate(differential = TeamScore - OpponentScore, FGPctMargin = TeamFGPCT - OpponentFGPCT)
+```
+
+```{r}
+fit <- lm(differential ~ FGPctMargin, data = residualmodel)
+summary(fit)
+```
+
+```{r}
+residualmodel <- residualmodel %>% mutate(predicted = predict(fit), residuals = residuals(fit))
+```
+
+```{r}
+residualmodel <- residualmodel %>% filter(!is.na(FGPctMargin))
+```
+
+```{r}
+residualmodel %>% filter(Conference == 'Big Ten') %>% arrange(desc(residuals)) %>% select(Date, Team, Opponent, W_L, differential, FGPctMargin, predicted, residuals)
+```
+
+```{r}
+residualmodel %>% filter(FGPctMargin < 0, W_L == 'W', residuals > 10, differential > 10, Team == 'Maryland')
+```
+
