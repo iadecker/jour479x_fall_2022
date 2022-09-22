@@ -7,6 +7,7 @@ We'll use this notebook to explore some NCAA women's soccer data and [our questi
 
 ```{r}
 library(tidyverse)
+library(Hmisc)
 ```
 
 We'll want to start with 2022 match data, which is located in [this GitHub repository](https://github.com/dwillis/NCAAWomensSoccerData). We can load the match data directly from GitHub using `read_csv`:
