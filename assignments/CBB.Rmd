@@ -42,3 +42,16 @@ residualmodel %>% filter(Conference == 'Big Ten') %>% arrange(desc(residuals)) %
 residualmodel %>% filter(FGPctMargin < 0, W_L == 'W', residuals > 10, differential > 10, Team == 'Maryland')
 ```
 
+```{r}
+fouls <- logs %>% 
+  mutate(
+    differential = TeamScore - OpponentScore, 
+    TotalFouls = TeamPersonalFouls+OpponentPersonalFouls
+  )
+```
+
+```{r}
+pfit <- lm(differential ~ TotalFouls, data = fouls)
+summary(pfit)
+```
+
