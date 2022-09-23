@@ -55,3 +55,13 @@ pfit <- lm(differential ~ TotalFouls, data = fouls)
 summary(pfit)
 ```
 
+```{r}
+fouls <- fouls %>% filter(!is.na(TotalFouls))
+fouls$predicted <- predict(pfit)
+fouls$residuals <- residuals(pfit)
+```
+
+```{r}
+fouls %>% arrange(desc(residuals)) %>% select(Team, Opponent, W_L, TeamScore, OpponentScore, TotalFouls, residuals)
+```
+
