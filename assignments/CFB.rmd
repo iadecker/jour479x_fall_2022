@@ -152,7 +152,11 @@ summary(model_close_games2)
 
 #At the end of all that code, summarize what you've learned about the relationship between penalties and point differential and whether you think there's a story there or whether it's useful in adding context within a larger story. Would you use this in journalism and, if so, how?
 
-After all this code, I don't believe there is a strong relationship between penalties and point differential. I say this because all our models are weak; they did not do a good job of explaining the relationship between point differential and penalties. Based on our results, there just isn't much there. And while there might not be a strong story here, it could be useful in adding context within a larger story if we were able to do some more analysis (adding in offensive numbers). I wouldn't feel confident using these results in journalism or pitching this as a potential story to an editor, but I think there are some interesting concepts — are penalties not that important? — to keep in mind for further investigations. And if we do go a step further and find out that penalties aren't that important in explaining point differential (and I happened to be on the Maryland football team), I would have present my findings to coach Locksley after the SMU game! 
+After all this code, I don't believe there is a strong relationship between penalties and point differential. I say this because all our models are weak; they did not do a good job of giving us results that explain the relationship between point differential and penalties. Based on our results, there just isn't much there. And while there might not be a strong story here, it could be useful in adding context within a larger story if we were able to do some more analysis (adding in offensive numbers). 
+
+I wouldn't feel confident using these results in journalism or pitching this as a potential story to an editor, but I think there are some interesting concepts — are penalties not that important? — to keep in mind for further investigations. 
+
+And if we do go a step further and find out that penalties really aren't that important in explaining point differential (and I happened to be on the Maryland football team), I would go back to the first practice after the SMU game and present my findings to coach Locksley!
 
 
 
