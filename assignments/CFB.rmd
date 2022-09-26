@@ -111,12 +111,13 @@ summary(model3)
 #Max residual: 79.104
 #RSE: 19.72
 
-#I was really excited about this one. 
+#I was really excited about this one. This is the Bermuda Triangle of "bad outcomes." I mean, c'mon! Certainly int + fum + penyards is a deadly outcome, so this must be predictive of point differential. Sadly, though, model3 looks a lot like models one and two. It's not random, has a 25% r-squared value, large residuals and a pretty crummy RSE. One thing to point out here, and although I joked about it up top, I was really surprised this model wasn't more revealing. Reason says that this combination should have an impact on point differential, so it's weird that it looks a lot like our previous models. Now, it is similar in code to model1, but I thought adding in penalty yards would have a greater effect than it did. Almost all the numbers are identical. Looking at that, it looks like penalty yards don't add that much more to our model. And while I don't think this means penalty yards are inconsequential when looking at point differential, it is curious that its impact was negligible when paired with int/fum. 
 ```
 
 #Use filter to narrow the game data so that you're only working with games that are close (you'll need to define what "close" means). Are your simple or multiple regression models better? Worse? Below this code block, explain your choices and what you think the results say.
 
 ```{r}
+#Here, I defined "close games" as one-score matches, so eight points, assuming a team scored a touchdown and converted the two-point try.
 close_games <- logs %>%
   filter(PointDifferential < 9, PointDifferential >-9)
 
@@ -128,6 +129,14 @@ summary(model_close_games)
 #Max residual: 11.1263
 #RSE: 4.789
 
+#Wishing for these models to be better is like wishing you could go trick-or-treating as a 25-year-old. When we filtered for "close games" — defined above — using int/fum to see the explain point differential, we saw that the outcome wasn't random, our RSE dropped from 20 to four, so that was super encouraging, and we saw that the min/max residual values had gone from a 150-point gap to a 22-point gap. This is looking pretty good (giddy excitement builds). But then we go and look at our r-squared value and see that it comes in at only 10% :-(. Darn it! 
+
+#With everything else looking so good, it's frustrating to see that our r-value is lower than our other models. Reason says that int/fum should be super important in close games. In some cases, a turnover might be the difference in a "close game," so why is it that this model only explains 10% of point differential? 
+
+#While I don't have a good answer, I suppose that these models are using all the "bad outcomes" to try and predict point differential, and it's entirely possible that we need to include offensive metrics as well. Maybe a combination of boneheaded plays on defense and languid offense negatively impacts point differential, or perhaps if you have Carson Wentz hurling the ball to Terry McLaurin (on a good day) combined with what Washington's defense is supposed to be, point differential will be positively impacted. 
+
+#Maybe we should be looking at some sort of combination of offensive and defensive metrics. Football is won on both sides of the ball, after all. 
+
 model_close_games2 <- lm(PointDifferential ~ InterceptionsDifferential + FumbleDifferential + PenYdsDifferential, data=close_games)
 summary(model_close_games2)
 #p-value: 2.2e-16
@@ -135,9 +144,9 @@ summary(model_close_games2)
 #Min residual: -11.3417
 #Max residual: 11.2030
 #RSE: 4.788
+
+#Even though we learned above that adding penalty yards to a model with int/fum doesn't really do much, like Mr. Run The Ball guy, I wanted to test it out jsut to be sure. And sure enough, we get almost identical numbers to model_close_games. Nothing more to add here, folks.
 ```
-
-
 
 #At the end of all that code, summarize what you've learned about the relationship between penalties and point differential and whether you think there's a story there or whether it's useful in adding context within a larger story. Would you use this in journalism and, if so, how?
 
