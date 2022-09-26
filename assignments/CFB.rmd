@@ -65,9 +65,10 @@ summary(fit)
 
 p-value: 0.01856
 R-squared: 0.0002627 
-Because our p-value is less than 0.05, we know that the relationship between point differential and penalties is statistically significant. But when we turn to the r-squared value, which measures the percent of how much the two are related, we see that it is less than 1%, so point differential and penalties aren't related at all. In other words, there is less than 1% of the difference in differential with the penalties. In conclusion, this regression is not that helpful because it turns out that our two variables in this case are not that related to each other. Also of note, the residual standard error is 22.76, which tells us that there is a decent amount of error in this model, meaning that our predictive range is pretty large.
+Because our p-value is less than 0.05, we know that the relationship between point differential and penalties is statistically significant, or not the relationship is not random. But when we turn to the r-squared value, which measures the percent of how much the two are related, we see that it is less than 1%, so point differential and penalties aren't related at all. In other words, there is less than 1% of the difference in differential with the penalties. In conclusion, this regression is not that helpful because it turns out that our two variables in this case are not that related to each other. Also of note, the residual standard error is 22.76, which tells us that there is a decent amount of error in this model, meaning that our predictive range is pretty large. And one more thing: the min/max residual values are -80 to 81, meaning that our model missed games by those values when trying to predict certain outcomes and scores. The farther apart our residual values are, the worse the model is.
 
 ```{r}
+#I know the instructions say to combine other metric columns, but I was curious about the differentials for the penalty columns as well.
 logs <- logs %>%
   mutate(
     FirstDownPenDifferential = FirstDownPen - DefFirstDownPen,
@@ -79,12 +80,27 @@ logs <- logs %>%
 
 model1 <- lm(PointDifferential ~ TurnoverDifferential + PenDifferential, data=logs)
 summary(model1)
+#p-value: 2.2e-16
+#R-squared: 0.234 
+#Min residual: -78.527
+#Max residual: 79.826
+
+model2 <- lm(PointDifferential ~ InterceptionsDifferential + FumbleDifferential, data=logs)
+summary(model2)
+
+model3 <- lm(PointDifferential ~ TurnoverDifferential + InterceptionsDifferential + FumbleDifferential, data=logs)
+summary(model3)
 
 close_games <- logs %>%
   filter(PointDifferential < 9, PointDifferential >-9)
 
-model_close_games <- lm(PointDifferential ~ FumbleDifferential + InterceptionsDifferential, data=close_games)
-summary(model1)
+model_close_games <- lm(PointDifferential ~ InterceptionsDifferential + FumbleDifferential, data=close_games)
+summary(model_close_games)
+#p-value: 2.2e-16
+#R-squared: 0.09807 
+#Min residual: -78.527
+#Max residual: 79.826
+
 
 
 ```
