@@ -100,7 +100,7 @@ summary(model2)
 #Max residual: 82.474
 #RSE: 19.95
 
-#My thinking here 
+#My thinking here was that turnovers (int/fum) are all-encompassing, so pairing that with penalty yards (another total) would cover all the major parts of "bad outcomes." Similarly to model1, model2 tells us that the relationship btwn the two is not random and that there is about a 25% predicted outcome of TO and penalty yards when looking at point differential. Again, though, our m/m residual values are super far apart and the RSE is also almost 20. So, yet again, solid thinking doesn't quite pan out here.
 
 #INT, FUM, PENYDS must be the worst, right?
 model3 <- lm(PointDifferential ~  InterceptionsDifferential + FumbleDifferential + PenYdsDifferential, data=logs)
@@ -110,6 +110,8 @@ summary(model3)
 #Min residual: -79.670
 #Max residual: 79.104
 #RSE: 19.72
+
+#I was really excited about this one. 
 ```
 
 #Use filter to narrow the game data so that you're only working with games that are close (you'll need to define what "close" means). Are your simple or multiple regression models better? Worse? Below this code block, explain your choices and what you think the results say.
