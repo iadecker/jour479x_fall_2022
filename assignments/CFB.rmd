@@ -67,6 +67,8 @@ p-value: 0.01856
 R-squared: 0.0002627 
 Because our p-value is less than 0.05, we know that the relationship between point differential and penalties is statistically significant, or not the relationship is not random. But when we turn to the r-squared value, which measures the percent of how much the two are related, we see that it is less than 1%, so point differential and penalties aren't related at all. In other words, there is less than 1% of the difference in differential with the penalties. In conclusion, this regression is not that helpful because it turns out that our two variables in this case are not that related to each other. Also of note, the residual standard error is 22.76, which tells us that there is a decent amount of error in this model, meaning that our predictive range is pretty large. And one more thing: the min/max residual values are -80 to 81, meaning that our model missed games by those values when trying to predict certain outcomes and scores. The farther apart our residual values are, the worse the model is.
 
+#Next, create a multiple regression model. Instead of using the number of penalties alone, combine other numeric columns that describe mistakes/bad outcomes to try and predict the score differential with a higher degree of confidence. Look at the same values in the results you did before, but also take into account the residual standard error and the risk of multicollinearity - are you adding columns that explain each other instead of the differential? Below this code block, explain your choices and what you think the results say.
+
 ```{r}
 #I was curious about the differentials for all the "bad outcome" columns.
 logs <- logs %>%
@@ -104,7 +106,11 @@ summary(model3)
 #Min residual: -79.670
 #Max residual: 79.104
 #RSE: 19.72
+```
 
+#Use filter to narrow the game data so that you're only working with games that are close (you'll need to define what "close" means). Are your simple or multiple regression models better? Worse? Below this code block, explain your choices and what you think the results say.
+
+```{r}
 close_games <- logs %>%
   filter(PointDifferential < 9, PointDifferential >-9)
 
@@ -114,12 +120,9 @@ summary(model_close_games)
 #R-squared: 0.09807 
 #Min residual: -11.2655
 #Max residual: 11.1263
-
-
-
+#RSE: 4.789
 ```
 
-#Next, create a multiple regression model. Instead of using the number of penalties alone, combine other numeric columns that describe mistakes/bad outcomes to try and predict the score differential with a higher degree of confidence. Look at the same values in the results you did before, but also take into account the residual standard error and the risk of multicollinearity - are you adding columns that explain each other instead of the differential? Below this code block, explain your choices and what you think the results say.
 
 
 #At the end of all that code, summarize what you've learned about the relationship between penalties and point differential and whether you think there's a story there or whether it's useful in adding context within a larger story. Would you use this in journalism and, if so, how?
