@@ -78,7 +78,8 @@ logs <- logs %>%
     PenDifferential = Penalties - DefPenalties,
     FumbleDifferential = Fumbles - DefFumbles,
     InterceptionsDifferential = Interceptions - DefInterceptions,
-    TurnoverDifferential = TotalTurnovers - DefTotalTurnovers)
+    TurnoverDifferential = TotalTurnovers - DefTotalTurnovers,
+    YardsDifferential = OffensiveYards - DefYards)
 
 #Turnovers are bad
 model1 <- lm(PointDifferential ~ InterceptionsDifferential + FumbleDifferential, data=logs)
@@ -137,6 +138,16 @@ summary(model_close_games)
 
 #Maybe we should be looking at some sort of combination of offensive and defensive metrics. Football is won on both sides of the ball, after all. 
 
+model_close_games_with_offense <- lm(PointDifferential ~ InterceptionsDifferential + FumbleDifferential + YardsDifferential, data=close_games)
+summary(model_close_games_with_offense)
+#p-value: 2.2e-16
+#R-squared: 0.1841 
+#Min residual: -12.3991
+#Max residual: 12.2673
+#RSE: 4.555
+
+#Just cause I was curious, I wanted to try one offensive metric, and the early return seem to indicate that adding offensive stats might help our model. This one looks similar to our other model_close_game models, but the r-value doubled, almosst ten points, so maybe there is something there.
+
 #Based on the results we got from the simple and multiple regression models, the multiple regression models are stronger. At least in the multiple regression models our r-value was a somewhat significant number. In the single regression model, our r-squared was below 1%...yikes. In terms of which of the multiple regression models was best, the model_close_game models seemed to be a bit better than models one, two and three. I say this because while the r-value wasn't as good, our residual values and RSE were drastically improved, meaning there was less error in our model, even though it explained less of the total of point differential.
 
 model_close_games2 <- lm(PointDifferential ~ InterceptionsDifferential + FumbleDifferential + PenYdsDifferential, data=close_games)
@@ -152,7 +163,7 @@ summary(model_close_games2)
 
 #At the end of all that code, summarize what you've learned about the relationship between penalties and point differential and whether you think there's a story there or whether it's useful in adding context within a larger story. Would you use this in journalism and, if so, how?
 
-After all this code, I don't believe there is a strong relationship between penalties and point differential. I say this because all our models are weak; they did not do a good job of giving us results that explain the relationship between point differential and penalties. Based on our results, there just isn't much there. And while there might not be a strong story here, it could be useful in adding context within a larger story if we were able to do some more analysis (adding in offensive numbers). 
+After all this code, I don't believe there is a strong relationship between penalties and point differential. I say this because all our models are weak; they did not do a good job of giving us results that explain the relationship between point differential and penalties. Based on our results, there just isn't much there. And while there might not be a strong story here, it could be useful in adding context within a larger story if we were able to do some more analysis (adding in offensive numbers, which seems to be worth exploring). 
 
 I wouldn't feel confident using these results in journalism or pitching this as a potential story to an editor, but I think there are some interesting concepts — are penalties not that important? — to keep in mind for further investigations. 
 
