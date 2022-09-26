@@ -121,6 +121,14 @@ summary(model_close_games)
 #Min residual: -11.2655
 #Max residual: 11.1263
 #RSE: 4.789
+
+model_close_games2 <- lm(PointDifferential ~ InterceptionsDifferential + FumbleDifferential + PenYdsDifferential, data=close_games)
+summary(model_close_games2)
+#p-value: 2.2e-16
+#R-squared: 0.09827 
+#Min residual: -11.3417
+#Max residual: 11.2030
+#RSE: 4.788
 ```
 
 
