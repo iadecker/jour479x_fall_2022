@@ -61,11 +61,11 @@ fit <- lm(PointDifferential ~ Penalties, data = logs)
 summary(fit)
 ```
   
-#In a paragraph below this code block, describe the results: what is the p-value, and does it mean the results are random? Using the r-squared value, how much of the differential can be explained by penalty yards? How useful is this regression?
+#In a paragraph below, describe the results: what is the p-value, and does it mean the results are random? Using the r-squared value, how much of the differential can be explained by penalty yards? How useful is this regression?
 
 p-value: 0.01856
 R-squared: 0.0002627 
-Because our p-value is less than 0.05, we know that the relationship between point differential and penalties is statistically significant, or not the relationship is not random. But when we turn to the r-squared value, which measures the percent of how much the two are related, we see that it is less than 1%, so point differential and penalties aren't related at all. In other words, there is less than 1% of the difference in differential with the penalties. In conclusion, this regression is not that helpful because it turns out that our two variables in this case are not that related to each other. Also of note, the residual standard error is 22.76, which tells us that there is a decent amount of error in this model, meaning that our predictive range is pretty large. And one more thing: the min/max residual values are -80 to 81, meaning that our model missed games by those values when trying to predict certain outcomes and scores. The farther apart our residual values are, the worse the model is.
+Because our p-value is less than 0.05, we know that the relationship between point differential and penalties is statistically significant, or not the relationship is not random. But when we turn to the r-squared value, which measures the percent of how much the two are related, we see that it is less than 1%, so point differential and penalties aren't related at all. In other words, there is less than 1% of the difference in differential with the penalties. So, to answer the question of how much of the differential can be explained by penalty yards? Not much, really. This regression is not that helpful because it turns out that our two variables in this case are not that related to each other. Also of note, the residual standard error is 22.76 (meaning that our predictive range is pretty large), which tells us that there is a decent amount of error in this model. And one more thing: the min/max residual values are -80 to 81, meaning that a team underperformed the model's prediction by 80 and one team overperformed by 81, so it missed games by those values when trying to predict certain outcomes and scores. The farther apart our residual values are, the worse the model is.
 
 #Next, create a multiple regression model. Instead of using the number of penalties alone, combine other numeric columns that describe mistakes/bad outcomes to try and predict the score differential with a higher degree of confidence. Look at the same values in the results you did before, but also take into account the residual standard error and the risk of multicollinearity - are you adding columns that explain each other instead of the differential? Below this code block, explain your choices and what you think the results say.
 
@@ -89,6 +89,8 @@ summary(model1)
 #Max residual: 78.996
 #RSE: 19.72
 
+#My thought process here is that int and fum are two of the worst outcomes you can have, so they must be related to point differential. I didn't throw in turnover differential because it stands to reason that TO are made up of int and fum. In other words, having a model with all three would just be adding columns that explain each other instead of the differential. What I learned: Our p-value shows that this is not random, and our r-squared predicts about a quarter of the the factors that impact point differential can be attributed to int and fum. Where we get into trouble is with the min/max residuals and RSE. the m/m values are really far apart, and we have a large range of residual standard error. So while the thought behind this model was sound, it isn't the strongest.
+
 #Turnovers and penalty yards are worse...?
 model2 <- lm(PointDifferential ~ TurnoverDifferential + PenYdsDifferential, data=logs)
 summary(model2)
@@ -98,7 +100,9 @@ summary(model2)
 #Max residual: 82.474
 #RSE: 19.95
 
-#Is this the worst?
+#My thinking here 
+
+#INT, FUM, PENYDS must be the worst, right?
 model3 <- lm(PointDifferential ~  InterceptionsDifferential + FumbleDifferential + PenYdsDifferential, data=logs)
 summary(model3)
 #p-value: 2.2e-16
