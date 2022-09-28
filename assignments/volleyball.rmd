@@ -1,0 +1,46 @@
+---
+title: "volleyball.rmd"
+output: html_document
+date: "2022-09-28"
+---
+
+```{r}
+library(tidyverse)
+```
+
+
+```{r setup, include=FALSE}
+match_data <- read_csv("https://raw.githubusercontent.com/dwillis/NCAAWomensVolleyballData/main/data/ncaa_womens_volleyball_matchstats_2022.csv")
+
+head(match_data)
+```
+
+```{r}
+perset_stats <- match_data %>% 
+  mutate(
+    killsperset = kills/s,
+    digsperset = digs/s,
+    acesperset = aces/s,
+    soloblocksperset = block_solos/s,
+    blockassistsperset = block_assists/s,
+    blockerrorsperset = b_err/s,
+    teamscoreperset = team_score/s,
+    oppscoreperset = opponent_score/s
+    ) %>%
+  select(Season, Institution, Conference, killsperset, digsperset, acesperset, soloblocksperset, blockassistsperset, blockerrorsperset, teamscoreperset, oppscoreperset)
+
+head(perset_stats)
+
+teamzscore <- perset_stats %>%
+  group_by(date) %>% 
+  mutate(
+    killszscore = as.numeric(scale(killsperset, center = TRUE, scale = TRUE)),
+    aceszscore = as.numeric(scale(acesperset, center = TRUE, scale = TRUE)),
+    digszscore = as.numeric(scale(digsperset, center = TRUE, scale = TRUE)),
+    TotalZscore = killszscore + aceszscore + digszscore
+  ) %>% ungroup() 
+```
+
+
+
+
