@@ -1,0 +1,48 @@
+---
+title: "nfl.rmd"
+output: html_document
+date: "2022-09-29"
+---
+
+```{r}
+library(tidyverse)
+```
+
+
+```{r}
+pbp <- read_rds("play_by_play_2022.rds")
+
+glimpse(pbp)
+
+McLaurin <- pbp %>%
+filter(str_detect(desc, 'McLaurin'))
+
+McLaurin_fisrt_half_targets <- McLaurin %>%
+  filter(posteam == 'WAS', game_half == 'Half1', play_type == 'pass')
+
+pbp %>%
+  filter(game_half == 'Half1', play_type == 'pass') %>%
+  group_by(posteam, receiver) %>%
+  summarise(count = n()) %>%
+  arrange(count) %>%
+  filter(count > 1) %>% filter(count < 10)
+
+pbp %>%
+  filter(game_half == 'Half1', play_type == 'pass', posteam == 'WAS') %>%
+  group_by(receiver) %>%
+  summarise(count = n()) %>%
+  arrange(desc(count))
+
+pbp %>%
+  filter(game_half == 'Half1', play_type == 'pass', posteam == 'WAS') %>%
+  #we can use this next line to see what the 11 NAs are, to look at the data without the NAs, we use the exclamation   point)
+  filter(!is.na(receiver)) %>%
+  group_by(receiver) %>%
+  summarise(count = n()) %>%
+  arrange(desc(count))
+```
+
+
+
+
+
