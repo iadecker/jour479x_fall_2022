@@ -8,7 +8,6 @@ date: "2022-09-28"
 library(tidyverse)
 ```
 
-
 ```{r setup, include=FALSE}
 match_data <- read_csv("https://raw.githubusercontent.com/dwillis/NCAAWomensVolleyballData/main/data/ncaa_womens_volleyball_matchstats_2022.csv")
 
@@ -92,7 +91,3 @@ teamzscore %>%
   arrange(desc(TotalZscore)) %>%
   select(date, team, TotalZscore)
 ```
-
-
-
-
