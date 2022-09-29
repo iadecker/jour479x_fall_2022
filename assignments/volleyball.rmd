@@ -8,6 +8,8 @@ date: "2022-09-28"
 library(tidyverse)
 ```
 
+#The two additional factors I wanted to see from the quiz were blocks and game score. To reiterate, blocks are an essential part of the game, and within the data we were provided, there are several components of blocks — solo blocks, block assists and block errors. We already have kills and aces (two offensive metrics) and digs (a defensive stat), so I felt like adding a second defensive metric in blocks would help show which teams were the strongest. I also wanted to leave in kills, aces and digs because each of those metrics is intergral to the sport. We also have the game score data in team_score and opponent_score. I wanted to include this information because it is the easiest way for us to measure dominance with the data we were given. For example, a team that wins a majority of its games 3-0 is a stronger unit than a team that wins 3-2. Granted, strength of opponent is a factor in this, but seeing as we don't have that data, team and opponent score seem like good ways to see which teams were the most dominant.
+
 ```{r setup, include=FALSE}
 match_data <- read_csv("https://raw.githubusercontent.com/dwillis/NCAAWomensVolleyballData/main/data/ncaa_womens_volleyball_matchstats_2022.csv")
 
@@ -51,6 +53,36 @@ teamzscore %>%
   arrange(desc(TotalZscore)) %>%
   select(team, TotalZscore)
 ```
+#Who are the highest-performing teams in the NCAA (based on my new-and-improved TotalZScores)? 
+Here are the top 10 highest-performing teams in the NCAA based on my new total z-scores:
+1. Wright St. Raiders (154.8)
+2. New Mexico Lobos (149.1)
+3. Creighton Bluejays (148.5)
+4. Ball St. Cardinals (146.6)
+5. Chattanooga Mocs (145.2)
+6. Tulsa Golden Hurricane (145.1)
+7. UTEP Miners (144.2)
+8. Murray St. Racers (144.0)
+9. Valparaiso Beacons (143.5)
+10. McNeese Cowgirls (142.9)
+
+And here is the AVCA Coaches ranking of the top 10 teams with their zscores:
+1. Texas (119.5)
+2. Louisville (116.75)
+3. Nebraska (125.2727)
+4. Univ. of SD (126.3)
+5. Purdue (126.3)
+6. OSU (113.8)
+7. Minnesota (121.3)
+8. Wisconsin (117.9)
+9. Stanford (121.9)
+10. Pitt (122.8)
+
+#Where does Maryland rank on the Z-score scale and what teams are similar to it? 
+Maryland ranks 
+123.7
+158
+
 
 ```{r}
 perset_stats <- match_data %>% 
