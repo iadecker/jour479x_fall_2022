@@ -54,7 +54,8 @@ teamzscore %>%
   select(team, TotalZscore)
 ```
 #Who are the highest-performing teams in the NCAA (based on my new-and-improved TotalZScores)? 
-Here are the top 10 highest-performing teams in the NCAA based on my new total z-scores:
+
+Here are the top 10 highest-performing teams in the NCAA witht their z-scores:
 1. Wright St. Raiders (154.8)
 2. New Mexico Lobos (149.1)
 3. Creighton Bluejays (148.5)
@@ -82,8 +83,10 @@ And here is the AVCA Coaches ranking of the top 10 teams with their zscores:
 Maryland ranks 
 123.7
 158
+Simialr nine teams:
+Charlotte 49ers, Lehigh Mountain Hawks, Charleston So. Buccaneers, Portland Pilots, Sacred Heart Pioneers, Davidson Wildcats, Memphis Tigers, Hawaii Rainbow Wahine, Southeastern La. Lady Lions
 
-
+#This was my first attempt at this assignemnt. Here, I tried to follow the steps from the tutorial. I got to the very end but realized I was working with match data as opposed to using data that had been compressed for each team, so I started semi-anew (seen above). Still, I thought I would leave it here to show my first try.
 ```{r}
 perset_stats <- match_data %>% 
   mutate(
