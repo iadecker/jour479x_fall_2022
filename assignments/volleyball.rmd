@@ -13,6 +13,39 @@ library(tidyverse)
 match_data <- read_csv("https://raw.githubusercontent.com/dwillis/NCAAWomensVolleyballData/main/data/ncaa_womens_volleyball_matchstats_2022.csv")
 
 head(match_data)
+
+teamquality <- match_data %>% 
+  select(team, kills, digs, aces, block_solos, block_assists, b_err, team_score, opponent_score)
+
+teamtotals <- teamquality %>% 
+  group_by(team) %>% 
+  summarise(
+    KillsAvg = mean(kills), 
+    DigsAvg = mean(digs), 
+    AcesAvg = mean(aces),
+    BSoloAvg = mean(block_solos),
+    BAssAvg = mean(block_assists),
+    BErrAvg = mean(b_err),
+    TeamScoreAvg = mean(team_score),
+    OppScoreAvg = mean(opponent_score),
+    ) 
+
+teamzscore <- teamtotals %>% 
+  mutate(
+    killszscore = as.numeric(scale(KillsAvg, center = TRUE, scale = TRUE)),
+    digszscore = as.numeric(scale(DigsAvg, center = TRUE, scale = TRUE)),
+    aceszscore = as.numeric(scale(AcesAvg, center = TRUE, scale = TRUE)),
+    soloblockszscore = as.numeric(scale(BSoloAvg, center = TRUE, scale = TRUE)),
+    blockassistzscore = as.numeric(scale(BAssAvg, center = TRUE, scale = TRUE)),
+    blockerrorzscore = as.numeric(scale(BErrAvg, center = TRUE, scale = TRUE)),
+    teamscorezscore = as.numeric(scale(TeamScoreAvg, center = TRUE, scale = TRUE)),
+    oppscorezscore = as.numeric(scale(OppScoreAvg, center = TRUE, scale = TRUE)),
+    TotalZscore = KillsAvg + DigsAvg + AcesAvg + BSoloAvg + BAssAvg + BErrAvg + TeamScoreAvg + OppScoreAvg
+    ) %>% ungroup() 
+
+head(teamzscore)
+
+teamzscore %>% arrange(desc(TotalZscore))
 ```
 
 ```{r}
@@ -27,7 +60,7 @@ perset_stats <- match_data %>%
     teamscoreperset = team_score/s,
     oppscoreperset = opponent_score/s
     ) %>%
-  select(Season, Institution, Conference, killsperset, digsperset, acesperset, soloblocksperset, blockassistsperset, blockerrorsperset, teamscoreperset, oppscoreperset)
+  select(date, team, killsperset, digsperset, acesperset, soloblocksperset, blockassistsperset, blockerrorsperset, teamscoreperset, oppscoreperset)
 
 head(perset_stats)
 
@@ -50,9 +83,9 @@ head(teamzscore)
 teamzscore %>% arrange(desc(TotalZscore))
 
 teamzscore %>% 
-  filter(Conference == "Big Ten") %>% 
+  filter(team == "Maryland Terrapins, Terps") %>% 
   arrange(desc(TotalZscore)) %>%
-  select(Season, Institution, TotalZscore)
+  select(date, team, TotalZscore)
 ```
 
 
