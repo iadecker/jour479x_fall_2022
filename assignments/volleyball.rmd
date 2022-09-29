@@ -46,6 +46,11 @@ teamzscore <- teamtotals %>%
 head(teamzscore)
 
 teamzscore %>% arrange(desc(TotalZscore))
+
+teamzscore %>% 
+  filter(team == "Maryland Terrapins, Terps") %>% 
+  arrange(desc(TotalZscore)) %>%
+  select(team, TotalZscore)
 ```
 
 ```{r}
