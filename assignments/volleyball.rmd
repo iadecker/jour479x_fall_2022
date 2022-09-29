@@ -32,7 +32,7 @@ perset_stats <- match_data %>%
 head(perset_stats)
 
 teamzscore <- perset_stats %>%
-  group_by(date) %>% 
+  group_by(team) %>% 
   mutate(
     killszscore = as.numeric(scale(killsperset, center = TRUE, scale = TRUE)),
     aceszscore = as.numeric(scale(acesperset, center = TRUE, scale = TRUE)),
