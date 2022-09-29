@@ -35,10 +35,24 @@ teamzscore <- perset_stats %>%
   group_by(team) %>% 
   mutate(
     killszscore = as.numeric(scale(killsperset, center = TRUE, scale = TRUE)),
-    aceszscore = as.numeric(scale(acesperset, center = TRUE, scale = TRUE)),
     digszscore = as.numeric(scale(digsperset, center = TRUE, scale = TRUE)),
-    TotalZscore = killszscore + aceszscore + digszscore
-  ) %>% ungroup() 
+    aceszscore = as.numeric(scale(acesperset, center = TRUE, scale = TRUE)),
+    soloblockszscore = as.numeric(scale(soloblocksperset, center = TRUE, scale = TRUE)),
+    blockassistzscore = as.numeric(scale(blockassistsperset, center = TRUE, scale = TRUE)),
+    blockerrorzscore = as.numeric(scale(blockerrorsperset, center = TRUE, scale = TRUE)),
+    teamscorezscore = as.numeric(scale(teamscoreperset, center = TRUE, scale = TRUE)),
+    oppscorezscore = as.numeric(scale(oppscoreperset, center = TRUE, scale = TRUE)),
+    TotalZscore = killszscore + aceszscore + digszscore + soloblockszscore + blockassistzscore + blockerrorzscore + teamscorezscore + oppscorezscore
+    ) %>% ungroup() 
+
+head(teamzscore)
+
+teamzscore %>% arrange(desc(TotalZscore))
+
+teamzscore %>% 
+  filter(Conference == "Big Ten") %>% 
+  arrange(desc(TotalZscore)) %>%
+  select(Season, Institution, TotalZscore)
 ```
 
 
