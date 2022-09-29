@@ -79,6 +79,8 @@ And here is the AVCA Coaches ranking of the top 10 teams with their zscores:
 9. Stanford (121.9)
 10. Pitt (122.8)
 
+Clearly, despite my best intentions, the highest-performing teams in the NCAA based on my z-scores aren't the actual best ten teams in the country — rankings are subjective, but the 10 teams listed in the AVCA are some of the best in the nation. WHY IS THIS...?
+
 #Where does Maryland rank on the Z-score scale and what teams are similar to it? 
 Maryland ranks 
 123.7
