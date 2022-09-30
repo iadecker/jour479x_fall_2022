@@ -82,11 +82,9 @@ And here is the AVCA Coaches ranking of the top 10 teams with their zscores:
 Clearly, despite my best intentions, the highest-performing teams in the NCAA based on my z-scores aren't the actual best ten teams in the country — rankings are subjective, but the 10 teams listed in the AVCA are some of the best in the nation. WHY IS THIS...?
 
 #Where does Maryland rank on the Z-score scale and what teams are similar to it? 
-Maryland ranks 
-123.7
-158
-Simialr nine teams:
-Charlotte 49ers, Lehigh Mountain Hawks, Charleston So. Buccaneers, Portland Pilots, Sacred Heart Pioneers, Davidson Wildcats, Memphis Tigers, Hawaii Rainbow Wahine, Southeastern La. Lady Lions
+Maryland's z-score is 123.7, which makes it the 158th best team in the country according to these metrics. By these metrics, Maryland is a better overall team than all but three of the teams that appear in the AVCA list...When we look at the Big Ten standings this season, Maryland is 0-2 with losses to Illinois and Indiana. Last season, the Terps were 7-13 in conference play and finished ninth.
+
+The nine teams that are most simialr to Maryland using these metrics are the Charlotte 49ers, Lehigh Mountain Hawks, Charleston So. Buccaneers, Portland Pilots, Sacred Heart Pioneers, Davidson Wildcats, Memphis Tigers, Hawaii Rainbow Wahine, Southeastern La. Lady Lions.
 
 #This was my first attempt at this assignemnt. Here, I tried to follow the steps from the tutorial. I got to the very end but realized I was working with match data as opposed to using data that had been compressed for each team, so I started semi-anew (seen above). Still, I thought I would leave it here to show my first try.
 ```{r}
