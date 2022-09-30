@@ -48,7 +48,7 @@ head(teamzscore)
 
 teamzscore %>% arrange(desc(TotalZscore))
 
-big_ten <- c("SEC", "Big Ten", "Pac-12", "Big 12", "ACC")
+big_ten <- c("Nebraska Cornhuskers", "Minnesota Golden Gophers", "Iowa Hawkeyes", "Wisconsin Badgers", "Illinois Fighting Illini", "Northwestern Wildcats", "Purdue Boilermakers", "Indiana Hoosiers", "Michigan Wolverines", "Michigan St. Spartans", "Ohio St. Buckeyes", "Penn St. Nittany Lions", "Maryland Terrapins, Terps", "Rutgers Scarlet Knights")
 
 teamzscore %>% 
   filter(team %in% big_ten) %>% 
