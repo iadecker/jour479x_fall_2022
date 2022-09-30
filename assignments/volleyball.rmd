@@ -40,13 +40,20 @@ teamzscore <- teamtotals %>%
     blockassistzscore = as.numeric(scale(BAssAvg, center = TRUE, scale = TRUE)),
     blockerrorzscore = as.numeric(scale(BErrAvg, center = TRUE, scale = TRUE)),
     teamscorezscore = as.numeric(scale(TeamScoreAvg, center = TRUE, scale = TRUE)),
-    oppscorezscore = as.numeric(scale(OppScoreAvg, center = TRUE, scale = TRUE)),
+    oppscorezscore = as.numeric(scale(OppScoreAvg, center = TRUE, scale = TRUE)) * -1,
     TotalZscore = killszscore + digszscore + aceszscore + soloblockszscore + blockassistzscore + blockerrorzscore + teamscorezscore + oppscorezscore
     ) %>% ungroup() 
 
 head(teamzscore)
 
 teamzscore %>% arrange(desc(TotalZscore))
+
+big_ten <- c("SEC", "Big Ten", "Pac-12", "Big 12", "ACC")
+
+teamzscore %>% 
+  filter(team %in% big_ten) %>% 
+  arrange(desc(TotalZscore)) %>%
+  select(team, TotalZscore)
 
 teamzscore %>% 
   filter(team == "Maryland Terrapins, Terps") %>% 
@@ -55,7 +62,7 @@ teamzscore %>%
 ```
 #Who are the highest-performing teams in the NCAA (based on my new-and-improved TotalZScores)? 
 
-Here are the top 10 highest-performing teams in the NCAA witht their z-scores:
+Here are the top 10 highest-performing teams in the NCAA with their z-scores:
 1. UTEP Miners (8.4)
 2. Idaho St. Bengals (7.6)
 3. Northwestern St. Lady Demons (7.2)
@@ -122,7 +129,7 @@ Another important element to consider is that there is no way to adjust for stre
 #Where does Maryland rank on the Z-score scale and what teams are similar to it? 
 Maryland's z-score is 2.7, which makes it the 79th best team in the country according to these metrics. By these metrics, Maryland is a better overall team than all of the teams that appear in the AVCA list...When we look at the Big Ten standings this season, Maryland is 0-2 with losses to Illinois and Indiana. Last season, the Terps were 7-13 in conference play and finished ninth. 
 
-The nine teams that are most simialr to Maryland using these metrics are the Grand Canyon Lopes, Drake Bulldogs, Southern Miss. Golden Eagles, Kent St. Golden Flashes, Georgia St. Panthers, St. John's (NY) Red Storm, Bellarmine Knights, Chicago St. Cougars, Miami (FL) Hurricanes.
+The nine teams that are most similar to Maryland using these metrics are the Grand Canyon Lopes, Drake Bulldogs, Southern Miss. Golden Eagles, Kent St. Golden Flashes, Georgia St. Panthers, St. John's (NY) Red Storm, Bellarmine Knights, Chicago St. Cougars, Miami (FL) Hurricanes.
 
 #This was my first attempt at this assignemnt. Here, I tried to follow the steps from the tutorial. I got to the very end but realized I was working with match data as opposed to using data that had been compressed for each team, so I started semi-anew (seen above). Still, I thought I would leave it here to show my first try.
 ```{r}
