@@ -41,7 +41,7 @@ teamzscore <- teamtotals %>%
     blockerrorzscore = as.numeric(scale(BErrAvg, center = TRUE, scale = TRUE)),
     teamscorezscore = as.numeric(scale(TeamScoreAvg, center = TRUE, scale = TRUE)),
     oppscorezscore = as.numeric(scale(OppScoreAvg, center = TRUE, scale = TRUE)),
-    TotalZscore = KillsAvg + DigsAvg + AcesAvg + BSoloAvg + BAssAvg + BErrAvg + TeamScoreAvg + OppScoreAvg
+    TotalZscore = killszscore + digszscore + aceszscore + soloblockszscore + blockassistzscore + blockerrorzscore + teamscorezscore + oppscorezscore
     ) %>% ungroup() 
 
 head(teamzscore)
@@ -56,51 +56,51 @@ teamzscore %>%
 #Who are the highest-performing teams in the NCAA (based on my new-and-improved TotalZScores)? 
 
 Here are the top 10 highest-performing teams in the NCAA witht their z-scores:
-1. Wright St. Raiders (154.8)
-2. New Mexico Lobos (149.1)
-3. Creighton Bluejays (148.5)
-4. Ball St. Cardinals (146.6)
-5. Chattanooga Mocs (145.2)
-6. Tulsa Golden Hurricane (145.1)
-7. UTEP Miners (144.2)
-8. Murray St. Racers (144.0)
-9. Valparaiso Beacons (143.5)
-10. McNeese Cowgirls (142.9)
+1. UTEP Miners (8.4)
+2. Idaho St. Bengals (7.6)
+3. Northwestern St. Lady Demons (7.2)
+4. New Mexico Lobos (7.1)
+5. Saint Louis Billikens (7.0)
+6. UNLV Lady Rebels (6.7)
+7. Wright St. Raiders (6.5)
+8. Oregon Ducks (5.963)
+9. UT Arlington Mavericks (5.961)
+10. South Dakota Coyotes (5.7)
 
 And here is the AVCA Coaches ranking of the top 10 teams with their zscores:
-1. Texas (119.5)
-2. Louisville (116.75)
-3. Nebraska (125.2727)
-4. Univ. of SD (126.3)
-5. Purdue (126.3)
-6. OSU (113.8)
-7. Minnesota (121.3)
-8. Wisconsin (117.9)
-9. Stanford (121.9)
-10. Pitt (122.8)
+1. Texas (-2.2)
+2. Louisville (0.8)
+3. Nebraska (-2.5)
+4. Univ. of SD (1.0)
+5. Purdue (2.5)
+6. OSU (-4.3)
+7. Minnesota (0.1)
+8. Wisconsin (0.1)
+9. Stanford (-1.0)
+10. Pitt (0.9)
 
 #Clearly, despite my best intentions, the highest-performing teams in the NCAA based on my z-scores aren't the actual best ten teams in the country according to the rankings. Rankings are subjective, but the 10 teams listed in the AVCA are some of the best in the nation. WHY IS THIS...? I have a couple thoughts. 
 
-#First, let's just take the top teams in each list — Wright State and Texas — and compare the seasons they are having just to see why we got the teams we did in the first list. 
+#First, let's just take the top teams in each list — UTEP and Texas — and compare the seasons they are having just to see why we got the teams we did in the first list. 
 
 ```{r}
 teamzscore %>% 
-  filter(team == "Wright St. Raiders")
+  filter(team == "UTEP Miners")
 
-#Here are Wright State's numbers:
-#Kills: 54
-#Digs: 71.5
-#Aces: 6.2
-#BlockSolo: 1.8
+#Here are UTEP's numbers in averages:
+#Kills: 52.6
+#Digs: 59
+#Aces: 8.2
+#BlockSolo: 2.5
 #BlockAssist: 16
-#BlockError: 1.2
-#TeamScore: 2.7
-#OpponentScore: 1.5
+#BlockError: 1.5
+#TeamScore: 2.2
+#OpponentScore: 2.1 
   
 teamzscore %>% 
   filter(team == "Texas Longhorns") 
 
-#Here are Texas's numbers:
+#Here are Texas's numbers in averages:
 #Kills: 49.6
 #Digs: 46.6
 #Aces: 5.8
@@ -111,16 +111,18 @@ teamzscore %>%
 #OpponentScore: 0.5
 ```
 
-Wright State is 11-3. Two of their wins have been 3-0 wallopings, seven have come at a 3-1 margin and two have been 3-2. Of their three losses, two have been 2-3 and one has been 1-3. Texas meanwhile is a perfect 10-0, with six wins coming at 3-0, three at 3-1 and just one at 3-2. Texas has also defeated multiple team that are nationally ranked so far.  
+Woah, UTEP looks pretty darn competitive here! But wait, let's glance at the final two categories. UTEP is 8-7. Only one of their wins has been by a score of 3-0. Texas meanwhile is a perfect 10-0, with six wins coming at 3-0. Texas has also defeated multiple team that are nationally ranked so far. In looking at team and opponent score, Texas is a far better team than UTEP — the Longhorns win their matches by an average score of 3-0.5, while the Miners win by an average score of 2.2-2.1. UTEP is nowhere near as dominant in terms of its game score as Texas. This tells me that there is something to using game scores to evaluate how good a team is. We could also ask how much we dilute a team's talent by adding in all these additional statistics.
 
-There is no way to adjust for strength of schedule within our data. Based on a total z-score, Wright State might come out ahead of Texas, even though if the two teams played the outcome would be a pretty straightforward Texas victory. And just using game score might not be that effective because a team like Texas might defeat a stronger opponent 3-2, like it did against Kansas, but be penalized for a result over another team that might have defeated a weaker opponent 3-0. 
+Which leads us to...
 
-Another issue with these z-scores is that we're assuming that each one of these metrics is equally related to victories. Is it possible that aces are more important than blocks? Or are kills more valuable than block assists? 
+Another issue with these z-scores is that we're assuming that each one of these metrics is equally related to victories. Is it possible that aces are more important than blocks? Or are kills more valuable than block assists? Maybe adding in all the nitty gritty parts of blocks messes up our 
+
+Another important element to consider is that there is no way to adjust for strength of schedule within our data. Based on a total z-score, UTEP might come out ahead of Texas, even though a game between the two teams would most likely end in a straightforward Texas victory. And just using game score might not be that effective because a team like Texas might defeat a stronger opponent 3-2, like it did against Kansas, but be penalized for a result over another team that might have defeated a weaker opponent 3-0 (even though this isn't the case for Texas vs. UTEP). 
 
 #Where does Maryland rank on the Z-score scale and what teams are similar to it? 
-Maryland's z-score is 123.7, which makes it the 158th best team in the country according to these metrics. By these metrics, Maryland is a better overall team than all but three of the teams that appear in the AVCA list...When we look at the Big Ten standings this season, Maryland is 0-2 with losses to Illinois and Indiana. Last season, the Terps were 7-13 in conference play and finished ninth. 
+Maryland's z-score is 2.7, which makes it the 79th best team in the country according to these metrics. By these metrics, Maryland is a better overall team than all of the teams that appear in the AVCA list...When we look at the Big Ten standings this season, Maryland is 0-2 with losses to Illinois and Indiana. Last season, the Terps were 7-13 in conference play and finished ninth. 
 
-The nine teams that are most simialr to Maryland using these metrics are the Charlotte 49ers, Lehigh Mountain Hawks, Charleston So. Buccaneers, Portland Pilots, Sacred Heart Pioneers, Davidson Wildcats, Memphis Tigers, Hawaii Rainbow Wahine, Southeastern La. Lady Lions.
+The nine teams that are most simialr to Maryland using these metrics are the Grand Canyon Lopes, Drake Bulldogs, Southern Miss. Golden Eagles, Kent St. Golden Flashes, Georgia St. Panthers, St. John's (NY) Red Storm, Bellarmine Knights, Chicago St. Cougars, Miami (FL) Hurricanes.
 
 #This was my first attempt at this assignemnt. Here, I tried to follow the steps from the tutorial. I got to the very end but realized I was working with match data as opposed to using data that had been compressed for each team, so I started semi-anew (seen above). Still, I thought I would leave it here to show my first try.
 ```{r}
