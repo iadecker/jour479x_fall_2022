@@ -85,7 +85,7 @@ teamzscore %>%
   select(team, TotalZscore)
 ```
 
-If we run the teamzscore block of code that contains the 14 Big Ten teams, these are the results we get:
+To start, if we run the teamzscore block of code that contains the 14 Big Ten teams, these are the results we get:
 1. Purdue (6.54)
 2. Michigan (4.67)
 3. Maryland (4.62)
