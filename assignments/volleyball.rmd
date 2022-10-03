@@ -78,6 +78,11 @@ teamzscore %>%
   filter(team %in% big_ten) %>% 
   arrange(desc(TotalZscore)) %>%
   select(team, TotalZscore, teamscorezscore, oppscorezscore)
+
+teamzscore %>% 
+  filter(team == "Maryland Terrapins, Terps") %>% 
+  arrange(desc(TotalZscore)) %>%
+  select(team, TotalZscore)
 ```
 
 If we run the teamzscore block of code that contains the 14 Big Ten teams, these are the results we get:
@@ -96,16 +101,9 @@ If we run the teamzscore block of code that contains the 14 Big Ten teams, these
 13.Iowa (-1.46)
 14. OSU (-3.73)
 
-This seems kind of weird. This model loves Purdue but hates OSU. In adding team and opponent score, this model likes squads with strong records, and Purdue has a bunch of 3-0 wins, whereas OSU has a lot of 0-3 losses combined with 3-0 wins. As such, Purdue has a strong teamscorezscore (1.46) and OSU has a weak one (-0.11).
+This seems kind of weird. This model loves Purdue but hates OSU. In adding team and opponent score, this model likes squads with strong records, and Purdue has a bunch of 3-0 wins, whereas OSU has a lot of 0-3 losses combined with 3-0 wins. As such, Purdue has a strong teamscorezscore (1.46) and OSU has a weak one (-0.11). However, OSU is one of the top teams in the country. Might strength of opponent matter? More on that in a bit.
 
-```{r}
-teamzscore %>% 
-  filter(team == "Maryland Terrapins, Terps") %>% 
-  arrange(desc(TotalZscore)) %>%
-  select(team, TotalZscore)
-```
-
-#Who are the highest-performing teams in the NCAA (based on my new-and-improved TotalZScores)? 
+#Who are the highest-performing teams in the NCAA (based on my new-and-improved TotalZScores - this is using the data from teamzscore)? 
 
 Here are the top 10 highest-performing teams in the NCAA with their z-scores:
 1. UCF Knights (9.29)
@@ -137,17 +135,17 @@ And here is the AVCA Coaches ranking of the top 10 teams with their zscores:
 
 ```{r}
 teamzscore %>% 
-  filter(team == "UTEP Miners")
+  filter(team == "UCF Knights")
 
 #Here are UTEP's numbers in averages:
-#Kills: 52.6
-#Digs: 59
-#Aces: 8.2
-#BlockSolo: 2.5
-#BlockAssist: 16
-#BlockError: 1.5
-#TeamScore: 2.2
-#OpponentScore: 2.1 
+#Kills: 52.8
+#Digs: 51.5
+#Aces: 5.4
+#BlockSolo: 2.1
+#BlockAssist: 15.2
+#BlockError: 2
+#TeamScore: 3
+#OpponentScore: 0.7
   
 teamzscore %>% 
   filter(team == "Texas Longhorns") 
@@ -163,13 +161,13 @@ teamzscore %>%
 #OpponentScore: 0.5
 ```
 
-Woah, UTEP looks pretty darn competitive here! But wait, let's glance at the final two categories. UTEP is 8-7. Only one of their wins has been by a score of 3-0. Texas meanwhile is a perfect 10-0, with six wins coming at 3-0. Texas has also defeated multiple team that are nationally ranked so far. In looking at team and opponent score, Texas is a far better team than UTEP — the Longhorns win their matches by an average score of 3-0.5, while the Miners win by an average score of 2.2-2.1. UTEP is nowhere near as dominant in terms of its game score as Texas. This tells me that there is something to using game scores to evaluate how good a team is. We could also ask how much we dilute a team's talent by adding in all these additional statistics.
+Woah, UCF looks pretty darn competitive here! But wait, let's glance at the final two categories. UCF is a perfect 12-0 and is a solid team. And of their wins, eight have been by a score of 3-0. Texas is also perfect, holding an 11-0 record with seven wins coming at 3-0. Texas has also defeated multiple team that are nationally ranked so far. Let's look at these two teams' average team and opponent scores. We know how dominant Texas is, and they win their matches by an average score of 3-0.5, but UCF is pretty close going 3-0.7. while the Miners win by an average score of 2.2-2.1. If UCF is ranked first in our totalzscore list but Texas is ranked number one by the poll, we know there is something to using game scores to evaluate how good a team is. We could also ask how much we dilute a team's talent by adding in all these additional statistics.
 
 Which leads us to...
 
-Another issue with these z-scores is that we're assuming that each one of these metrics is equally related to victories. Is it possible that aces are more important than blocks? Or are kills more valuable than block assists? Maybe adding in all the nitty gritty parts of blocks messes up our 
+Another issue with these z-scores is that we're assuming that each one of these metrics is equally related to victories. Is it possible that aces are more important than blocks? Or are kills more valuable than block assists? And maybe having three different categories for blocks hurts some teams and helps others. For example, a team might have one player who is an incredibly dominant blocker so it doesn't get many block assists or block errors, this hurting their zscore even though that team probably wins a lot of points through that one player. Maybe adding in all the nitty gritty parts of blocks messes up our totalzscore.
 
-Another important element to consider is that there is no way to adjust for strength of schedule within our data. Based on a total z-score, UTEP might come out ahead of Texas, even though a game between the two teams would most likely end in a straightforward Texas victory. And just using game score might not be that effective because a team like Texas might defeat a stronger opponent 3-2, like it did against Kansas, but be penalized for a result over another team that might have defeated a weaker opponent 3-0 (even though this isn't the case for Texas vs. UTEP). 
+Another important element to consider is that there is no way to adjust for strength of schedule within our data. Based on a total z-score, UCF might come out ahead of Texas, even though a game between the two teams would most likely end in a Texas victory. Interestsingly enough, UCF defeated Kansas 3-0 (WOAH) earlier this season while Texas narrowly escaped with a 3-2 win. AND both games were played in Kansas. This probably contributes to UCF ranking above Texas, but I do want to mention that just using game score might not be that effective because a team might beat a good oppoennt 3-2 while another team might win 3-0 against a weaker oppoennt and get favored by our model.  
 
 #Where does Maryland rank on the Z-score scale and what teams are similar to it? 
 Maryland's z-score is 2.7, which makes it the 79th best team in the country according to these metrics. By these metrics, Maryland is a better overall team than all of the teams that appear in the AVCA list...When we look at the Big Ten standings this season, Maryland is 0-2 with losses to Illinois and Indiana. Last season, the Terps were 7-13 in conference play and finished ninth. 
