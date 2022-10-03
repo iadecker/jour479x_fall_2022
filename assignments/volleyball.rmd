@@ -176,6 +176,9 @@ I also want to talk a little bit about how Maryland ranks within the Big Ten bas
 
 In terms of the nine teams that are most similar to Maryland using these metrics, we see that those are the Pepperdine Waves, Providence Friars, Austin Peay Governors, Boston College Eagles, Lehigh Mountain Hawks, Cal St. Fullerton Titans, California Golden Bears, Michigan Wolverines and San Jose St. Spartans.
 
+#One last thing.
+So I was curious as to why the first model I created was so bad, and one of the first things I thought about (and that I have discussed above) is that maybe having three components of blocks was junking up the model. As such, I made a new model with the original name of teamzscore2 and took out the three block zscores. Sadly, this didn't change much. Most of the top teams were excluded from the top of our second model. So, like Tony Stark did in the first Iron Man movie, I thought, "What the heck, let's keep tinkering." I made a third model (teamzscore3) that just had team and opponent score, and the reuslts were quite encouraging. When I just used those two factors, Texas, Louisville, Nebraska and Purdue all rank in the top 10 with Pitt coming in at 14 and SD at 17. So, while this isn't the end all be all, of the models I made, model3 gets us closest to the actual rankings, so perhaps team and opponent score are two ways to see who the most dominant teams are!
+
 #This was my first attempt at this assignment. Here, I tried to follow the steps from the tutorial. I got to the very end but realized I was working with match data as opposed to using data that had been compressed for each team, so I started semi-anew (seen above). Still, I thought I would leave it here to show my first try.
 ```{r}
 perset_stats <- match_data %>% 
