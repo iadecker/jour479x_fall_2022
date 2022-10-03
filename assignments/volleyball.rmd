@@ -8,7 +8,9 @@ date: "2022-09-28"
 library(tidyverse)
 ```
 
-#The two additional factors I wanted to see from the quiz were blocks and game score. To reiterate, blocks are an essential part of the game, and within the data we were provided, there are several components of blocks — solo blocks, block assists and block errors. We already have kills and aces (two offensive metrics) and digs (a defensive stat), so I felt like adding a second defensive metric in blocks would help show which teams were the strongest. I also wanted to leave in kills, aces and digs because each of those metrics is intergral to the sport. We also have the game score data in team_score and opponent_score. I wanted to include this information because it is the easiest way for us to measure dominance with the data we were given. For example, a team that wins a majority of its games 3-0 is a stronger unit than a team that wins 3-2. Granted, strength of opponent is a factor in this, but seeing as we don't have that data, team and opponent score seem like good ways to see which teams were the most dominant.
+#The two additional factors I wanted to see from the quiz were blocks and game score. To reiterate, blocks are an essential part of the game, and within the data we were provided, there are several components of blocks — solo blocks, block assists and block errors. We already have kills and aces (two offensive metrics) and digs (a defensive stat), so I felt like adding a second defensive metric in blocks would help show which teams were the strongest. I also wanted to leave in kills, aces and digs because each of those metrics is intergral to the sport. 
+
+#We also have the game score data in team_score and opponent_score. I wanted to include this information because it is one way for us to measure dominance with the data we were given. For example, a team that wins a majority of its games 3-0 is a stronger unit than a team that wins 3-2. Granted, strength of opponent is a factor in this, but seeing as we don't have that data, team and opponent score seem like good ways to see which teams were the most dominant.
 
 ```{r setup, include=FALSE}
 match_data <- read_csv("https://raw.githubusercontent.com/dwillis/NCAAWomensVolleyballData/main/data/ncaa_womens_volleyball_matchstats_2022.csv")
@@ -31,6 +33,7 @@ teamtotals <- teamquality %>%
     OppScoreAvg = mean(opponent_score),
     ) 
 
+#These stats all seem important
 teamzscore <- teamtotals %>% 
   mutate(
     killszscore = as.numeric(scale(KillsAvg, center = TRUE, scale = TRUE)),
@@ -44,47 +47,89 @@ teamzscore <- teamtotals %>%
     TotalZscore = killszscore + digszscore + aceszscore + soloblockszscore + blockassistzscore + blockerrorzscore + teamscorezscore + oppscorezscore
     ) %>% ungroup() 
 
-head(teamzscore)
-
 teamzscore %>% arrange(desc(TotalZscore))
+
+#There are too many stats involved with blocks!
+teamzscore2 <- teamtotals %>% 
+  mutate(
+    killszscore = as.numeric(scale(KillsAvg, center = TRUE, scale = TRUE)),
+    digszscore = as.numeric(scale(DigsAvg, center = TRUE, scale = TRUE)),
+    aceszscore = as.numeric(scale(AcesAvg, center = TRUE, scale = TRUE)),
+    teamscorezscore = as.numeric(scale(TeamScoreAvg, center = TRUE, scale = TRUE)),
+    oppscorezscore = as.numeric(scale(OppScoreAvg, center = TRUE, scale = TRUE)) * -1,
+    TotalZscore = killszscore + digszscore + aceszscore + teamscorezscore + oppscorezscore
+    ) %>% ungroup() 
+
+teamzscore2 %>% arrange(desc(TotalZscore))
+
+#Third time's the charm?
+teamzscore3 <- teamtotals %>% 
+  mutate(
+    teamscorezscore = as.numeric(scale(TeamScoreAvg, center = TRUE, scale = TRUE)),
+    oppscorezscore = as.numeric(scale(OppScoreAvg, center = TRUE, scale = TRUE)) * -1,
+    TotalZscore = teamscorezscore + oppscorezscore
+    ) %>% ungroup() 
+
+teamzscore3 %>% arrange(desc(TotalZscore))
 
 big_ten <- c("Nebraska Cornhuskers", "Minnesota Golden Gophers", "Iowa Hawkeyes", "Wisconsin Badgers", "Illinois Fighting Illini", "Northwestern Wildcats", "Purdue Boilermakers", "Indiana Hoosiers", "Michigan Wolverines", "Michigan St. Spartans", "Ohio St. Buckeyes", "Penn St. Nittany Lions", "Maryland Terrapins, Terps", "Rutgers Scarlet Knights")
 
 teamzscore %>% 
   filter(team %in% big_ten) %>% 
   arrange(desc(TotalZscore)) %>%
-  select(team, TotalZscore)
+  select(team, TotalZscore, teamscorezscore, oppscorezscore)
+```
 
+If we run the teamzscore block of code that contains the 14 Big Ten teams, these are the results we get:
+1. Purdue (6.54)
+2. Michigan (4.67)
+3. Maryland (4.62)
+4. Penn St. (3.83)
+5. Mich St. (3.04)
+6. Wisconsin (3.03)
+7. Northwestern (2.01)
+8. Nebraska (1.69)
+9. Illinois (1.55)
+10. Minn (0.96)
+11. Rutgers (0.89)
+12. Indiana (0.84)
+13.Iowa (-1.46)
+14. OSU (-3.73)
+
+This seems kind of weird. This model loves Purdue but hates OSU. In adding team and opponent score, this model likes squads with strong records, and Purdue has a bunch of 3-0 wins, whereas OSU has a lot of 0-3 losses combined with 3-0 wins. As such, Purdue has a strong teamscorezscore (1.46) and OSU has a weak one (-0.11).
+
+```{r}
 teamzscore %>% 
   filter(team == "Maryland Terrapins, Terps") %>% 
   arrange(desc(TotalZscore)) %>%
   select(team, TotalZscore)
 ```
+
 #Who are the highest-performing teams in the NCAA (based on my new-and-improved TotalZScores)? 
 
 Here are the top 10 highest-performing teams in the NCAA with their z-scores:
-1. UTEP Miners (8.4)
-2. Idaho St. Bengals (7.6)
-3. Northwestern St. Lady Demons (7.2)
-4. New Mexico Lobos (7.1)
-5. Saint Louis Billikens (7.0)
-6. UNLV Lady Rebels (6.7)
-7. Wright St. Raiders (6.5)
-8. Oregon Ducks (5.963)
-9. UT Arlington Mavericks (5.961)
-10. South Dakota Coyotes (5.7)
+1. UCF Knights (9.29)
+2. UNLV Lady Rebels (9.14)
+3. New Mexico Lobos (8.59)
+4. Arkansas Razorbacks (8.30)
+5. Oregon Ducks (8.21)
+6. Wright St. Raiders (7.89)
+7. South Dakota Coyotes (7.87)
+8. UTEP Miners (7.64)
+9. Idaho St. Bengals (7.57)
+10. Auburn Tigers (7.49)
 
 And here is the AVCA Coaches ranking of the top 10 teams with their zscores:
-1. Texas (-2.2)
-2. Louisville (0.8)
-3. Nebraska (-2.5)
-4. Univ. of SD (1.0)
-5. Purdue (2.5)
-6. OSU (-4.3)
-7. Minnesota (0.1)
-8. Wisconsin (0.1)
-9. Stanford (-1.0)
-10. Pitt (0.9)
+1. Texas (2.43)
+2. Louisville (5.15)
+3. Nebraska (1.69)
+4. Univ. of SD (4.24)
+5. Purdue (6.54)
+6. OSU (-3.73)
+7. Minnesota (0.96)
+8. Wisconsin (3.03)
+9. Stanford (-0.12)
+10. Pitt (4.37)
 
 #Clearly, despite my best intentions, the highest-performing teams in the NCAA based on my z-scores aren't the actual best ten teams in the country according to the rankings. Rankings are subjective, but the 10 teams listed in the AVCA are some of the best in the nation. WHY IS THIS...? I have a couple thoughts. 
 
