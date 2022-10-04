@@ -1,0 +1,24 @@
+---
+title: "background.rmd"
+output: html_document
+date: "2022-10-04"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+#Question I'm trying to answer: At what point should a team decide to "blow up" its roster?
+Q1: I think maybe you could do this by plotting performance and trades to show if there's a point *when teams have decided to blow up its roster*. Is there any pattern to that? I think that's probably doable whereas predicting player performance if they hadn't been traded might be more complicated, but curious what your reaction is.
+
+#Does that data already exist? Can you get it?
+
+#Do you need assistance in getting it?
+
+#What time frame do you want/need data from?
+
+#Will you have to improve or augment the data in order to answer your question? If so, how?
+
+#Are there other examples of this kind of work (specific or general)? If so, provide them.
+
+If your data is available and you have it, create code blocks to load the appropriate libraries and then read in the data.
