@@ -12,21 +12,23 @@ knitr::opts_chunk$set(echo = TRUE)
 #I want to expand on this a little bit to ask the question of how long before the Nats — in light of their 107-loss (a Washington baseball record) season — are relevant again. I'll go into more detail below.
 A) I want to start by asking the question of when teams decide to blow up their rosters. To do this, I will look at recent sell-offs and what the records of those teams were. I will use the record of when the majority of the "big moves" involving notable players were made. This will help me get an idea of when teams begin the firesale. Most teams make several moves, but the big ones seem to happen in quick succession. This will help show if there's a point when teams have decided to blow up their rosters. By looking at records, I might be able to observe a pattern of when teams throw in the towel and start planning for the future.
 
-B) I want to look at how many years it takes before a team is good again. I will define "good" in two ways: 1. When a team that has had a losing record finally flips to a winning record, at least 82-80, and 2) When a team that has been struggling makes the playoffs. The important metrics to look at here are win percentage and postseason appearances. For the postseason category, I'm not interested in teams, like the Phillies, that have spent big in recent years and made the postseason this year after a lengthy drought. I want to look at teams (Orioles, Royals, Padres, Marlins, Astros, Pirates, Braves, Cubs) that built through trades and the draft to find success.
+B) I want to look at how many years it takes before a team is good again. I will define "good" in two ways: 1. When a team that has had a losing record finally flips to a winning record, at least 82-80, and 2) When a team that has been struggling makes the playoffs. The important metrics to look at here are win percentage and postseason appearances. For the postseason category, I'm not interested in teams, like the Phillies, that have spent big in recent years and made the postseason this year after a lengthy drought. I want to look at teams (Orioles, Royals, Padres, Marlins, Astros, Pirates, Braves, Cubs) that built through trades and the draft to find success and return to a competitive brand of baseball.
 
-C) One of the main components of this investigation will be to look at the farm systems of certain teams to project when they will return to relevancy. While this is impossible to predict, we can look at players at the AAA (Rochester Red Wings) and AA (Harrisburg Senators) level to see which players are performing at above-league rates who might contribute at the major league level. This is a oversimplified way of judging whether or not a player will be good, but the thought process is as follows: If player X is above-average at the minor league level, then he will contribute at the pro level. I can also look at roughly how many players per team were drafted/acquired via trade who contributed (played significant games, > 80) for their tams. The last part of this question is how many contributing players were signed via free agency, and what were the contracts of those players? This portion looks at how important free agency and spending are in a rebuild.
+C) One of the main components of this investigation will be to look at the farm systems of certain teams to project when they will return to relevancy. While this is impossible to predict, we can look at players at the AAA (Rochester Red Wings) and AA (Harrisburg Senators) level to see who is performing at above-league rates who might contribute at the major league level. 
+
+This is an oversimplified way of judging whether or not a player will be good, but the thought process is as follows: If player X is above-average at the minor league level, then he will contribute at the pro level. I can also look at roughly how many players per team were drafted/acquired via trade who contributed (defined by a player who has played significant games, > 80 and at-bats, > 320) for their teams. The last part of this question is how many contributing players were signed via free agency, and what were the contracts of those players? This portion looks at how important free agency and spending are in a rebuild. This part of my investigation will look at players drafted, players acquired via trade and players signed in the offseason.
 
 #Does that data already exist? Can you get it?
 All the data I will be using (records, years to relevancy and player data) is available, and I should be able to get it without having to spend any money or submit any requests.
 
 #Do you need assistance in getting it?
-I'm not sure how I could get the data for the first two queries outside of just writing it down, and I will need help getting the data on the prospects. It is available at mlb.com.
+I'm not sure how I could get the data for the first two queries outside of just writing it down, and I will need help getting the data on the prospects, but it is available at mlb.com. Further, the data is pretty easy to parse through.
 
 #What time frame do you want/need data from?
-Because I am looking at recent rebuilds, I might need data from the last 15 years or so? But with the data we have in baseball archives, this shouldn't be too big of a problem?
+Because I am looking at recent rebuilds, I might need data from the last 15 years or so. But with the data we have in baseball archives, this shouldn't be too big of a problem.
 
 #Will you have to improve or augment the data in order to answer your question? If so, how?
-I don't believe so. The data I will be working with is fairly straightforward. 
+I don't believe so. The data I will be working with is fairly straightforward for what I'm interested in.
 
 #Are there other examples of this kind of work (specific or general)? If so, provide them.
 https://community.fangraphs.com/an-examination-of-rebuilding-team-timelines/
@@ -36,4 +38,4 @@ https://pirates.pittsburghbaseball.com/2021/10/08/how-many-years-should-a-rebuil
 https://www.espn.com/mlb/insider/insider/story/_/id/34407508/when-does-rebuild-fail-detroit-tigers-disaster-means-your-team
 
 #If your data is available and you have it, create code blocks to load the appropriate libraries and then read in the data.
-N/A
+I don't have any of the data yet, but are there any libraries other than tidyverse that I will need to load for this investigation?
