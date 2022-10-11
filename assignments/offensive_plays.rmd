@@ -1,0 +1,31 @@
+---
+title: "offensive plays"
+output: html_document
+date: "2022-10-11"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+library(tidyverse)
+```
+
+load the data for big ten games
+
+```{r}
+logs <- read_csv("https://dwillis.github.io/sports-data-files/footballlogs21.csv")
+
+big_ten <- logs %>%
+  filter(Conference == 'Big Ten Conference')
+```
+
+calculate an avg offensive plays
+
+```{r}
+avg_plays <- big_ten %>%
+  group_by(TeamFull) %>%
+  summarise(avg_plays = mean(Offensive))
+```
+
