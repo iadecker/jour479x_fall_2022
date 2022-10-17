@@ -83,6 +83,9 @@ nats_roster_aug5 <- mlb_rosters(team_id = 120, season = 2021, date = "2021-08-05
 
 #This is creating a new dataframe for the guys who were traded at the deadline
 departures_trade_deadline_21 <- anti_join(nats_roster_jul20, nats_roster_aug5, by = "person_full_name", copy = FALSE, na_matches = c("na", "never"))
+
+#This is creating a new dataframe for the guys who were acquired at the deadline
+acquisitions_trade_deadline_21 <- anti_join(nats_roster_aug5, nats_roster_jul20, by = "person_full_name", copy = FALSE, na_matches = c("na", "never"))
 ```
 
 #I just wanted to separate the dataframes for 2021 and 2022 so that it wouldn't be one big jumbled codeblock.
@@ -110,4 +113,7 @@ nats_roster_aug10 <- mlb_rosters(team_id = 120, season = 2022, date = "2022-08-1
 
 #This is creating a new dataframe for the guys who were traded at the deadline
 departures_trade_deadline_22 <- anti_join(nats_roster_aug1, nats_roster_aug10, by = "person_full_name", copy = FALSE, na_matches = c("na", "never"))
+
+#This is creating a new dataframe for the guys who were acquired at the deadline
+acquisitions_trade_deadline_22 <- anti_join(nats_roster_aug10, nats_roster_aug1, by = "person_full_name", copy = FALSE, na_matches = c("na", "never"))
 ```
