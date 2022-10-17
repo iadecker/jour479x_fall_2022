@@ -52,7 +52,7 @@ My plan is to create similar dataframes for other teams that have undergone simi
 Doing all this is a way to try to quantify the hole teams put themselves in. I will look to answer questions like How long does it take a team to return to relevancy, and Can we see how long that process takes?
 
 ```{r}
-#I'm loading the necessary libraries for this set of querries
+#I'm loading the necessary libraries for this set of queries
 library(baseballr)
 library(dplyr)
 ```
@@ -69,6 +69,11 @@ nats_roster_oct3 <- mlb_rosters(team_id = 120, season = 2021, date = "2021-10-03
 
 #This is creating a new dataframe for the guys who started the season with the team but left before the end of the year
 opening_day_to_last_day_21 <- anti_join(nats_roster_apr6, nats_roster_oct3, by = "person_full_name", copy = FALSE, na_matches = c("na", "never"))
+
+#This is creating a new dataframe for the guys who didn't start the season with the team but ended the year as a Nat
+opening_day_to_last_day_newbies_21 <- anti_join(nats_roster_oct3, nats_roster_apr6, by = "person_full_name", copy = FALSE, na_matches = c("na", "never"))
+
+#According to opening_day_to_last_day_21, 14 of the players on the 40-man roster left the team, which is 35% of the roster, a solid amount during the season. That was without expiring contracts or players getting cut, which happens in the offseason. This could be interesting information to use in a potential graph, for we could track the change in the team over the course of the season.
 
 #This is me creating a dataframe for the Nats roster on July 20, 2021 — pre-trade deadline
 nats_roster_jul20 <- mlb_rosters(team_id = 120, season = 2021, date = "2021-07-20", roster_type = '40Man')
@@ -91,6 +96,11 @@ nats_roster_oct5 <- mlb_rosters(team_id = 120, season = 2022, date = "2022-10-05
 
 #This is creating a new dataframe for the guys who started the season with the team but left before the end of the year
 opening_day_to_last_day_22 <- anti_join(nats_roster_apr7, nats_roster_oct5, by = "person_full_name", copy = FALSE, na_matches = c("na", "never"))
+
+#This is creating a new dataframe for the guys who didn't start the season with the team but ended the year as a Nat
+opening_day_to_last_day_newbies_22 <- anti_join(nats_roster_oct5, nats_roster_apr7, by = "person_full_name", copy = FALSE, na_matches = c("na", "never"))
+
+#According to opening_day_to_last_day_22, 10 of the players on the 40-man roster left the team, which is 25% of the roster. While this is less than the previous year, it is of comparable (if not greater) value because Juan Soto was included in the deal. This could be interesting information to use in a potential graph, for we could track the change in the team over the course of the season.
 
 #This is me creating a dataframe for the Nats roster on July 28, 2022 — pre-trade deadline
 nats_roster_aug1 <- mlb_rosters(team_id = 120, season = 2022, date = "2022-07-28", roster_type = '40Man')
