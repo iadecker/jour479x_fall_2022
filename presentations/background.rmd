@@ -43,7 +43,13 @@ https://www.espn.com/mlb/insider/insider/story/_/id/34407508/when-does-rebuild-f
 I don't have any of the data yet, but are there any libraries other than tidyverse that I will need to load for this investigation?
 
 ##EXPLORATION (10/16/22)
-Summarise the gap in production of who is out and in, and then do that for other roster blowups, and try to wuantify the hole they put themselves in? How long did it take them to climb out of it? Can we see how long it takes?
+What I was interested in doing for this portion of the assignment was trying to see if I could create dataframes that would show which players were traded. I created two key dataframes for each of the years 2021 and 2022. I made one dataframe that showed all the departures throughout the season and one with departures at the trade deadline. 
+
+I wanted to do this because there are some players who might have been waived, or they might have been part of a less important trade. For this investigation, I want to look at major moves teams make when they blow up their rosters, so those marginal trades aren't super interesting. However, I'm still curious as about how different a team looks at the beginning and end of a season.
+
+My plan is to create similar dataframes for other teams that have undergone similar rebuild situations near the trade deadline This will allow me to isolate the talent a team loses when it decides to fire sale its roster at the trade deadline. In other words, it will allow me to summarize the gap in production of who is out and in. 
+
+This is a way to try to quantify the hole teams put themselves in. How long did it take them to climb out of it? Can we see how long it takes?
 
 #I'm loading the necessary libraries for this set of querries
 ```{r}
