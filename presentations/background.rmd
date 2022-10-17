@@ -118,9 +118,9 @@ departures_trade_deadline_22 <- anti_join(nats_roster_aug1, nats_roster_aug10, b
 acquisitions_trade_deadline_22 <- anti_join(nats_roster_aug10, nats_roster_aug1, by = "person_full_name", copy = FALSE, na_matches = c("na", "never"))
 ```
 
-#I wanted to see how things would change if I changed the roster_typ from '40man' to 'fullRoster.' Just using '40man' doesn't account for some of the prospects that were acquired in trades; it only gives us players who debuted for the team or were on the 40-man roster at some point. But, this investigation is looking at prospects acquired in trades, so just have to figure out the best way to create a dataframe with impact players because some of the guys on the lists that we create below will never play at the pro level. 
+#I wanted to see how things would change if I changed the roster_typ from '40man' to 'fullRoster.' Just using '40man' doesn't account for some of the prospects that were acquired in trades; it only gives us players who debuted for the team or were on the 40-man roster at some point. But, this investigation is looking at prospects acquired in trades, so I just have to figure out the best way to create a dataframe with impact players — some of the guys on the lists that we create below will never play at the pro level. 
 
-#I will expand this portion of the project for the next deliverable, but I think it is also important to use '40man' as part of my investigation. I just want to think a bit more on the best way to get the departed and acquired players on teams, but I wanted to show you that I have kicked around using fullRoster as well.
+#I will expand this portion of the project for the next deliverable, but I think it is also important to use '40man' as part of my investigation. I just want to think a bit more on the best way to get the departed and acquired players on teams, but I wanted to show you that I have kicked around the idea of using fullRoster as well.
 ```{r}
 
 nats_roster_jul26 <- mlb_rosters(team_id = 120, season = 2022, date = "2022-07-26", roster_type = 'fullRoster')
