@@ -39,56 +39,59 @@ https://pirates.pittsburghbaseball.com/2021/10/08/how-many-years-should-a-rebuil
 
 https://www.espn.com/mlb/insider/insider/story/_/id/34407508/when-does-rebuild-fail-detroit-tigers-disaster-means-your-team
 
-##EXPLORATION (10/16/22)
-
 #If your data is available and you have it, create code blocks to load the appropriate libraries and then read in the data.
 I don't have any of the data yet, but are there any libraries other than tidyverse that I will need to load for this investigation?
 
+##EXPLORATION (10/16/22)
+Summarise the gap in production of who is out and in, and then do that for other roster blowups, and try to wuantify the hole they put themselves in? How long did it take them to climb out of it? Can we see how long it takes?
 
+#I'm loading the necessary libraries for this set of querries
 ```{r}
 library(baseballr)
 library(dplyr)
 ```
 
 ```{r}
+#I'm looking at all the MLB teams
 mlb_teams(season = 2022, sport_ids = c(1))
 
+#This is me creating a dataframe for the Nats roster on April 6, 2021 — Opening Day
 nats_roster_apr6 <- mlb_rosters(team_id = 120, season = 2021, date = "2021-04-06", roster_type = '40Man')
 
+#This is me creating a dataframe for the Nats roster on October 3, 2021 — Last game of the season
 nats_roster_oct3 <- mlb_rosters(team_id = 120, season = 2021, date = "2021-10-03", roster_type = '40Man')
 
+#This is creating a new dataframe for the guys who started the season with the team but left before the end of the year
 opening_day_to_last_day_21 <- anti_join(nats_roster_apr6, nats_roster_oct3, by = "person_full_name", copy = FALSE, na_matches = c("na", "never"))
 
+#This is me creating a dataframe for the Nats roster on July 20, 2021 — pre-trade deadline
 nats_roster_jul20 <- mlb_rosters(team_id = 120, season = 2021, date = "2021-07-20", roster_type = '40Man')
 
+#This is me creating a dataframe for the Nats roster on August 05, 2021 — post-trade deadline
 nats_roster_aug5 <- mlb_rosters(team_id = 120, season = 2021, date = "2021-08-05", roster_type = '40Man')
 
+#This is creating a new dataframe for the guys who were traded at the deadline
 departures_trade_deadline_21 <- anti_join(nats_roster_jul20, nats_roster_aug5, by = "person_full_name", copy = FALSE, na_matches = c("na", "never"))
 ```
 
+#I just wanted to separate the dataframes for 2021 and 2022 so that it wouldn't be one big jumbled codeblock.
+
 ```{r}
+#This is me creating a dataframe for the Nats roster on April 7, 2022 — Opening Day
 nats_roster_apr7 <- mlb_rosters(team_id = 120, season = 2022, date = "2022-04-07", roster_type = '40Man')
 
+#This is me creating a dataframe for the Nats roster on October 5, 2022 — Last game of the season
 nats_roster_oct5 <- mlb_rosters(team_id = 120, season = 2022, date = "2022-10-05", roster_type = '40Man')
 
+#This is creating a new dataframe for the guys who started the season with the team but left before the end of the year
 opening_day_to_last_day_22 <- anti_join(nats_roster_apr7, nats_roster_oct5, by = "person_full_name", copy = FALSE, na_matches = c("na", "never"))
 
+#This is me creating a dataframe for the Nats roster on July 28, 2022 — pre-trade deadline
 nats_roster_aug1 <- mlb_rosters(team_id = 120, season = 2022, date = "2022-07-28", roster_type = '40Man')
 
+#This is me creating a dataframe for the Nats roster on August 10, 2022 — post-trade deadline
 nats_roster_aug10 <- mlb_rosters(team_id = 120, season = 2022, date = "2022-08-10", roster_type = '40Man')
 
+#This is creating a new dataframe for the guys who were traded at the deadline
 departures_trade_deadline_22 <- anti_join(nats_roster_aug1, nats_roster_aug10, by = "person_full_name", copy = FALSE, na_matches = c("na", "never"))
-
-net_loss <- departures_trade_deadline %>%
-  bref_daily_batter("2022-07-28", "2022-08-10")
 ```
-
-
-
-Summarise the gap in production of who is out and in, and then do that for other roster blowups, and try to wuantify the hole they put themselves in? How long did it take them to climb out of it? Can we see how long it takes?
-
-anti-join on player_id
-after anti join to before based on player id
-
-
-mlb_stats()
