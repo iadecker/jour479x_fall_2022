@@ -48,19 +48,39 @@ I don't have any of the data yet, but are there any libraries other than tidyver
 ```{r}
 library(baseballr)
 library(dplyr)
+```
 
+```{r}
 mlb_teams(season = 2022, sport_ids = c(1))
 
+nats_roster_apr6 <- mlb_rosters(team_id = 120, season = 2021, date = "2021-04-06", roster_type = '40Man')
+
+nats_roster_oct3 <- mlb_rosters(team_id = 120, season = 2021, date = "2021-10-03", roster_type = '40Man')
+
+opening_day_to_last_day_21 <- anti_join(nats_roster_apr6, nats_roster_oct3, by = "person_full_name", copy = FALSE, na_matches = c("na", "never"))
+
+nats_roster_jul20 <- mlb_rosters(team_id = 120, season = 2021, date = "2021-07-20", roster_type = '40Man')
+
+nats_roster_aug5 <- mlb_rosters(team_id = 120, season = 2021, date = "2021-08-05", roster_type = '40Man')
+
+departures_trade_deadline_21 <- anti_join(nats_roster_jul20, nats_roster_aug5, by = "person_full_name", copy = FALSE, na_matches = c("na", "never"))
+```
+
+```{r}
 nats_roster_apr7 <- mlb_rosters(team_id = 120, season = 2022, date = "2022-04-07", roster_type = '40Man')
+
+nats_roster_oct5 <- mlb_rosters(team_id = 120, season = 2022, date = "2022-10-05", roster_type = '40Man')
+
+opening_day_to_last_day_22 <- anti_join(nats_roster_apr7, nats_roster_oct5, by = "person_full_name", copy = FALSE, na_matches = c("na", "never"))
 
 nats_roster_aug1 <- mlb_rosters(team_id = 120, season = 2022, date = "2022-07-28", roster_type = '40Man')
 
 nats_roster_aug10 <- mlb_rosters(team_id = 120, season = 2022, date = "2022-08-10", roster_type = '40Man')
 
-nats_roster_oct5 <- mlb_rosters(team_id = 120, season = 2022, date = "2022-10-05", roster_type = '40Man')
+departures_trade_deadline_22 <- anti_join(nats_roster_aug1, nats_roster_aug10, by = "person_full_name", copy = FALSE, na_matches = c("na", "never"))
 
-departures <- anti_join(nats_roster_aug1, nats_roster_aug10, by = person_full_name, copy = FALSE, na_matches = c("na", "never"))
-
+net_loss <- departures_trade_deadline %>%
+  bref_daily_batter("2022-07-28", "2022-08-10")
 ```
 
 
