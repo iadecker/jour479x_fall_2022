@@ -113,6 +113,11 @@ nats_roster_aug10 <- mlb_rosters(team_id = 120, season = 2022, date = "2022-08-1
 
 #This is creating a new dataframe for the guys who were traded at the deadline
 departures_trade_deadline_22 <- anti_join(nats_roster_aug1, nats_roster_aug10, by = "person_full_name", copy = FALSE, na_matches = c("na", "never"))
+  
+library(baseballr)
+voigt_batter_stats <- mlb_player_game_stats(person_id = 572228)
+
+hassell_minor_league_stats <- fg_milb_batter_game_logs(690987, 2022)
 
 #This is creating a new dataframe for the guys who were acquired at the deadline
 acquisitions_trade_deadline_22 <- anti_join(nats_roster_aug10, nats_roster_aug1, by = "person_full_name", copy = FALSE, na_matches = c("na", "never"))
@@ -134,3 +139,20 @@ departures_trade_deadline_22_test <- anti_join(nats_roster_jul26, nats_roster_au
 
 acquisitions_trade_deadline_22_test <- anti_join(nats_roster_aug9, nats_roster_jul26, by = "person_full_name", copy = FALSE, na_matches = c("na", "never"))
 ```
+
+
+Stats
+
+cope data from baseball reference, share&export —> get table as cvs
+
+in r studio, files, new blank file, text file, give it a title with .csv paste in contents and hit save
+copy and put into 
+
+bind_rows function to get 2022 stats for player
+
+bref_team_results(WSH, 2015) make one for each year, then bind rows
+
+ggplot (line chart)
+
+
+is it worth exploring not just the percentage of the roster but percentage of various kinds of production that is lost as well? Not as a replacement for roster comparisons but an addition to them. I agree that 40-man roster probably is better to use for calculating actual gains and losses of players, and am interested to see what you find about minor league players, since you'll need to include their minor league production in your analysis.
