@@ -142,7 +142,7 @@ departures_trade_deadline_22_test <- anti_join(nats_roster_jul26, nats_roster_au
 acquisitions_trade_deadline_22_test <- anti_join(nats_roster_aug9, nats_roster_jul26, by = "person_full_name", copy = FALSE, na_matches = c("na", "never"))
 ```
 
-#Refining (10/16/22) — In this portion of the assignment, I'm going to try and chart the record of the 
+#Refining (10/16/22) — In this portion of the assignment, I'm going to try and chart the record of the Orioles and Marlins, two teams that traded away big-name players at the trade deadline.
 ```{r}
 #I'm looking at all the MLB teams
 mlb_teams(season = 2022, sport_ids = c(1))
@@ -173,8 +173,13 @@ os_record_19_22 <- bind_rows(os_2019_record, os_2020_record, os_2021_record, os_
 os_record_wins_losses_separate <- separate(os_record_19_22, col=Record, into=c('Wins', 'Losses'), sep='-')
 
 #Graphing the wins by year using a line chart
-ggplot() + geom_line(data=os_record_wins_losses_separate, aes(x=Year, y=Wins, group=Tm))
+ggplot(os_record_wins_losses_separate, aes(x=Year, y=Wins, group=Tm)) +         
+  geom_line() +
+  geom_point()
 ```
+#At the 2018 trade deadline, the Orioles traded away Darren O’Day, Kevin Gausman, Manny machado, Zach Britton and Jonathan Schoop. They won 54 the next season before winning 52 the following year. But in 2022, the team jumped up to 83 wins. Using just wins, it looks like the selloff the O's undertook in 2018 is paying off. 
+
+#I realize now that the 25 wins in 2020 skews this graph. It makes it look like the team in improving, when in reality that's 25 wins out of 60 games. So over a full season, that would equate to about 68 wins, so our graph would look different. I will try and correct this so the graph isnt as misleading.
 
 #Marlins Information
 ```{r}
@@ -205,9 +210,17 @@ fins_record_18_22 <- bind_rows(fins_2018_record, fins_2019_record, fins_2020_rec
 fins_record_wins_losses_separate <- separate(fins_record_18_22, col=Record, into=c('Wins', 'Losses'), sep='-')
 
 #Graphing the wins by year using a line chart
-ggplot() + geom_line(data=fins_record_wins_losses_separate, aes(x=Year, y=Wins, group=Tm))
+ggplot(fins_record_wins_losses_separate, aes(x=Year, y=Wins, group=Tm)) +         
+  geom_line() +
+  geom_point()
 ```
+#In the 2018 offseason, the Marlins traded away Dee Gordon, Christian Yelich, Giancarlo Stanton and Marcel Ozuna. They won 63 the next season before winning 57 the following year. But in 2021 and then again in 2022, the team jumped up from 67 to 69 wins. Now, this is still a pretty bad baseball team, but it is winning more games. Using just wins, it looks like the selloff the Marlins undertook in 2018 is not paying off yet.
 
+#I realize now that the 31 wins in 2020 skews this graph. It makes it look like the team in improving, when in reality that's 31 wins out of 60 games. So over a full season, that would equate to about 84 wins, so our graph would look different. I will try and correct this so the graph isnt as misleading.
+
+
+
+#Notes to myself
 Stats
 
 cope data from baseball reference, share&export —> get table as cvs
