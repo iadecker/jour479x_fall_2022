@@ -146,54 +146,67 @@ acquisitions_trade_deadline_22_test <- anti_join(nats_roster_aug9, nats_roster_j
 ```{r}
 #I'm looking at all the MLB teams
 mlb_teams(season = 2022, sport_ids = c(1))
+```
 
+#Orioles information
+```{r}
+#Dataframe for the O's 2019 record 
 os_2019_record <- bref_team_results('BAL', 2019) %>%
   filter(Gm == '162')
 
+#Dataframe for the O's 2020 record 
 os_2020_record <- bref_team_results('BAL', 2020) %>%
   filter(Gm == '60')
 
+#Dataframe for the O's 2021 record 
 os_2021_record <- bref_team_results('BAL', 2021) %>%
   filter(Gm == '162')
 
+#Dataframe for the O's 2022 record 
 os_2022_record <- bref_team_results('BAL', 2022) %>%
   filter(Gm == '162')
 
-os_record_19_22 <- bind_rows(os_2019_record, os_2020_record, os_2021_record, os_2022_record) %>%
+#Dataframe for O's four-year record
+os_record_19_22 <- bind_rows(os_2019_record, os_2020_record, os_2021_record, os_2022_record)
   
+#Separating the Record column into Wins and Losses
 os_record_wins_losses_separate <- separate(os_record_19_22, col=Record, into=c('Wins', 'Losses'), sep='-')
 
-ggplot() + geom_line(data=os_record_wins_losses_separate, aes(x=Wins, y=Year))
+#Graphing the wins by year using a line chart
+ggplot() + geom_line(data=os_record_wins_losses_separate, aes(x=Year, y=Wins, group=Tm))
 ```
 
-
-
+#Marlins Information
 ```{r}
+#Dataframe for the Fins' 2018 record 
 fins_2018_record <- bref_team_results('MIA', 2018) %>%
     filter(Gm == '161')
 
+#Dataframe for the Fins' 2019 record 
 fins_2019_record <- bref_team_results('MIA', 2019) %>%
     filter(Gm == '162')
 
+#Dataframe for the Fins' 2020 record 
 fins_2020_record <- bref_team_results('MIA', 2020) %>%
     filter(Gm == '60')
 
+#Dataframe for the Fins' 2021 record 
 fins_2021_record <- bref_team_results('MIA', 2021) %>%
     filter(Gm == '162')
 
+#Dataframe for the Fins' 2022 record 
 fins_2022_record <- bref_team_results('MIA', 2022) %>%
   filter(Gm == '162')
 
+#Dataframe for Fins' five-year record
 fins_record_18_22 <- bind_rows(fins_2018_record, fins_2019_record, fins_2020_record, fins_2021_record, fins_2022_record)
 
+#Separating the Record column into Wins and Losses
 fins_record_wins_losses_separate <- separate(fins_record_18_22, col=Record, into=c('Wins', 'Losses'), sep='-')
 
-ggplot() + geom_line(data=fins_record_wins_losses_separate, aes(x=Wins, y=Year))
-
-
-ggplot() + geom_line(data=os_record_wins_losses_separate, aes(x=Year, y=Wins))
+#Graphing the wins by year using a line chart
+ggplot() + geom_line(data=fins_record_wins_losses_separate, aes(x=Year, y=Wins, group=Tm))
 ```
-
 
 Stats
 
@@ -203,10 +216,5 @@ in r studio, files, new blank file, text file, give it a title with .csv paste i
 copy and put into 
 
 bind_rows function to get 2022 stats for player
-
-bref_team_results(WSH, 2015) make one for each year, then bind rows
-
-ggplot (line chart)
-
 
 is it worth exploring not just the percentage of the roster but percentage of various kinds of production that is lost as well? Not as a replacement for roster comparisons but an addition to them. I agree that 40-man roster probably is better to use for calculating actual gains and losses of players, and am interested to see what you find about minor league players, since you'll need to include their minor league production in your analysis.
