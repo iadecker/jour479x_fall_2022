@@ -55,6 +55,7 @@ Doing all this is a way to try to quantify the hole teams put themselves in. I w
 #I'm loading the necessary libraries for this set of queries
 library(baseballr)
 library(dplyr)
+library(ggplot2)
 ```
 
 ```{r}
@@ -138,6 +139,51 @@ departures_trade_deadline_22_test <- anti_join(nats_roster_jul26, nats_roster_au
 
 
 acquisitions_trade_deadline_22_test <- anti_join(nats_roster_aug9, nats_roster_jul26, by = "person_full_name", copy = FALSE, na_matches = c("na", "never"))
+```
+
+#Refining (10/16/22) — In this portion of the assignment, I'm going to try and chart the record of the 
+```{r}
+#I'm looking at all the MLB teams
+mlb_teams(season = 2022, sport_ids = c(1))
+
+os_2019_record <- bref_team_results('BAL', 2019) %>%
+  filter(Gm == '162')
+
+os_2020_record <- bref_team_results('BAL', 2020) %>%
+  filter(Gm == '60')
+
+os_2021_record <- bref_team_results('BAL', 2021) %>%
+  filter(Gm == '162')
+
+os_2022_record <- bref_team_results('BAL', 2022) %>%
+  filter(Gm == '162')
+
+os_record_19_22 <- bind_rows(os_2019_record, os_2020_record, os_2021_record, os_2022_record)
+
+ggplot() + geom_line(data=os_record_19_22, aes(x=Year, y=Record))
+```
+
+
+
+```{r}
+fins_2018_record <- bref_team_results('MIA', 2018) %>%
+    filter(Gm == '161')
+
+fins_2019_record <- bref_team_results('MIA', 2019) %>%
+    filter(Gm == '162')
+
+fins_2020_record <- bref_team_results('MIA', 2020) %>%
+    filter(Gm == '60')
+
+fins_2021_record <- bref_team_results('MIA', 2021) %>%
+    filter(Gm == '162')
+
+fins_2022_record <- bref_team_results('MIA', 2022) %>%
+  filter(Gm == '162')
+
+fins_record_18_22 <- bind_rows(fins_2018_record, fins_2019_record, fins_2020_record, fins_2021_record, fins_2022_record)
+
+ggplot() + geom_line(data=fins_record_18_22, aes(x=Year, y=Record))
 ```
 
 
