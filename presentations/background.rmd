@@ -177,7 +177,7 @@ ggplot(os_record_wins_losses_separate, aes(x=Year, y=Wins, group=Tm)) +
   geom_line() +
   geom_point()
 ```
-#At the 2018 trade deadline, the Orioles traded away Darren O’Day, Kevin Gausman, Manny machado, Zach Britton and Jonathan Schoop. They won 54 the next season before winning 52 the following year. But in 2022, the team jumped up to 83 wins. Using just wins, it looks like the selloff the O's undertook in 2018 is paying off. 
+#At the 2018 trade deadline, the Orioles traded away Darren O’Day, Kevin Gausman, Manny machado, Zach Britton and Jonathan Schoop. They won 54 the next season before winning 52 the following year. But in 2022, the team jumped up to 83 wins. Using just wins, it looks like the selloff the O's undertook in 2018 is paying off. Again, one of my criteria for looking at whether a team's selloff works is how many years it takes before the team has a winning record, so it took the O's three and a half seasons to log do so.
 
 #I realize now that the 25 wins in 2020 skews this graph. It makes it look like the team in improving, when in reality that's 25 wins out of 60 games. So over a full season, that would equate to about 68 wins, so our graph would look different. I will try and correct this so the graph isnt as misleading.
 
@@ -214,7 +214,7 @@ ggplot(fins_record_wins_losses_separate, aes(x=Year, y=Wins, group=Tm)) +
   geom_line() +
   geom_point()
 ```
-#In the 2018 offseason, the Marlins traded away Dee Gordon, Christian Yelich, Giancarlo Stanton and Marcel Ozuna. They won 63 the next season before winning 57 the following year. But in 2021 and then again in 2022, the team jumped up from 67 to 69 wins. Now, this is still a pretty bad baseball team, but it is winning more games. Using just wins, it looks like the selloff the Marlins undertook in 2018 is not paying off yet.
+#In the 2018 offseason, the Marlins traded away Dee Gordon, Christian Yelich, Giancarlo Stanton and Marcel Ozuna. They won 63 the next season before winning 57 the following year. But in 2021 and then again in 2022, the team jumped up from 67 to 69 wins. Now, this is still a pretty eh baseball team, but it is winning more games. Using just wins, it looks like the selloff the Marlins undertook in 2018 is not paying off yet. Again, one of my criteria for looking at whether a team's selloff works is how many years it takes before the team has a winning record, so we're still waiting on the Marlins here.
 
 #I realize now that the 31 wins in 2020 skews this graph. It makes it look like the team in improving, when in reality that's 31 wins out of 60 games. So over a full season, that would equate to about 84 wins, so our graph would look different. I will try and correct this so the graph isnt as misleading.
 
