@@ -170,10 +170,12 @@ os_2022_record <- bref_team_results('BAL', 2022) %>%
 os_record_19_22 <- bind_rows(os_2019_record, os_2020_record, os_2021_record, os_2022_record)
   
 #Separating the Record column into Wins and Losses
-os_record_wins_losses_separate <- separate(os_record_19_22, col=Record, into=c('Wins', 'Losses'), sep='-')
+os_record_wins_losses_separate <- separate(os_record_19_22, col=Record, into=c('Wins', 'Losses'), sep='-') %>%
+  mutate(Wins = as.numeric(Wins), Losses = as.numeric(Losses)) %>%
+  mutate(win_percentage = (Wins/(Wins+Losses)*100))
 
 #Graphing the wins by year using a line chart
-ggplot(os_record_wins_losses_separate, aes(x=Year, y=Wins, group=Tm)) +         
+ggplot(os_record_wins_losses_separate, aes(x=Year, y=win_percentage, group=Tm)) +         
   geom_line() +
   geom_point()
 ```
@@ -207,10 +209,12 @@ fins_2022_record <- bref_team_results('MIA', 2022) %>%
 fins_record_18_22 <- bind_rows(fins_2018_record, fins_2019_record, fins_2020_record, fins_2021_record, fins_2022_record)
 
 #Separating the Record column into Wins and Losses
-fins_record_wins_losses_separate <- separate(fins_record_18_22, col=Record, into=c('Wins', 'Losses'), sep='-')
+fins_record_wins_losses_separate <- separate(fins_record_18_22, col=Record, into=c('Wins', 'Losses'), sep='-') %>%
+  mutate(Wins = as.numeric(Wins), Losses = as.numeric(Losses)) %>%
+  mutate(win_percentage = (Wins/(Wins+Losses)*100))
 
 #Graphing the wins by year using a line chart
-ggplot(fins_record_wins_losses_separate, aes(x=Year, y=Wins, group=Tm)) +         
+ggplot(fins_record_wins_losses_separate, aes(x=Year, y=win_percentage, group=Tm)) +         
   geom_line() +
   geom_point()
 ```
