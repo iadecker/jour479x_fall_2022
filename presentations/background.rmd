@@ -91,7 +91,6 @@ acquisitions_trade_deadline_21 <- anti_join(nats_roster_aug5, nats_roster_jul20,
 ```
 
 #I just wanted to separate the dataframes for 2021 and 2022 so that it wouldn't be one big jumbled codeblock.
-
 ```{r}
 #This is me creating a dataframe for the Nats roster on April 7, 2022 — Opening Day
 nats_roster_apr7 <- mlb_rosters(team_id = 120, season = 2022, date = "2022-04-07", roster_type = '40Man')
@@ -235,3 +234,144 @@ copy and put into
 bind_rows function to get 2022 stats for player
 
 is it worth exploring not just the percentage of the roster but percentage of various kinds of production that is lost as well? Not as a replacement for roster comparisons but an addition to them. I agree that 40-man roster probably is better to use for calculating actual gains and losses of players, and am interested to see what you find about minor league players, since you'll need to include their minor league production in your analysis.
+
+#More Refining — I am thinking about looking at different information for my project. I realize that the Covid year kind of skews what I am looking at, even if I adjust for win percentage and not overall wins, so instead I'm going to look at how long it takes teams to get back to a world series
+```{r}
+#I'm looking at all the MLB teams
+mlb_teams(season = 2022, sport_ids = c(1))
+```
+
+```{r}
+braves_1995_record <- bref_team_results('ATL', 1995) %>%
+    filter(Gm == '144')
+braves_1996_record <- bref_team_results('ATL', 1996) %>%
+    filter(Gm == '162')
+braves_1997_record <- bref_team_results('ATL', 1997) %>%
+    filter(Gm == '162')
+braves_1998_record <- bref_team_results('ATL', 1998) %>%
+    filter(Gm == '162')
+braves_1999_record <- bref_team_results('ATL', 1999) %>%
+    filter(Gm == '162')
+braves_2000_record <- bref_team_results('ATL', 2000) %>%
+    filter(Gm == '162')
+braves_2001_record <- bref_team_results('ATL', 2001) %>%
+    filter(Gm == '162')
+braves_2002_record <- bref_team_results('ATL', 2002) %>%
+    filter(Gm == '161')
+braves_2003_record <- bref_team_results('ATL', 2003) %>%
+    filter(Gm == '162')
+braves_2004_record <- bref_team_results('ATL', 2004) %>%
+    filter(Gm == '162')
+braves_2005_record <- bref_team_results('ATL', 2005) %>%
+    filter(Gm == '162')
+braves_2006_record <- bref_team_results('ATL', 2006) %>%
+    filter(Gm == '162')
+braves_2007_record <- bref_team_results('ATL', 2007) %>%
+    filter(Gm == '162')
+braves_2008_record <- bref_team_results('ATL', 2008) %>%
+    filter(Gm == '162')
+braves_2009_record <- bref_team_results('ATL', 2009) %>%
+    filter(Gm == '162')
+braves_2010_record <- bref_team_results('ATL', 2010) %>%
+    filter(Gm == '162')
+braves_2011_record <- bref_team_results('ATL', 2011) %>%
+    filter(Gm == '162')
+braves_2012_record <- bref_team_results('ATL', 2012) %>%
+    filter(Gm == '162')
+braves_2013_record <- bref_team_results('ATL', 2013) %>%
+    filter(Gm == '162')
+braves_2014_record <- bref_team_results('ATL', 2014) %>%
+    filter(Gm == '162')
+braves_2015_record <- bref_team_results('ATL', 2015) %>%
+    filter(Gm == '162')
+braves_2016_record <- bref_team_results('ATL', 2016) %>%
+    filter(Gm == '161')
+braves_2017_record <- bref_team_results('ATL', 2017) %>%
+    filter(Gm == '162')
+braves_2018_record <- bref_team_results('ATL', 2018) %>%
+    filter(Gm == '162')
+braves_2019_record <- bref_team_results('ATL', 2019) %>%
+    filter(Gm == '162')
+braves_2020_record <- bref_team_results('ATL', 2020) %>%
+    filter(Gm == '60')
+braves_2021_record <- bref_team_results('ATL', 2021) %>%
+    filter(Gm == '161')
+
+braves_record_95_21 <- bind_rows(braves_1995_record, braves_1996_record, braves_1997_record, braves_1998_record, braves_1999_record, braves_2000_record, braves_2001_record, braves_2002_record, braves_2003_record, braves_2004_record, braves_2005_record, braves_2006_record, braves_2007_record, braves_2008_record, braves_2009_record, braves_2010_record, braves_2011_record, braves_2012_record, braves_2013_record, braves_2014_record, braves_2015_record, braves_2016_record, braves_2017_record, braves_2018_record, braves_2019_record, braves_2020_record, braves_2021_record)
+
+#Separating the Record column into Wins and Losses
+braves_record_wins_losses_separate <- separate(braves_record_95_21, col=Record, into=c('Wins', 'Losses'), sep='-') %>%
+  mutate(Wins = as.numeric(Wins), Losses = as.numeric(Losses)) %>%
+  mutate(win_percentage = (Wins/(Wins+Losses)*100))
+
+#Graphing the wins by year using a line chart
+ggplot(braves_record_wins_losses_separate, aes(x=Year, y=win_percentage, group=Tm)) +         
+  geom_line() +
+  geom_point()
+```
+
+2015 Royals
+2016 Cubs
+2017 Astros
+
+#Player change since the Nats won the world series (2019)
+```{r}
+nats_od_roster_2019 <- mlb_rosters(team_id = 120, season = 2019, date = "2019-03-28", roster_type = 'fullSeason')
+
+nats_od_roster_2020 <- mlb_rosters(team_id = 120, season = 2020, date = "2020-07-23", roster_type = 'fullSeason')
+
+nats_od_roster_2021 <- mlb_rosters(team_id = 120, season = 2021, date = "2021-04-06", roster_type = 'fullSeason')
+
+nats_od_roster_2022 <- mlb_rosters(team_id = 120, season = 2022, date = "2022-04-07", roster_type = 'fullSeason')
+
+nats_od_19_to_20 <- anti_join(nats_od_roster_2019, nats_od_roster_2020, by = "person_full_name", copy = FALSE, na_matches = c("na", "never"))
+
+nats_od_20_to_21 <- anti_join(nats_od_roster_2020, nats_od_roster_2021, by = "person_full_name", copy = FALSE, na_matches = c("na", "never"))
+
+nats_od_21_to_22 <- anti_join(nats_od_roster_2021, nats_od_roster_2022, by = "person_full_name", copy = FALSE, na_matches = c("na", "never"))
+```
+
+```{r}
+rsox_od_roster_2018 <- mlb_rosters(team_id = 111, season = 2018, date = "2018-04-05", roster_type = 'fullSeason')
+
+rsox_od_roster_2019 <- mlb_rosters(team_id = 111, season = 2019, date = "2019-04-09", roster_type = 'fullSeason')
+
+rsox_od_roster_2020 <- mlb_rosters(team_id = 111, season = 2020, date = "2020-07-24", roster_type = 'fullSeason')
+
+rsox_od_roster_2021 <- mlb_rosters(team_id = 111, season = 2021, date = "2021-04-02", roster_type = 'fullSeason')
+
+rsox_od_roster_2022 <- mlb_rosters(team_id = 111, season = 2022, date = "2022-04-15", roster_type = 'fullSeason')
+
+rsox_od_18_to_19 <- anti_join(rsox_od_roster_2018, rsox_od_roster_2019, by = "person_full_name", copy = FALSE, na_matches = c("na", "never"))
+
+rsox_od_19_to_20 <- anti_join(rsox_od_roster_2019, rsox_od_roster_2020, by = "person_full_name", copy = FALSE, na_matches = c("na", "never"))
+
+rsox_od_20_to_21 <- anti_join(rsox_od_roster_2020, rsox_od_roster_2021, by = "person_full_name", copy = FALSE, na_matches = c("na", "never"))
+
+rsox_od_21_to_22 <- anti_join(rsox_od_roster_2021, rsox_od_roster_2022, by = "person_full_name", copy = FALSE, na_matches = c("na", "never"))
+```
+
+```{r}
+astros_od_roster_2017 <- mlb_rosters(team_id = 117, season = 2017, date = "2017-04-03", roster_type = 'fullSeason')
+
+astros_od_roster_2018 <- mlb_rosters(team_id = 117, season = 2018, date = "2018-04-02", roster_type = 'fullSeason')
+
+astros_od_roster_2019 <- mlb_rosters(team_id = 117, season = 2019, date = "2019-04-05", roster_type = 'fullSeason')
+
+astros_od_roster_2020 <- mlb_rosters(team_id = 117, season = 2020, date = "2020-07-24", roster_type = 'fullSeason')
+
+astros_od_roster_2021 <- mlb_rosters(team_id = 117, season = 2021, date = "2021-04-08", roster_type = 'fullSeason')
+
+astros_od_roster_2022 <- mlb_rosters(team_id = 117, season = 2022, date = "2022-04-18", roster_type = 'fullSeason')
+
+astros_od_17_to_18 <- anti_join(astros_od_roster_2017, astros_od_roster_2018, by = "person_full_name", copy = FALSE, na_matches = c("na", "never"))
+
+astros_od_18_to_19 <- anti_join(astros_od_roster_2018, astros_od_roster_2019, by = "person_full_name", copy = FALSE, na_matches = c("na", "never"))
+
+astros_od_19_to_20 <- anti_join(astros_od_roster_2019, astros_od_roster_2020, by = "person_full_name", copy = FALSE, na_matches = c("na", "never"))
+
+astros_od_20_to_21 <- anti_join(astros_od_roster_2020, astros_od_roster_2021, by = "person_full_name", copy = FALSE, na_matches = c("na", "never"))
+
+astros_od_21_to_22 <- anti_join(astros_od_roster_2021, astros_od_roster_2022, by = "person_full_name", copy = FALSE, na_matches = c("na", "never"))
+```
+
