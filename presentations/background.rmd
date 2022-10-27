@@ -326,17 +326,30 @@ nats_od_20_to_21 <- anti_join(nats_od_roster_2020, nats_od_roster_2021, by = "pe
 
 nats_od_21_to_22 <- anti_join(nats_od_roster_2021, nats_od_roster_2022, by = "person_full_name", copy = FALSE, na_matches = c("na", "never"))
 
+nats_19_20_departures <- nats_od_19_to_20 %>% group_by(season) %>% summarize(departures = n()) %>% mutate(full_season = nats_od_roster_2019 %>% nrow()) %>% mutate(pct_departed = departures/full_season)
+
+nats_20_21_departures <- nats_od_20_to_21 %>% group_by(season) %>% summarize(departures = n()) %>% mutate(full_season = nats_od_roster_2019 %>% nrow()) %>% mutate(pct_departed = departures/full_season)
+
+nats_21_22_departures <- nats_od_21_to_22 %>% group_by(season) %>% summarize(departures = n()) %>% mutate(full_season = nats_od_roster_2019 %>% nrow()) %>% mutate(pct_departed = departures/full_season)
+
+nats_total_players_lost <- bind_rows(nats_19_20_departures, nats_20_21_departures, nats_21_22_departures) %>%
+  rename("season" = "Year")
+
+nats_players_lost_plus_win_percentage <- inner_join(nats_total_players_lost, nats_record_wins_losses_separate, by = Year)
+
+#bind_rows
+
 #Nats wins
-nats_2019_record <- bref_team_results('WSH', 2019) %>%
+nats_2019_record <- bref_team_results('WSN', 2019) %>%
     filter(Gm == '162')
 
-nats_2020_record <- bref_team_results('WSH', 2020) %>%
+nats_2020_record <- bref_team_results('WSN', 2020) %>%
     filter(Gm == '60')
 
-nats_2021_record <- bref_team_results('WSH', 2021) %>%
+nats_2021_record <- bref_team_results('WSN', 2021) %>%
     filter(Gm == '162')
 
-nats_2022_record <- bref_team_results('WSH', 2022) %>%
+nats_2022_record <- bref_team_results('WSN', 2022) %>%
     filter(Gm == '162')
 
 nats_record_19_22 <- bind_rows(nats_2019_record, nats_2020_record, nats_2021_record, nats_2022_record)
@@ -344,7 +357,9 @@ nats_record_19_22 <- bind_rows(nats_2019_record, nats_2020_record, nats_2021_rec
 #Separating the Record column into Wins and Losses
 nats_record_wins_losses_separate <- separate(nats_record_19_22, col=Record, into=c('Wins', 'Losses'), sep='-') %>%
   mutate(Wins = as.numeric(Wins), Losses = as.numeric(Losses)) %>%
-  mutate(win_percentage = (Wins/(Wins+Losses)*100))
+  mutate(win_percentage = (Wins/(Wins+Losses)*100)) %>% select(Year, win_percentage)
+
+nats_players_lost <- bind_rows(nats_od_19_to_20, nats_od_20_to_21, nats_od_21_to_22)
 
 #Graphing the wins by year using a line chart
 ggplot(nats_record_wins_losses_separate, aes(x=Year, y=win_percentage, group=Tm)) +         
