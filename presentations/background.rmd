@@ -333,9 +333,11 @@ nats_20_21_departures <- nats_od_20_to_21 %>% group_by(season) %>% summarize(dep
 nats_21_22_departures <- nats_od_21_to_22 %>% group_by(season) %>% summarize(departures = n()) %>% mutate(full_season = nats_od_roster_2019 %>% nrow()) %>% mutate(pct_departed = departures/full_season)
 
 nats_total_players_lost <- bind_rows(nats_19_20_departures, nats_20_21_departures, nats_21_22_departures) %>%
-  rename("season" = "Year")
+  rename("Year" = "season")
 
-nats_players_lost_plus_win_percentage <- inner_join(nats_total_players_lost, nats_record_wins_losses_separate, by = Year)
+nats_players_lost_plus_win_percentage <- inner_join(nats_total_players_lost, nats_record_wins_losses_separate, by = "Year")
+
+ggplot() + geom_point(data=nats_players_lost_plus_win_percentage, aes(x=win_percentage, y=pct_departed))
 
 #bind_rows
 
