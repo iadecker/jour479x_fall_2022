@@ -310,10 +310,6 @@ ggplot(braves_record_wins_losses_separate, aes(x=Year, y=win_percentage, group=T
   geom_point()
 ```
 
-2015 Royals
-2016 Cubs
-2017 Astros
-
 #Player change since the Nats won the world series (2019)
 ```{r}
 nats_od_roster_2019 <- mlb_rosters(team_id = 120, season = 2019, date = "2019-03-28", roster_type = 'fullSeason')
@@ -329,8 +325,34 @@ nats_od_19_to_20 <- anti_join(nats_od_roster_2019, nats_od_roster_2020, by = "pe
 nats_od_20_to_21 <- anti_join(nats_od_roster_2020, nats_od_roster_2021, by = "person_full_name", copy = FALSE, na_matches = c("na", "never"))
 
 nats_od_21_to_22 <- anti_join(nats_od_roster_2021, nats_od_roster_2022, by = "person_full_name", copy = FALSE, na_matches = c("na", "never"))
+
+#Nats wins
+nats_2019_record <- bref_team_results('WSH', 2019) %>%
+    filter(Gm == '162')
+
+nats_2020_record <- bref_team_results('WSH', 2020) %>%
+    filter(Gm == '60')
+
+nats_2021_record <- bref_team_results('WSH', 2021) %>%
+    filter(Gm == '162')
+
+nats_2022_record <- bref_team_results('WSH', 2022) %>%
+    filter(Gm == '162')
+
+nats_record_19_22 <- bind_rows(nats_2019_record, nats_2020_record, nats_2021_record, nats_2022_record)
+
+#Separating the Record column into Wins and Losses
+nats_record_wins_losses_separate <- separate(nats_record_19_22, col=Record, into=c('Wins', 'Losses'), sep='-') %>%
+  mutate(Wins = as.numeric(Wins), Losses = as.numeric(Losses)) %>%
+  mutate(win_percentage = (Wins/(Wins+Losses)*100))
+
+#Graphing the wins by year using a line chart
+ggplot(nats_record_wins_losses_separate, aes(x=Year, y=win_percentage, group=Tm)) +         
+  geom_line() +
+  geom_point()
 ```
 
+#Player change since the Red Sox won the world series (2018)
 ```{r}
 rsox_od_roster_2018 <- mlb_rosters(team_id = 111, season = 2018, date = "2018-04-05", roster_type = 'fullSeason')
 
@@ -351,6 +373,7 @@ rsox_od_20_to_21 <- anti_join(rsox_od_roster_2020, rsox_od_roster_2021, by = "pe
 rsox_od_21_to_22 <- anti_join(rsox_od_roster_2021, rsox_od_roster_2022, by = "person_full_name", copy = FALSE, na_matches = c("na", "never"))
 ```
 
+#Player change since the Astros won the world series (2017)
 ```{r}
 astros_od_roster_2017 <- mlb_rosters(team_id = 117, season = 2017, date = "2017-04-03", roster_type = 'fullSeason')
 
@@ -373,5 +396,67 @@ astros_od_19_to_20 <- anti_join(astros_od_roster_2019, astros_od_roster_2020, by
 astros_od_20_to_21 <- anti_join(astros_od_roster_2020, astros_od_roster_2021, by = "person_full_name", copy = FALSE, na_matches = c("na", "never"))
 
 astros_od_21_to_22 <- anti_join(astros_od_roster_2021, astros_od_roster_2022, by = "person_full_name", copy = FALSE, na_matches = c("na", "never"))
+```
+
+#Player change since the Cubs won the world series (2016)
+```{r}
+cubs_od_roster_2016 <- mlb_rosters(team_id = 112, season = 2016, date = "2016-04-11", roster_type = 'fullSeason')
+
+cubs_od_roster_2017 <- mlb_rosters(team_id = 112, season = 2017, date = "2017-04-10", roster_type = 'fullSeason')
+
+cubs_od_roster_2018 <- mlb_rosters(team_id = 112, season = 2018, date = "2018-04-10", roster_type = 'fullSeason')
+
+cubs_od_roster_2019 <- mlb_rosters(team_id = 112, season = 2019, date = "2019-04-08", roster_type = 'fullSeason')
+
+cubs_od_roster_2020 <- mlb_rosters(team_id = 112, season = 2020, date = "2020-07-24", roster_type = 'fullSeason')
+
+cubs_od_roster_2021 <- mlb_rosters(team_id = 112, season = 2021, date = "2021-04-01", roster_type = 'fullSeason')
+
+cubs_od_roster_2022 <- mlb_rosters(team_id = 112, season = 2022, date = "2022-04-07", roster_type = 'fullSeason')
+
+cubs_od_16_to_17 <- anti_join(cubs_od_roster_2016, cubs_od_roster_2017, by = "person_full_name", copy = FALSE, na_matches = c("na", "never"))
+
+cubs_od_17_to_18 <- anti_join(cubs_od_roster_2017, cubs_od_roster_2018, by = "person_full_name", copy = FALSE, na_matches = c("na", "never"))
+
+cubs_od_18_to_19 <- anti_join(cubs_od_roster_2018, cubs_od_roster_2019, by = "person_full_name", copy = FALSE, na_matches = c("na", "never"))
+
+cubs_od_19_to_20 <- anti_join(cubs_od_roster_2019, cubs_od_roster_2020, by = "person_full_name", copy = FALSE, na_matches = c("na", "never"))
+
+cubs_od_20_to_21 <- anti_join(cubs_od_roster_2020, cubs_od_roster_2021, by = "person_full_name", copy = FALSE, na_matches = c("na", "never"))
+
+cubs_od_21_to_22 <- anti_join(cubs_od_roster_2021, cubs_od_roster_2022, by = "person_full_name", copy = FALSE, na_matches = c("na", "never"))
+```
+
+#Player change since the Royals won the world series (2015)
+```{r}
+royals_od_roster_2015 <- mlb_rosters(team_id = 118, season = 2015, date = "2015-04-06", roster_type = 'fullSeason')
+
+royals_od_roster_2016 <- mlb_rosters(team_id = 118, season = 2016, date = "2016-04-03", roster_type = 'fullSeason')
+
+royals_od_roster_2017 <- mlb_rosters(team_id = 118, season = 2017, date = "2017-04-10", roster_type = 'fullSeason')
+
+royals_od_roster_2018 <- mlb_rosters(team_id = 118, season = 2018, date = "2018-03-29", roster_type = 'fullSeason')
+
+royals_od_roster_2019 <- mlb_rosters(team_id = 118, season = 2019, date = "2019-03-28", roster_type = 'fullSeason')
+
+royals_od_roster_2020 <- mlb_rosters(team_id = 118, season = 2020, date = "2020-07-31", roster_type = 'fullSeason')
+
+royals_od_roster_2021 <- mlb_rosters(team_id = 118, season = 2021, date = "2021-04-01", roster_type = 'fullSeason')
+
+royals_od_roster_2022 <- mlb_rosters(team_id = 118, season = 2022, date = "2022-04-07", roster_type = 'fullSeason')
+
+royals_od_15_to_16 <- anti_join(royals_od_roster_2015, royals_od_roster_2016, by = "person_full_name", copy = FALSE, na_matches = c("na", "never"))
+
+royals_od_16_to_17 <- anti_join(royals_od_roster_2015, royals_od_roster_2016, by = "person_full_name", copy = FALSE, na_matches = c("na", "never"))
+
+royals_od_17_to_18 <- anti_join(royals_od_roster_2015, royals_od_roster_2016, by = "person_full_name", copy = FALSE, na_matches = c("na", "never"))
+
+royals_od_18_to_19 <- anti_join(royals_od_roster_2015, royals_od_roster_2016, by = "person_full_name", copy = FALSE, na_matches = c("na", "never"))
+
+royals_od_19_to_20 <- anti_join(royals_od_roster_2015, royals_od_roster_2016, by = "person_full_name", copy = FALSE, na_matches = c("na", "never"))
+
+royals_od_20_to_21 <- anti_join(royals_od_roster_2015, royals_od_roster_2016, by = "person_full_name", copy = FALSE, na_matches = c("na", "never"))
+
+royals_od_21_to_22 <- anti_join(royals_od_roster_2015, royals_od_roster_2016, by = "person_full_name", copy = FALSE, na_matches = c("na", "never"))
 ```
 
