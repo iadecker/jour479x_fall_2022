@@ -322,6 +322,8 @@ nats_od_roster_2020 <- mlb_rosters(team_id = 120, season = 2020, date = "2020-07
 
 nats_od_roster_2021 <- mlb_rosters(team_id = 120, season = 2021, date = "2021-04-06", roster_type = 'fullSeason')
 
+nats_od_roster_2022 <- mlb_rosters(team_id = 120, season = 2022, date = "2021-04-07", roster_type = 'fullSeason')
+
 ## Departures
 
 nats_od_18_to_19 <- anti_join(nats_od_roster_2018, nats_od_roster_2019, by = "person_full_name", copy = FALSE, na_matches = c("na", "never"))
@@ -511,5 +513,5 @@ royals_od_21_to_22 <- anti_join(royals_od_roster_2015, royals_od_roster_2016, by
 
 
 Do we have an inflated sense of roster blowing up?
-What happens to players when they depart?
+What happens to players when they depart
 
