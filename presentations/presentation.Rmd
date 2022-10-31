@@ -70,12 +70,23 @@ reds_departures <- reds_od_roster_2022 %>%
 ```{r}
 combined_sellers_1 <- inner_join(nats_departures, athletics_departures, by = c("status_description"))
 
-all_combined_sellers <- inner_join(combined_sellers_1, reds_departures, by = c("status_description"))
+all_combined_sellers <- inner_join(combined_sellers_1, reds_departures, by = c("status_description")) %>%
+  rename(nats = count.x) %>% rename(athletics = count.y) %>% rename(reds = count)
 ```
 
 ```{r}
+all_combined_sellers %>% 
+  pivot_longer(
+    cols=starts_with("status_description"), 
+    names_to="Type", 
+    values_to="nats", "athletics", "reds")
+```
+
+
+```{r}
 ggplot() + 
-  geom_bar(data=all_combined_sellers, aes(x=status_description, weight=count))
+  geom_bar(data=all_combined_sellers, aes(x=status_description, weight=count)) +
+  coord_flip()
 ```
 
 
