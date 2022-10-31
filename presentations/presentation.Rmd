@@ -1,0 +1,115 @@
+---
+title: "presentation.Rmd"
+output: html_document
+date: "2022-10-31"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+#I'm loading the necessary libraries for this set of queries
+library(baseballr)
+library(dplyr)
+library(ggplot2)
+library(tidyr)
+```
+
+```{r}
+#I'm looking at all the MLB teams
+mlb_teams(season = 2022, sport_ids = c(1))
+```
+
+#Teams that "blew up" their rosters
+```{r}
+#Every player who logged a major-league game for the Nats
+nats_od_roster_2022 <- mlb_rosters(team_id = 120, season = 2022, date = "2021-04-07", roster_type = 'fullSeason')
+
+#Every player who logged a major-league game for the A's
+athletics_od_roster_2022 <- mlb_rosters(team_id = 133, season = 2022, date = "2022-04-08", roster_type = 'fullSeason')
+
+#Every player who logged a major-league game for the Reds
+reds_od_roster_2022 <- mlb_rosters(team_id = 113, season = 2022, date = "2022-04-08", roster_type = 'fullSeason')
+```
+
+#AL teams expected to compete for the World Series
+```{r}
+#Every player who logged a major-league game for the Astros
+astros_od_roster_2022 <- mlb_rosters(team_id = 117, season = 2022, date = "2022-04-07", roster_type = 'fullSeason')
+
+#Every player who logged a major-league game for the Yankees
+yankees_od_roster_2022 <- mlb_rosters(team_id = 147, season = 2022, date = "2022-04-07", roster_type = 'fullSeason')
+```
+
+#NL Teams expected to compete for the World Series 
+```{r}
+#Every player who logged a major-league game for the Dodgers
+dodgers_od_roster_2022 <- mlb_rosters(team_id = 119, season = 2022, date = "2022-04-08", roster_type = 'fullSeason')
+
+#Every player who logged a major-league game for the Mets
+mets_od_roster_2022 <- mlb_rosters(team_id = 121, season = 2022, date = "2022-04-07", roster_type = 'fullSeason')
+```
+
+#"Sellers" at the trade deadline
+```{r}
+nats_departures <- nats_od_roster_2022 %>%
+  group_by(status_description) %>%
+  summarise(count = n())
+
+athletics_departures <- athletics_od_roster_2022 %>%
+  group_by(status_description) %>%
+  summarise(count = n())
+
+reds_departures <- reds_od_roster_2022 %>%
+  group_by(status_description) %>%
+  summarise(count = n())
+```
+
+#Combined sellers 
+```{r}
+combined_sellers_1 <- inner_join(nats_departures, athletics_departures, by = c("status_description"))
+
+all_combined_sellers <- inner_join(combined_sellers_1, reds_departures, by = c("status_description"))
+```
+
+```{r}
+ggplot() + 
+  geom_bar(data=all_combined_sellers, aes(x=status_description, weight=count))
+```
+
+
+
+#Buyers at the trade deadline
+```{r}
+astros_departures <- astros_od_roster_2022 %>%
+  group_by(status_description) %>%
+  summarise(count = n())
+
+yankees_departures <- yankees_od_roster_2022 %>%
+  group_by(status_description) %>%
+  summarise(count = n())
+
+dodgers_departures <- dodgers_od_roster_2022 %>%
+  group_by(status_description) %>%
+  summarise(count = n())
+
+mets_departures <- mets_od_roster_2022 %>%
+  group_by(status_description) %>%
+  summarise(count = n())
+```
+
+```{r}
+ggplot() + 
+  geom_bar(
+    data=mets_departures, 
+    aes(x=status_description)
+  )
+```
+
+```{r}
+
+```
+
+
+

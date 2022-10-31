@@ -221,8 +221,6 @@ ggplot(fins_record_wins_losses_separate, aes(x=Year, y=win_percentage, group=Tm)
 
 #I realize now that the 31 wins in 2020 skews this graph. It makes it look like the team in improving, when in reality that's 31 wins out of 60 games. So over a full season, that would equate to about 84 wins, so our graph would look different. I will try and correct this so the graph isnt as misleading.
 
-
-
 #Notes to myself
 Stats
 
