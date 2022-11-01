@@ -167,7 +167,7 @@ nats_record_wins_losses_separate <- separate(nats_overall_record, col=Record, in
 ggplot(nats_record_wins_losses_separate, aes(x=Year, y=win_percentage, group=Tm)) +         
   geom_line() +
   geom_point(colour='red') +
-   labs(title="Have the Washington Nationals ever been this bad?", subtitle="2022 was the worst season in Washington baseball history, so fans could be in for a lengthy rebuild.", caption="Source: Baseball-Reference | By Ian Decker")
+   labs(title="Have the Washington Nationals ever been this bad?", subtitle="2022 was the worst season in Washington baseball history, but how long will the rebuild take?", caption="Source: Baseball-Reference | By Ian Decker")
 ```
 
 #Narrative
