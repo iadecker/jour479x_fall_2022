@@ -64,6 +64,21 @@ ggplot() +
    labs(title="What does 'blowing up' a roster actually mean in Major League Baseball?", subtitle="The Nationals traded fewer players than other 'rebuilding' teams but had the league's worst record.", caption="Source: Baseball-Reference | By Ian Decker")
 ```
 
+```{r}
+nats_od_roster_2021 <- mlb_rosters(team_id = 120, season = 2021, date = "2021-04-06", roster_type = 'fullSeason')
+
+nats_departures_2021 <- nats_od_roster_2021 %>%
+  group_by(status_description) %>%
+  summarise(count = n()) %>% 
+  mutate(team = 'Nats')
+
+ggplot() + 
+  geom_bar(data=nats_departures_2021, aes(x=team, weight=count, fill=status_description)) +
+  coord_flip() +
+   labs(title="What does 'blowing up' a roster actually mean in Major League Baseball?", subtitle="The Nationals traded fewer players than other 'rebuilding' teams but had the league's worst record.", caption="Source: Baseball-Reference | By Ian Decker")
+```
+
+
 #AL teams expected to compete for the World Series
 ```{r}
 #Every player who logged a major-league game for the Astros in 2022
@@ -171,11 +186,22 @@ ggplot(nats_record_wins_losses_separate, aes(x=Year, y=win_percentage, group=Tm)
 ```
 
 #Narrative
-Do we have an inflated sense of roster blowing up?
+When the Washington Nationals traded away Juan Soto in on August 2, they signalled to the fans and the rest of the league that they were 'blowing up' the roster and planning for the future.
+
+But the trade of Soto, and first baseman Josh Bell, was the latest example of an MLB franchise trading away a superstar whom they couldn't afford to keep for younger, and more importantly, cheaper players. 
+
+Looking at the fall from grace Washington baseball has experienced since winnig the World Series in 2019, I was curious as to what 'blowing up' a roster actually meant. Yes, the Nationals traded away a generational talent in Soto and a former all-star in Bell, but aside from a little-remebered trade where they swapped fringe players, the team traded only Soto and Bell. 
+
+A season prior, the team parted ways with eight veteran players, almost thrice as many compared with 2022. From a raw numbers perpesctive, the team detonated its roster to a larger degree in 2021 than it did a year later in 2022. This led to the question that drove my analysis: Do we have an inflated sense of roster blowing up?
+
+
 What happens to players when they depart
 
 
 as for the second question, i think you should briefly summarize what your original idea was, the obstacles you encountered and then how you got to where you are now. If there's some code that helps illustrate any of those points, feel free to use it as an example.
 
+I thought at first I'd look at X, but quickly realized that I couldn't due to not having the data I needed.
+
+and contain explanatory sections that describe your code and the choices you made. Explain the methodological choices you made and why you made them.  Organize the narrative like a story - what did you find (or not find) and why readers should care.
 
 
