@@ -118,6 +118,59 @@ ggplot() +
    labs(title="How do the Terps compare in aces per match against elite Big Ten teams?", subtitle="Maryland setter Sydney Dowler is one of the best servers in the conference.", caption="Source: Baseball-Reference | By Ian Decker")
 ```
 
+```{r}
+nats_2005_record <- bref_team_results('WSN', 2005) %>%
+    filter(Gm == '162')
+nats_2006_record <- bref_team_results('WSN', 2006) %>%
+    filter(Gm == '162')
+nats_2007_record <- bref_team_results('WSN', 2007) %>%
+    filter(Gm == '162')
+nats_2008_record <- bref_team_results('WSN', 2008) %>%
+    filter(Gm == '161')
+nats_2009_record <- bref_team_results('WSN', 2009) %>%
+    filter(Gm == '162')
+nats_2010_record <- bref_team_results('WSN', 2010) %>%
+    filter(Gm == '162')
+nats_2011_record <- bref_team_results('WSN', 2011) %>%
+    filter(Gm == '161')
+nats_2012_record <- bref_team_results('WSN', 2012) %>%
+    filter(Gm == '162')
+nats_2013_record <- bref_team_results('WSN', 2013) %>%
+    filter(Gm == '162')
+nats_2014_record <- bref_team_results('WSN', 2014) %>%
+    filter(Gm == '162')
+nats_2015_record <- bref_team_results('WSN', 2015) %>%
+    filter(Gm == '162')
+nats_2016_record <- bref_team_results('WSN', 2016) %>%
+    filter(Gm == '161')
+nats_2017_record <- bref_team_results('WSN', 2017) %>%
+    filter(Gm == '162')
+nats_2018_record <- bref_team_results('WSN', 2018) %>%
+    filter(Gm == '162')
+nats_2019_record <- bref_team_results('WSN', 2019) %>%
+    filter(Gm == '162')
+nats_2020_record <- bref_team_results('WSN', 2020) %>%
+    filter(Gm == '60')
+nats_2021_record <- bref_team_results('WSN', 2021) %>%
+    filter(Gm == '162')
+nats_2022_record <- bref_team_results('WSN', 2022) %>%
+    filter(Gm == '162')  
+
+nats_overall_record <- bind_rows(nats_2005_record, nats_2006_record, nats_2007_record, nats_2008_record,nats_2009_record, nats_2010_record, nats_2011_record, nats_2012_record, nats_2013_record, nats_2014_record, nats_2015_record, nats_2016_record, nats_2017_record, nats_2018_record, nats_2019_record, nats_2020_record, nats_2021_record, nats_2022_record)
+
+#Separating the Record column into Wins and Losses
+nats_record_wins_losses_separate <- separate(nats_overall_record, col=Record, into=c('Wins', 'Losses'), sep='-') %>%
+  mutate(Wins = as.numeric(Wins), Losses = as.numeric(Losses)) %>%
+  mutate(win_percentage = (Wins/(Wins+Losses)*100))
+
+#Graphing the wins by year using a line chart
+ggplot(nats_record_wins_losses_separate, aes(x=Year, y=win_percentage, group=Tm)) +         
+  geom_line() +
+  geom_point() +
+   labs(title="How do the Terps compare in aces per match against elite Big Ten teams?", subtitle="Maryland setter Sydney Dowler is one of the best servers in the conference.", caption="Source: Baseball-Reference | By Ian Decker")
+```
+
+
 #Narrative
 Do we have an inflated sense of roster blowing up?
 What happens to players when they depart
