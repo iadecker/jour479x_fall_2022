@@ -117,3 +117,13 @@ ggplot() +
   coord_flip() +
    labs(title="How do the Terps compare in aces per match against elite Big Ten teams?", subtitle="Maryland setter Sydney Dowler is one of the best servers in the conference.", caption="Source: Baseball-Reference | By Ian Decker")
 ```
+
+#Narrative
+Do we have an inflated sense of roster blowing up?
+What happens to players when they depart
+
+
+
+
+
+

@@ -506,10 +506,3 @@ royals_od_20_to_21 <- anti_join(royals_od_roster_2015, royals_od_roster_2016, by
 
 royals_od_21_to_22 <- anti_join(royals_od_roster_2015, royals_od_roster_2016, by = "person_full_name", copy = FALSE, na_matches = c("na", "never"))
 ```
-
-
-
-
-Do we have an inflated sense of roster blowing up?
-What happens to players when they depart
-
