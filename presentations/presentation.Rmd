@@ -55,23 +55,23 @@ mets_od_roster_2022 <- mlb_rosters(team_id = 121, season = 2022, date = "2022-04
 ```{r}
 nats_departures <- nats_od_roster_2022 %>%
   group_by(status_description) %>%
-  summarise(count = n())
+  summarise(count = n()) %>% 
+  mutate(team = 'Nats')
 
 athletics_departures <- athletics_od_roster_2022 %>%
   group_by(status_description) %>%
-  summarise(count = n())
+  summarise(count = n()) %>% 
+  mutate(team = 'As')
 
 reds_departures <- reds_od_roster_2022 %>%
   group_by(status_description) %>%
-  summarise(count = n())
+  summarise(count = n()) %>% 
+  mutate(team = 'Reds')
 ```
 
 #Combined sellers 
 ```{r}
-combined_sellers_1 <- inner_join(nats_departures, athletics_departures, by = c("status_description"))
-
-all_combined_sellers <- inner_join(combined_sellers_1, reds_departures, by = c("status_description")) %>%
-  rename(nats = count.x) %>% rename(athletics = count.y) %>% rename(reds = count)
+combined_sellers <- bind_rows(nats_departures, athletics_departures, reds_departures)
 ```
 
 ```{r}
@@ -81,7 +81,6 @@ all_combined_sellers %>%
     names_to="Type", 
     values_to="nats", "athletics", "reds")
 ```
-
 
 ```{r}
 ggplot() + 
