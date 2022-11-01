@@ -61,7 +61,7 @@ combined_sellers <- bind_rows(nats_departures, athletics_departures, reds_depart
 ggplot() + 
   geom_bar(data=combined_sellers, aes(x=team, weight=count, fill=status_description)) +
   coord_flip() +
-   labs(title="What does 'blowing up' a roster actually mean in Major League Baseball?", subtitle="The Washington Nationals traded fewer players than other 'rebuilding' teams but had the league's worst record.", caption="Source: Baseball-Reference | By Ian Decker")
+   labs(title="What does 'blowing up' a roster actually mean in Major League Baseball?", subtitle="The Nationals traded fewer players than other 'rebuilding' teams but had the league's worst record.", caption="Source: Baseball-Reference | By Ian Decker")
 ```
 
 #AL teams expected to compete for the World Series
@@ -115,7 +115,7 @@ combined_buyers <- bind_rows(astros_departures, yankees_departures, dodgers_depa
 ggplot() + 
   geom_bar(data=combined_buyers, aes(x=team, weight=count, fill=status_description)) +
   coord_flip() +
-   labs(title="How do the Terps compare in aces per match against elite Big Ten teams?", subtitle="Maryland setter Sydney Dowler is one of the best servers in the conference.", caption="Source: Baseball-Reference | By Ian Decker")
+   labs(title="Do teams with World Series hopes 'blow up' their rosters?", subtitle="Most MLB trade deadline buyers alter their rosters midway through the season.", caption="Source: Baseball-Reference | By Ian Decker")
 ```
 
 ```{r}
