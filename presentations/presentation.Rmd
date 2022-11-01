@@ -166,7 +166,7 @@ nats_record_wins_losses_separate <- separate(nats_overall_record, col=Record, in
 #Graphing the wins by year using a line chart
 ggplot(nats_record_wins_losses_separate, aes(x=Year, y=win_percentage, group=Tm)) +         
   geom_line() +
-  geom_point() +
+  geom_point(colour='red') +
    labs(title="Have the Washington Nationals ever been this bad?", subtitle="2022 was the worst season in Washington baseball history, so fans could be in for a lengthy rebuild.", caption="Source: Baseball-Reference | By Ian Decker")
 ```
 
@@ -175,7 +175,7 @@ Do we have an inflated sense of roster blowing up?
 What happens to players when they depart
 
 
-
+as for the second question, i think you should briefly summarize what your original idea was, the obstacles you encountered and then how you got to where you are now. If there's some code that helps illustrate any of those points, feel free to use it as an example.
 
 
 
