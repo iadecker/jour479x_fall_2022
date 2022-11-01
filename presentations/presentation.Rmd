@@ -61,7 +61,7 @@ combined_sellers <- bind_rows(nats_departures, athletics_departures, reds_depart
 ggplot() + 
   geom_bar(data=combined_sellers, aes(x=team, weight=count, fill=status_description)) +
   coord_flip() +
-   labs(title="What does 'blowing up' a roster actually mean in Major League Baseball?", subtitle="The Nationals traded fewer players than other 'rebuilding' teams but had the league's worst record.", caption="Source: Baseball-Reference | By Ian Decker")
+   labs(title="Graph 1A: What does 'blowing up' a roster actually mean in Major League Baseball?", subtitle="The Nationals traded fewer players than other 'rebuilding' teams but had the league's worst record.", caption="Source: Baseball-Reference | By Ian Decker")
 ```
 
 ```{r}
@@ -75,7 +75,7 @@ nats_departures_2021 <- nats_od_roster_2021 %>%
 ggplot() + 
   geom_bar(data=nats_departures_2021, aes(x=team, weight=count, fill=status_description)) +
   coord_flip() +
-   labs(title="What does 'blowing up' a roster actually mean in Major League Baseball?", subtitle="The Nationals traded fewer players than other 'rebuilding' teams but had the league's worst record.", caption="Source: Baseball-Reference | By Ian Decker")
+   labs(title="Graph 1B: What does 'blowing up' a roster actually mean in Major League Baseball?", subtitle="The Nationals traded fewer players than other 'rebuilding' teams but had the league's worst record.", caption="Source: Baseball-Reference | By Ian Decker")
 ```
 
 
@@ -130,7 +130,7 @@ combined_buyers <- bind_rows(astros_departures, yankees_departures, dodgers_depa
 ggplot() + 
   geom_bar(data=combined_buyers, aes(x=team, weight=count, fill=status_description)) +
   coord_flip() +
-   labs(title="Do teams with World Series hopes 'blow up' their rosters?", subtitle="Most MLB trade deadline buyers alter their rosters midway through the season.", caption="Source: Baseball-Reference | By Ian Decker")
+   labs(title="Graph 2: Do teams with World Series hopes 'blow up' their rosters?", subtitle="Most MLB trade deadline buyers alter their rosters midway through the season.", caption="Source: Baseball-Reference | By Ian Decker")
 ```
 
 ```{r}
@@ -182,7 +182,7 @@ nats_record_wins_losses_separate <- separate(nats_overall_record, col=Record, in
 ggplot(nats_record_wins_losses_separate, aes(x=Year, y=win_percentage, group=Tm)) +         
   geom_line() +
   geom_point(colour='red') +
-   labs(title="Have the Washington Nationals ever been this bad?", subtitle="2022 was the worst season in Washington baseball history, but how long will the rebuild take?", caption="Source: Baseball-Reference | By Ian Decker")
+   labs(title="Graph 3: Have the Washington Nationals ever been this bad?", subtitle="2022 was the worst season in Washington baseball history, but how long will the rebuild take?", caption="Source: Baseball-Reference | By Ian Decker")
 ```
 
 #Narrative
@@ -194,13 +194,23 @@ Looking at the fall from grace Washington baseball has experienced since winnig 
 
 A season prior, the team parted ways with eight veteran players, almost thrice as many compared with 2022. From a raw numbers perpesctive, the team detonated its roster to a larger degree in 2021 than it did a year later in 2022. This led to the question that drove my analysis: Do we have an inflated sense of roster blowing up?
 
+In 2021, the Nationals netted 12 players from the eight they traded away, and seven for three in 2022, but the caliber of player is what really gives us a sense of what a team does to its roster. It is easy to think that the 2022 rendition of the Nats decimated its roster, but the 2021 team also traded several big-name players, but we think more about the Soto trade. Why? We perceive roster deconstructions differently. 
 
-What happens to players when they depart
+For instance, looking at opening day rosters from seven major league teams (the Washington Nationals, Oakland Athletics, Cincinnati Reds, Houston Astros, NY Yankees, LA Dodgers and NY Mets) I wanted to look at whether even contending teams 'blow up their rosters.' For my investigation, I chose three teams (Nats, A's and Reds) who acted as sellers at the trade deadline, sending proven big-leaguers for prospects. I also looked at the roster moves of four teams expected to compete for a title this year to see what 'blowing up' a roster actually meant.
+
+The results showed that this is an extremely nuanced question, but it did shed light on debunking our understanding of a team hitting reset on its roster. For example, most analysts agree that the Nationals made the biggest deadline day move when they traded Juan Soto, making it the team that blew up its roster to the largest degree. However, in Graph 1A, the Nats (three trades) made fewer moves — reset their roster to a lesser degree — than both the A's (four) and Reds (seven). 
+
+What's more, Washington (eight) carried fewer minor league contracts — generally associated with a losing team — than Oakland (10) and Cincy (nine). The logic is as follows: the more minor league-level players a major league roster has, the worse that team will perform, thus signifying that team is in rebuild mode.
+
+I also wanted to answer the question of 
+
+My initial goal when I started this investigation was to look at when teams decide to blow up their rosters. I tried to answer this question by looking at recent sell-offs and what the records of those teams were. The hope was to try and quantify if there's a point when teams decide to blow up their rosters. I was also interested in analyzing how many years it takes before a team is good again — when a losing team either has its first winning record or makes the postseason. 
+
+I thought at first I'd look at when a team decides to rebuild, but quickly realized that I couldn't due to not having the data I needed. I also struggled with 
 
 
 as for the second question, i think you should briefly summarize what your original idea was, the obstacles you encountered and then how you got to where you are now. If there's some code that helps illustrate any of those points, feel free to use it as an example.
 
-I thought at first I'd look at X, but quickly realized that I couldn't due to not having the data I needed.
 
 and contain explanatory sections that describe your code and the choices you made. Explain the methodological choices you made and why you made them.  Organize the narrative like a story - what did you find (or not find) and why readers should care.
 
