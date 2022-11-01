@@ -64,7 +64,7 @@ ggplot() +
    labs(title="Graph 1A: What does 'blowing up' a roster actually mean in Baseball?", subtitle="The Nationals traded fewer players than other 'rebuilding' teams but had the league's worst record.", caption="Source: Baseball-Reference | By Ian Decker")
 ```
 
-#Looking at how the Nats 'blew up' their roster in 2021
+#Looking at how the Nats 'blew up' their roster in 2021 to compare with 2022
 ```{r}
 nats_od_roster_2021 <- mlb_rosters(team_id = 120, season = 2021, date = "2021-04-06", roster_type = 'fullSeason')
 
