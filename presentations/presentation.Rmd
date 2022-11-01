@@ -61,7 +61,7 @@ combined_sellers <- bind_rows(nats_departures, athletics_departures, reds_depart
 ggplot() + 
   geom_bar(data=combined_sellers, aes(x=team, weight=count, fill=status_description)) +
   coord_flip() +
-   labs(title="Graph 1A: What does 'blowing up' a roster actually mean in Major League Baseball?", subtitle="The Nationals traded fewer players than other 'rebuilding' teams but had the league's worst record.", caption="Source: Baseball-Reference | By Ian Decker")
+   labs(title="Graph 1A: What does 'blowing up' a roster actually mean in Baseball?", subtitle="The Nationals traded fewer players than other 'rebuilding' teams but had the league's worst record.", caption="Source: Baseball-Reference | By Ian Decker")
 ```
 
 #Looking at how the Nats 'blew up' their roster in 2021
@@ -76,7 +76,7 @@ nats_departures_2021 <- nats_od_roster_2021 %>%
 ggplot() + 
   geom_bar(data=nats_departures_2021, aes(x=team, weight=count, fill=status_description)) +
   coord_flip() +
-   labs(title="Graph 1B: What does 'blowing up' a roster actually mean in Major League Baseball?", subtitle="The Nationals traded fewer players than other 'rebuilding' teams but had the league's worst record.", caption="Source: Baseball-Reference | By Ian Decker")
+   labs(title="Graph 1B: How did the 2021 Nationals 'blow up' their roster?", subtitle="The Nationals traded eight high-profile players at the 2021 trade deadline.", caption="Source: Baseball-Reference | By Ian Decker")
 ```
 
 #AL teams expected to compete for the World Series
