@@ -188,13 +188,13 @@ ggplot(nats_record_wins_losses_separate, aes(x=Year, y=win_percentage, group=Tm)
 ```
 
 #Narrative
-When the Washington Nationals traded away Juan Soto in on August 2, they signalled to the fans and the rest of the league that they were 'blowing up' the roster and planning for the future.
+When the Washington Nationals traded away Juan Soto in on August 2, they signaled to the fans and the rest of the league that they were 'blowing up' the roster and planning for the future.
 
 But the trade of Soto, and first baseman Josh Bell, was the latest example of an MLB franchise trading away a superstar whom they couldn't afford to keep for younger, and more importantly, cheaper players. 
 
-Looking at the fall from grace Washington baseball has experienced since winnig the World Series in 2019, I was curious as to what 'blowing up' a roster actually meant. Yes, the Nationals traded away a generational talent in Soto and a former all-star in Bell, but aside from a little-remebered trade where they swapped fringe players, the team traded only Soto and Bell. 
+Looking at the fall from grace Washington baseball has experienced since winnig the World Series in 2019, I was curious as to what 'blowing up' a roster actually meant. Yes, the Nationals traded away a generational talent in Soto and a former all-star in Bell, but aside from a little-remembered trade where they swapped fringe players, the team traded only Soto and Bell. 
 
-A season prior, the team parted ways with eight veteran players, almost thrice as many compared with 2022. From a raw numbers perpesctive, the team detonated its roster to a larger degree in 2021 than it did a year later in 2022. This led to the question that drove my analysis: Do we have an inflated sense of roster blowing up?
+A season prior, the team parted ways with eight veteran players, almost thrice as many compared with 2022. From a raw numbers perspective, the team detonated its roster to a larger degree in 2021 than it did a year later in 2022. This led to the question that drove my analysis: Do we have an inflated sense of roster blowing up?
 
 In 2021, the Nationals netted 12 players from the eight they traded away, and seven for three in 2022, but the caliber of player is what really gives us a sense of what a team does to its roster. It is easy to think that the 2022 rendition of the Nats decimated its roster, but the 2021 team also traded several big-name players, but we think more about the Soto trade. Why? We perceive roster deconstructions differently. 
 
