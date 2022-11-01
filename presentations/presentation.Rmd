@@ -210,12 +210,86 @@ But, when we look at Graph 2, we see that each team altered its roster throughou
 
 When I started this investigation, I wanted to look at when teams decide to blow up their rosters. I tried to answer this question by looking at recent sell-offs and what the records of those teams were. The hope was to try and quantify if there's a point when teams decide to blow up their rosters. I was also interested in analyzing how many years it takes before a team is good again — when a losing team either has its first winning record or makes the postseason. 
 
-I thought at first I'd look at when a team decides to rebuild, but quickly realized that I couldn't due to not having the data I needed. I also struggled with 
+I thought at first I'd look at when a team decides to rebuild, but quickly realized that I couldn't due to not having the data I needed. I then changed my thinking to analyze 
 
+```{r}
 
- the obstacles you encountered and then how you got to where you are now.
+# OD Full Season Rosters
+nats_od_roster_2018 <- mlb_rosters(team_id = 120, season = 2018, date = "2018-04-05", roster_type = 'fullSeason')
 
+nats_od_roster_2019 <- mlb_rosters(team_id = 120, season = 2019, date = "2019-03-28", roster_type = 'fullSeason')
 
-and contain explanatory sections that describe your code and the choices you made. Explain the methodological choices you made and why you made them.  Organize the narrative like a story - what did you find (or not find) and why readers should care.
+nats_od_roster_2020 <- mlb_rosters(team_id = 120, season = 2020, date = "2020-07-23", roster_type = 'fullSeason')
+
+nats_od_roster_2021 <- mlb_rosters(team_id = 120, season = 2021, date = "2021-04-06", roster_type = 'fullSeason')
+
+nats_od_roster_2022 <- mlb_rosters(team_id = 120, season = 2022, date = "2021-04-07", roster_type = 'fullSeason')
+
+## Departures
+
+nats_od_18_to_19 <- anti_join(nats_od_roster_2018, nats_od_roster_2019, by = "person_full_name", copy = FALSE, na_matches = c("na", "never"))
+
+nats_od_19_to_20 <- anti_join(nats_od_roster_2019, nats_od_roster_2020, by = "person_full_name", copy = FALSE, na_matches = c("na", "never"))
+
+nats_od_20_to_21 <- anti_join(nats_od_roster_2020, nats_od_roster_2021, by = "person_full_name", copy = FALSE, na_matches = c("na", "never"))
+
+nats_od_21_to_22 <- anti_join(nats_od_roster_2021, nats_od_roster_2022, by = "person_full_name", copy = FALSE, na_matches = c("na", "never"))
+
+## Counting & Pct Departures
+
+nats_18_19_departures <- nats_od_18_to_19 %>% group_by(season) %>% summarize(departures = n()) %>% mutate(full_season = nats_od_roster_2018 %>% nrow()) %>% mutate(pct_departed = departures/full_season)
+
+nats_19_20_departures <- nats_od_19_to_20 %>% group_by(season) %>% summarize(departures = n()) %>% mutate(full_season = nats_od_roster_2019 %>% nrow()) %>% mutate(pct_departed = departures/full_season)
+
+nats_20_21_departures <- nats_od_20_to_21 %>% group_by(season) %>% summarize(departures = n()) %>% mutate(full_season = nats_od_roster_2020 %>% nrow()) %>% mutate(pct_departed = departures/full_season)
+
+nats_21_22_departures <- nats_od_21_to_22 %>% group_by(season) %>% summarize(departures = n()) %>% mutate(full_season = nats_od_roster_2021 %>% nrow()) %>% mutate(pct_departed = departures/full_season)
+
+nats_22_23_departures <- nats_od_21_to_22 %>% group_by(season) %>% summarize(departures = n()) %>% mutate(full_season = nats_od_roster_2021 %>% nrow()) %>% mutate(pct_departed = departures/full_season)
+
+nats_total_players_lost <- bind_rows(nats_19_20_departures, nats_20_21_departures, nats_21_22_departures) %>%
+  rename("Year" = "season")
+
+nats_players_lost_plus_win_percentage <- inner_join(nats_total_players_lost, nats_record_wins_losses_separate, by = "Year")
+
+ggplot() + geom_point(data=nats_players_lost_plus_win_percentage, aes(x=win_percentage, y=pct_departed))
+
+nats_2018_record <- bref_team_results('WSN', 2018) %>%
+    filter(Gm == '162')
+
+nats_2019_record <- bref_team_results('WSN', 2019) %>%
+    filter(Gm == '162')
+
+nats_2020_record <- bref_team_results('WSN', 2020) %>%
+    filter(Gm == '60')
+
+nats_2021_record <- bref_team_results('WSN', 2021) %>%
+    filter(Gm == '162')
+
+nats_2022_record <- bref_team_results('WSN', 2022) %>%
+    filter(Gm == '162')
+
+nats_record_18_22 <- bind_rows(nats_2018_record, nats_2019_record, nats_2020_record, nats_2021_record, nats_2022_record)
+
+#Separating the Record column into Wins and Losses
+nats_record_wins_losses_separate <- separate(nats_record_18_22, col=Record, into=c('Wins', 'Losses'), sep='-') %>%
+  mutate(Wins = as.numeric(Wins), Losses = as.numeric(Losses)) %>%
+  mutate(win_percentage = (Wins/(Wins+Losses)*100)) %>% select(Year, Wins, win_percentage) %>% 
+  mutate(previous_year_wins = case_when(
+   Year == 2019 ~ 82,
+   Year == 2020 ~ 93,
+   Year == 2021 ~ 26,
+   Year == 2022 ~ 65
+   )
+  ) %>% 
+  mutate(win_change = previous_year_wins - Wins)
+
+nats_players_lost <- bind_rows(nats_od_19_to_20, nats_od_20_to_21, nats_od_21_to_22)
+
+#Graphing the wins by year using a line chart
+ggplot(nats_record_wins_losses_separate, aes(x=Year, y=win_percentage)) +         
+  geom_line() +
+  geom_point()
+```
 
 

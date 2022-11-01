@@ -344,22 +344,12 @@ nats_21_22_departures <- nats_od_21_to_22 %>% group_by(season) %>% summarize(dep
 
 nats_22_23_departures <- nats_od_21_to_22 %>% group_by(season) %>% summarize(departures = n()) %>% mutate(full_season = nats_od_roster_2021 %>% nrow()) %>% mutate(pct_departed = departures/full_season)
 
-# 2019 departures from 2018
-# 2020 departures from 2019
-# 2021 departures
-
-# Totals
-
 nats_total_players_lost <- bind_rows(nats_19_20_departures, nats_20_21_departures, nats_21_22_departures) %>%
   rename("Year" = "season")
 
 nats_players_lost_plus_win_percentage <- inner_join(nats_total_players_lost, nats_record_wins_losses_separate, by = "Year")
 
 ggplot() + geom_point(data=nats_players_lost_plus_win_percentage, aes(x=win_percentage, y=pct_departed))
-
-#bind_rows
-
-#Nats wins
 
 nats_2018_record <- bref_team_results('WSN', 2018) %>%
     filter(Gm == '162')
