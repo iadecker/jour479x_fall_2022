@@ -64,6 +64,7 @@ ggplot() +
    labs(title="Graph 1A: What does 'blowing up' a roster actually mean in Major League Baseball?", subtitle="The Nationals traded fewer players than other 'rebuilding' teams but had the league's worst record.", caption="Source: Baseball-Reference | By Ian Decker")
 ```
 
+#Looking at how the Nats 'blew up' their roster in 2021
 ```{r}
 nats_od_roster_2021 <- mlb_rosters(team_id = 120, season = 2021, date = "2021-04-06", roster_type = 'fullSeason')
 
@@ -77,7 +78,6 @@ ggplot() +
   coord_flip() +
    labs(title="Graph 1B: What does 'blowing up' a roster actually mean in Major League Baseball?", subtitle="The Nationals traded fewer players than other 'rebuilding' teams but had the league's worst record.", caption="Source: Baseball-Reference | By Ian Decker")
 ```
-
 
 #AL teams expected to compete for the World Series
 ```{r}
@@ -134,6 +134,7 @@ ggplot() +
 ```
 
 ```{r}
+#Nats year-by-year records 2005-2022
 nats_2005_record <- bref_team_results('WSN', 2005) %>%
     filter(Gm == '162')
 nats_2006_record <- bref_team_results('WSN', 2006) %>%
@@ -171,6 +172,7 @@ nats_2021_record <- bref_team_results('WSN', 2021) %>%
 nats_2022_record <- bref_team_results('WSN', 2022) %>%
     filter(Gm == '162')  
 
+#Single dataframe with Nats overall record
 nats_overall_record <- bind_rows(nats_2005_record, nats_2006_record, nats_2007_record, nats_2008_record,nats_2009_record, nats_2010_record, nats_2011_record, nats_2012_record, nats_2013_record, nats_2014_record, nats_2015_record, nats_2016_record, nats_2017_record, nats_2018_record, nats_2019_record, nats_2020_record, nats_2021_record, nats_2022_record)
 
 #Separating the Record column into Wins and Losses
@@ -206,9 +208,13 @@ I also wanted to compare Washington's trade deadlines from the past two seasons.
 
 The Houston Astros have made the American League Championship Series every year since 2017 and have been one of the most dominant teams in baseball; The New York Yankees have the third-largest payroll in the bigs; the Los Angeles Dodgers (highest payroll) contend on a yearly basis; the New York Mets (second-highest payroll) shelled out massive contracts in the offseason to compete for a title — nobody would think these are teams blowing up their rosters. 
 
-But, when we look at Graph 2, we see that each team altered its roster throughout the season, and the Astros (two trades) were the only team that made fewer trades than the Nats. The Mets also made three trades, the Dodgers had four and the Yankees made five. Now, this evaluation does not look at the statistical or economic value of the players involved in the trades, but it does, however, illustrate that every team 'blows up' its roster — to an extent — during the season; the difference is what a team trades away (fringe players or all-stars) and what it gets in return (win-now players or proepcts for the future). 
+But, when we look at Graph 2, we see that each team altered its roster throughout the season, and the Astros (two trades) were the only team that made fewer trades than the Nats. The Mets also made three trades, the Dodgers had four and the Yankees made five. Now, this evaluation does not look at the statistical or economic value of the players involved in the trades, but it does, however, illustrate that every team 'blows up' its roster — to an extent — during the season; the difference is what a team trades away (fringe players or all-stars) and what it gets in return (win-now players or prospects for the future). 
 
 When I started this investigation, I wanted to look at when teams decide to blow up their rosters. I tried to answer this question by looking at recent sell-offs and what the records of those teams were. The hope was to try and quantify if there's a point when teams decide to blow up their rosters. I was also interested in analyzing how many years it takes before a team is good again — when a losing team either has its first winning record or makes the postseason. 
+
+While this idea didn't fully materialize, I was able to chart Washington's record since the franchise's first season in 2005. This let me look at how long it took the Nats to become a competitive team in the early 2010s. After going 81-81 in 2005, Washington had six straight losing seasons before finally winning more than 50% of its games in 2012, a trend it continued through its World Series-winning season in 2019. Using the mid 2000s as an indicator of success, the Nats have at least another three years of losing baseball before they will return to relevancy.
+
+Graph 3 also allowed me to look at what 'blowing up' a roster does to the record of a team. In the Nats' case, hitting the reset button evidently has a direct negative impact on the team's record; each time the team partook in a sell-off, its record plummeted at a commensurate rate.
 
 I thought at first I'd look at when a team decides to rebuild, but quickly realized that I couldn't due to not having the data I needed. I then changed my thinking to analyze the relationship between trading players away and record. What I struggled with, though, was what record to compare with which roster. Initially, I tried to look at the change opening day rosters between two seasons and the record of the most recent season, but this information was difficult to graph and understand, an idea highlighted in the code block below. 
 
