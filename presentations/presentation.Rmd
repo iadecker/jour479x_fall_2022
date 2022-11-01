@@ -202,14 +202,18 @@ The results showed that this is an extremely nuanced question, but it did shed l
 
 What's more, Washington (eight) carried fewer minor league contracts — generally associated with a losing team — than Oakland (10) and Cincy (nine). The logic is as follows: the more minor league-level players a major league roster has, the worse that team will perform, thus signifying that team is in rebuild mode.
 
-I also wanted to answer the question of 
+I also wanted to compare Washington's trade deadlines from the past two seasons. If we compare the Nats' moves in Graph 1A and 1B, we see that the fuchsia bar (trades) is larger in 2021 than in 2022. So according to our chart, the Nats blew up their roster to a larger degree in '21 than '22, but we know that's not true from both a talent and a player return standpoint. And while it is clear that Washington has embraced a rebuild just three years after it one the World Series, do contending teams also 'blow up' their rosters?
 
-My initial goal when I started this investigation was to look at when teams decide to blow up their rosters. I tried to answer this question by looking at recent sell-offs and what the records of those teams were. The hope was to try and quantify if there's a point when teams decide to blow up their rosters. I was also interested in analyzing how many years it takes before a team is good again — when a losing team either has its first winning record or makes the postseason. 
+The Houston Astros have made the American League Championship Series every year since 2017 and have been one of the most dominant teams in baseball; The New York Yankees have the third-largest payroll in the bigs; the Los Angeles Dodgers (highest payroll) contend on a yearly basis; the New York Mets (second-highest payroll) shelled out massive contracts in the offseason to compete for a title — nobody would think these are teams blowing up their rosters. 
+
+But, when we look at Graph 2, we see that each team altered its roster throughout the season, and the Astros (two trades) were the only team that made fewer trades than the Nats. The Mets also made three trades, the Dodgers had four and the Yankees made five. Now, this evaluation does not look at the statistical or economic value of the players involved in the trades, but it does, however, illustrate that every team 'blows up' its roster — to an extent — during the season; the difference is what a team trades away (fringe players or all-stars) and what it gets in return (win-now players or proepcts for the future). 
+
+When I started this investigation, I wanted to look at when teams decide to blow up their rosters. I tried to answer this question by looking at recent sell-offs and what the records of those teams were. The hope was to try and quantify if there's a point when teams decide to blow up their rosters. I was also interested in analyzing how many years it takes before a team is good again — when a losing team either has its first winning record or makes the postseason. 
 
 I thought at first I'd look at when a team decides to rebuild, but quickly realized that I couldn't due to not having the data I needed. I also struggled with 
 
 
-as for the second question, i think you should briefly summarize what your original idea was, the obstacles you encountered and then how you got to where you are now. If there's some code that helps illustrate any of those points, feel free to use it as an example.
+ the obstacles you encountered and then how you got to where you are now.
 
 
 and contain explanatory sections that describe your code and the choices you made. Explain the methodological choices you made and why you made them.  Organize the narrative like a story - what did you find (or not find) and why readers should care.
