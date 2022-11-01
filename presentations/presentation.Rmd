@@ -33,24 +33,6 @@ athletics_od_roster_2022 <- mlb_rosters(team_id = 133, season = 2022, date = "20
 reds_od_roster_2022 <- mlb_rosters(team_id = 113, season = 2022, date = "2022-04-08", roster_type = 'fullSeason')
 ```
 
-#AL teams expected to compete for the World Series
-```{r}
-#Every player who logged a major-league game for the Astros
-astros_od_roster_2022 <- mlb_rosters(team_id = 117, season = 2022, date = "2022-04-07", roster_type = 'fullSeason')
-
-#Every player who logged a major-league game for the Yankees
-yankees_od_roster_2022 <- mlb_rosters(team_id = 147, season = 2022, date = "2022-04-07", roster_type = 'fullSeason')
-```
-
-#NL Teams expected to compete for the World Series 
-```{r}
-#Every player who logged a major-league game for the Dodgers
-dodgers_od_roster_2022 <- mlb_rosters(team_id = 119, season = 2022, date = "2022-04-08", roster_type = 'fullSeason')
-
-#Every player who logged a major-league game for the Mets
-mets_od_roster_2022 <- mlb_rosters(team_id = 121, season = 2022, date = "2022-04-07", roster_type = 'fullSeason')
-```
-
 #"Sellers" at the trade deadline
 ```{r}
 nats_departures <- nats_od_roster_2022 %>%
@@ -75,51 +57,66 @@ combined_sellers <- bind_rows(nats_departures, athletics_departures, reds_depart
 ```
 
 ```{r}
-all_combined_sellers %>% 
-  pivot_longer(
-    cols=starts_with("status_description"), 
-    names_to="Type", 
-    values_to="nats", "athletics", "reds")
+#Stacked bar chart showing the player status descriptions for the Nats, A's and Reds
+ggplot() + 
+  geom_bar(data=combined_sellers, aes(x=team, weight=count, fill=status_description)) +
+  coord_flip()
+```
+
+#AL teams expected to compete for the World Series
+```{r}
+#Every player who logged a major-league game for the Astros
+astros_od_roster_2022 <- mlb_rosters(team_id = 117, season = 2022, date = "2022-04-07", roster_type = 'fullSeason')
+
+#Every player who logged a major-league game for the Yankees
+yankees_od_roster_2022 <- mlb_rosters(team_id = 147, season = 2022, date = "2022-04-07", roster_type = 'fullSeason')
+```
+
+#NL Teams expected to compete for the World Series 
+```{r}
+#Every player who logged a major-league game for the Dodgers
+dodgers_od_roster_2022 <- mlb_rosters(team_id = 119, season = 2022, date = "2022-04-08", roster_type = 'fullSeason')
+
+#Every player who logged a major-league game for the Mets
+mets_od_roster_2022 <- mlb_rosters(team_id = 121, season = 2022, date = "2022-04-07", roster_type = 'fullSeason')
+```
+
+#"Buyers" at the trade deadline
+```{r}
+astros_departures <- astros_od_roster_2022 %>%
+  group_by(status_description) %>%
+  summarise(count = n()) %>% 
+  mutate(team = 'Astros')
+
+yankees_departures <- yankees_od_roster_2022 %>%
+  group_by(status_description) %>%
+  summarise(count = n()) %>% 
+  mutate(team = 'Yankees')
+
+dodgers_departures <- dodgers_od_roster_2022 %>%
+  group_by(status_description) %>%
+  summarise(count = n()) %>% 
+  mutate(team = 'Dodgers')
+
+mets_departures <- mets_od_roster_2022 %>%
+  group_by(status_description) %>%
+  summarise(count = n()) %>% 
+  mutate(team = 'Mets')
+```
+
+#Combined buyers 
+```{r}
+combined_buyers <- bind_rows(astros_departures, yankees_departures, dodgers_departures, mets_departures)
 ```
 
 ```{r}
+#Stacked bar chart showing the player status descriptions for the Nats, A's and Reds
 ggplot() + 
-  geom_bar(data=all_combined_sellers, aes(x=status_description, weight=count)) +
+  geom_bar(data=combined_buyers, aes(x=team, weight=count, fill=status_description)) +
   coord_flip()
 ```
 
 
-
-#Buyers at the trade deadline
-```{r}
-astros_departures <- astros_od_roster_2022 %>%
-  group_by(status_description) %>%
-  summarise(count = n())
-
-yankees_departures <- yankees_od_roster_2022 %>%
-  group_by(status_description) %>%
-  summarise(count = n())
-
-dodgers_departures <- dodgers_od_roster_2022 %>%
-  group_by(status_description) %>%
-  summarise(count = n())
-
-mets_departures <- mets_od_roster_2022 %>%
-  group_by(status_description) %>%
-  summarise(count = n())
-```
-
-```{r}
-ggplot() + 
-  geom_bar(
-    data=mets_departures, 
-    aes(x=status_description)
-  )
-```
-
-```{r}
-
-```
 
 
 
