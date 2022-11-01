@@ -23,13 +23,13 @@ mlb_teams(season = 2022, sport_ids = c(1))
 
 #Teams that "blew up" their rosters
 ```{r}
-#Every player who logged a major-league game for the Nats
+#Every player who logged a major-league game for the Nats in 2022
 nats_od_roster_2022 <- mlb_rosters(team_id = 120, season = 2022, date = "2021-04-07", roster_type = 'fullSeason')
 
-#Every player who logged a major-league game for the A's
+#Every player who logged a major-league game for the A's in 2022
 athletics_od_roster_2022 <- mlb_rosters(team_id = 133, season = 2022, date = "2022-04-08", roster_type = 'fullSeason')
 
-#Every player who logged a major-league game for the Reds
+#Every player who logged a major-league game for the Reds in 2022
 reds_od_roster_2022 <- mlb_rosters(team_id = 113, season = 2022, date = "2022-04-08", roster_type = 'fullSeason')
 ```
 
@@ -51,8 +51,8 @@ reds_departures <- reds_od_roster_2022 %>%
   mutate(team = 'Reds')
 ```
 
-#Combined sellers 
 ```{r}
+#Combined sellers dataframe
 combined_sellers <- bind_rows(nats_departures, athletics_departures, reds_departures)
 ```
 
@@ -60,24 +60,25 @@ combined_sellers <- bind_rows(nats_departures, athletics_departures, reds_depart
 #Stacked bar chart showing the player status descriptions for the Nats, A's and Reds
 ggplot() + 
   geom_bar(data=combined_sellers, aes(x=team, weight=count, fill=status_description)) +
-  coord_flip()
+  coord_flip() +
+   labs(title="How do the Terps compare in aces per match against elite Big Ten teams?", subtitle="Maryland setter Sydney Dowler is one of the best servers in the conference.", caption="Source: Baseball-Reference | By Ian Decker")
 ```
 
 #AL teams expected to compete for the World Series
 ```{r}
-#Every player who logged a major-league game for the Astros
+#Every player who logged a major-league game for the Astros in 2022
 astros_od_roster_2022 <- mlb_rosters(team_id = 117, season = 2022, date = "2022-04-07", roster_type = 'fullSeason')
 
-#Every player who logged a major-league game for the Yankees
+#Every player who logged a major-league game for the Yankees in 2022
 yankees_od_roster_2022 <- mlb_rosters(team_id = 147, season = 2022, date = "2022-04-07", roster_type = 'fullSeason')
 ```
 
 #NL Teams expected to compete for the World Series 
 ```{r}
-#Every player who logged a major-league game for the Dodgers
+#Every player who logged a major-league game for the Dodgers in 2022
 dodgers_od_roster_2022 <- mlb_rosters(team_id = 119, season = 2022, date = "2022-04-08", roster_type = 'fullSeason')
 
-#Every player who logged a major-league game for the Mets
+#Every player who logged a major-league game for the Mets in 2022
 mets_od_roster_2022 <- mlb_rosters(team_id = 121, season = 2022, date = "2022-04-07", roster_type = 'fullSeason')
 ```
 
@@ -104,19 +105,15 @@ mets_departures <- mets_od_roster_2022 %>%
   mutate(team = 'Mets')
 ```
 
-#Combined buyers 
 ```{r}
+#Combined buyers dataframe
 combined_buyers <- bind_rows(astros_departures, yankees_departures, dodgers_departures, mets_departures)
 ```
 
 ```{r}
-#Stacked bar chart showing the player status descriptions for the Nats, A's and Reds
+#Stacked bar chart showing the player status descriptions for the Astros, Yankees, Dodgers and Mets
 ggplot() + 
   geom_bar(data=combined_buyers, aes(x=team, weight=count, fill=status_description)) +
-  coord_flip()
+  coord_flip() +
+   labs(title="How do the Terps compare in aces per match against elite Big Ten teams?", subtitle="Maryland setter Sydney Dowler is one of the best servers in the conference.", caption="Source: Baseball-Reference | By Ian Decker")
 ```
-
-
-
-
-
