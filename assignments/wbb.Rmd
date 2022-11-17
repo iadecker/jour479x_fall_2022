@@ -1,0 +1,78 @@
+---
+title: "wbb.Rmd"
+output: html_document
+date: "2022-11-17"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+library(tidyverse)
+library(usdata)
+```
+
+```{r}
+wbb_rosters <- read_csv("https://github.com/dwillis/wbb-rosters/raw/main/rosters_2022-23.csv")
+```
+
+#Things to clean
+-Standardize positions
+-Standardize hometowns
+-Drop where name is NA
+-Standardize year column
+-Standardize height (5'10" or 5-10)
+
+#Columns to add
+-State
+-Country
+-Height in inches
+
+
+```{r}
+wbb_rosters %>% distinct(hometown)
+```
+
+```{r}
+cleaned_wbb_rosters <- wbb_rosters %>%
+  mutate(hometown_clean = str_to_upper(hometown))
+
+cleaned_wbb_rosters <- cleaned_wbb_rosters %>%
+  separate(col=hometown_clean, into=c("new_hometown", "state"), sep=",", extra="merge")
+
+```
+
+```{r}
+cleaned_wbb_rosters %>% distinct(state)
+```
+
+```{r}
+cleaned_wbb_rosters <- cleaned_wbb_rosters %>% 
+  mutate(state = str_trim(state), state = str_replace(state, '\\.','')) %>% 
+  mutate(state = case_when(
+     is.na(abbr2state(state)) ~ state,
+     TRUE ~ str_to_upper(abbr2state(state)))
+  )
+```
+
+
+```{r}
+cleaned_wbb_rosters %>% group_by(position) %>% summarise(players = n()) %>% arrange(desc(players))
+
+cleaned_wbb_rosters <- cleaned_wbb_rosters %>%
+  mutate(position_clean = str_to_upper(position)) %>%
+  mutate(position_clean = case_when(position_clean == 'G' ~ 'GUARD',
+                                    position_clean == 'F' ~ 'FORWARD',
+                                    position_clean == 'G/F' ~ 'GUARD/FORWARD',
+                                    position_clean == 'F/C' ~ 'FORWARD/CENTER',
+                                    position_clean == 'C/F' ~ 'FORWARD/CENTER',
+                                    position_clean == 'C' ~ 'CENTER',
+         TRUE ~ position_clean))
+
+cleaned_wbb_rosters %>% group_by(position_clean) %>% summarise(count = n()) %>% arrange(desc(count))
+```
+
+
+
+
