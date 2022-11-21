@@ -68,12 +68,8 @@ If we look at the highest number of technical fouls, we get a game between Maryl
 
 I think this line of investigation is interesting because it can show us which teams had the most fouls on a large scale and which games were the chippiest on an individual scale. It might also be able to tell us a little bit about the refs who were in charge of officiating these games to see if certain refs/crews call more fouls or let teams play more.
 
-The crews dataframe generates a whole host of additional questions, but the main one is that there are tons of records without any information about who the referees were. I also played around with grouping by the officials and the two schools to see if there was anything there, but the data isn't great. Looks like this data needs to be cleaned.
-
 #In particular, I want you to focus on your biggest question or problem that you need to solve for this analysis. Is the data you want incomplete or in need of cleaning? Are you struggling to figure out what the best question is, or how to start? Describe the issue and what you've tried to do so far to address it.
 
+The crews dataframe generates a whole host of additional questions, but the main one is that there are tons of records without any information about who the referees were. I also played around with grouping by the officials and the two schools to see if there was anything there, but the data isn't great. Looks like this data needs to be cleaned.
 
-
-
-
-
+My second biggest question is dealing with the officials column itself. In most cases, we have three refs per row, but some have two or one and some are empty. It might be beneficial to either alphabetize the columns so we can see how many times a crew worked together, or maybe we should separate them into distinct columns.
