@@ -26,7 +26,7 @@ maryland_home_fouls <- refs %>%
   filter(home == 'Maryland') %>%
   group_by(home_fouls) %>%
   arrange(desc(home_fouls)) %>%
-  distinct()
+  distinct() 
 
 maryland_away_fouls <- refs %>%
   filter(visitor == 'Maryland') %>%
@@ -35,17 +35,32 @@ maryland_away_fouls <- refs %>%
   distinct()
 ```
 
-In this data, we have basic information about home and away teams, number of fouls (regular and technical) committed by each team and the names of the officials who were in charge of the game from last year's women's college basketball season.
+In this data, we have basic information about home and away teams, number of fouls (regular and technical) committed by each team and the names of the officials who were in charge of the game from last year's women's college basketball season. What we don't have is game outcome, which would be interesting to know to figure out how much fouls called either for or against a team impacts the game's outcome.
 
 Here's the weird part, though. In these two dataframes, and in the entire refs dataframe as well, we have a ton of duplicate games. For example, in most of the Maryland_home_fouls, we have three identical records for each game. It looks like all the conference games have three records, and the non-conference games vary between one and two. The quirk is that each of those games, despite having identical stats, refs and game dates, have different game ids. Sometimes there are duplicate game ids and one distinct one. 
 
-To fix this issue, I ran the distinct function to get rid of the duplicate game ids. However, we still have two records for every 
+To fix this issue, I ran the distinct function to get rid of the duplicate game ids. However, we still have two records for every game. I'm not sure how to further condense those, but I'm making progress! Clearly, Maryland did not play 59 games last year.
 
 #Next, I want to see that you've begun digging into your analysis, so that means writing code and summarizing the results of your explorations. The more detail you can provide, the better.
 
 ```{r}
+refs %>%
+  arrange(desc(home_fouls))
 
+refs %>%
+  arrange(desc(home_technicals))
+
+refs %>%
+  arrange(desc(visitor_fouls))
+
+refs %>%
+  arrange(desc(visitor_technicals))
 ```
+
+Alright, here, I was curious about which refs called the most common and technical fouls last season. Let's take a look at the top game for common fouls — Pfeiffer vs.	Hollins. In this game, a total of 66 fouls were committed, 35 for Pfeiffer and 31 against Hollins. Two Hollins players fouled out and three picked up four fouls. On the other side, while no Pfeiffer player fouled out, they had five players pick up four fouls. The weird part: Pfeiffer played 14 different players. What's also odd is that this was the first game of the season. There's some pretty weird stuff going on here.
+
+If we look at the 
+
 
 #In particular, I want you to focus on your biggest question or problem that you need to solve for this analysis. Is the data you want incomplete or in need of cleaning? Are you struggling to figure out what the best question is, or how to start? Describe the issue and what you've tried to do so far to address it.
 
