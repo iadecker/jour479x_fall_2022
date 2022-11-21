@@ -1,0 +1,56 @@
+---
+title: "Second Project"
+output: html_document
+date: "2022-11-18"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+#Loading our libraries
+library(tidyverse)
+library(dplyr)
+```
+
+```{r}
+#Loading the referee data
+refs <- read_csv("~/Downloads/officials_2021-22.csv")
+```
+
+#Describe the data's scope to me - what time period or range of teams, etc, that it covers. What's included in the data and what isn't. Write the code to do this and then summarize it in text.
+
+```{r}
+maryland_home_fouls <- refs %>%
+  filter(home == 'Maryland') %>%
+  group_by(home_fouls) %>%
+  arrange(desc(home_fouls)) %>%
+  distinct()
+
+maryland_away_fouls <- refs %>%
+  filter(visitor == 'Maryland') %>%
+  group_by(visitor_fouls) %>%
+  arrange(desc(visitor_fouls)) %>%
+  distinct()
+```
+
+In this data, we have basic information about home and away teams, number of fouls (regular and technical) committed by each team and the names of the officials who were in charge of the game from last year's women's college basketball season.
+
+Here's the weird part, though. In these two dataframes, and in the entire refs dataframe as well, we have a ton of duplicate games. For example, in most of the Maryland_home_fouls, we have three identical records for each game. It looks like all the conference games have three records, and the non-conference games vary between one and two. The quirk is that each of those games, despite having identical stats, refs and game dates, have different game ids. Sometimes there are duplicate game ids and one distinct one. 
+
+To fix this issue, I ran the distinct function to get rid of the duplicate game ids. However, we still have two records for every 
+
+#Next, I want to see that you've begun digging into your analysis, so that means writing code and summarizing the results of your explorations. The more detail you can provide, the better.
+
+```{r}
+
+```
+
+#In particular, I want you to focus on your biggest question or problem that you need to solve for this analysis. Is the data you want incomplete or in need of cleaning? Are you struggling to figure out what the best question is, or how to start? Describe the issue and what you've tried to do so far to address it.
+
+
+
+
+
+
