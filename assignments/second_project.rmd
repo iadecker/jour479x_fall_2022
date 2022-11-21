@@ -55,12 +55,20 @@ refs %>%
 
 refs %>%
   arrange(desc(visitor_technicals))
+
+crews <- refs %>%
+  group_by(officials, home, visitor) %>%
+  summarise(count = n()) %>%
+  arrange(desc(count))
 ```
 
 Alright, here, I was curious about which refs called the most common and technical fouls last season. Let's take a look at the top game for common fouls — Pfeiffer vs.	Hollins. In this game, a total of 66 fouls were committed, 35 for Pfeiffer and 31 against Hollins. Two Hollins players fouled out and three picked up four fouls. On the other side, while no Pfeiffer player fouled out, they had five players pick up four fouls. The weird part: Pfeiffer played 14 different players. What's also odd is that this was the first game of the season. There's some pretty weird stuff going on here.
 
-If we look at the 
+If we look at the highest number of technical fouls, we get a game between Maryland Eastern Shore	and	Morgan State. MES got four techs to MSs five for a total of nine Ts! Here's the lede from the story written for the team website: "The University of Maryland Eastern Shore dug themselves an early hole on Monday night at home against Morgan State heading into the half down 35-21 in what was an extremely physical game and were never quite able to battle back." Two players were ejected in this game. 
 
+I think this line of investigation is interesting because it can show us which teams had the most fouls on a large scale and which games were the chippiest on an individual scale. It might also be able to tell us a little bit about the refs who were in charge of officiating these games to see if certain refs/crews call more fouls or let teams play more.
+
+The crews dataframe generates a whole host of additional questions, but the main one is that there are tons of records without any information about who the referees were. I also played around with grouping by the officials and the two schools to see if there was anything there, but the data isn't great. Looks like this data needs to be cleaned.
 
 #In particular, I want you to focus on your biggest question or problem that you need to solve for this analysis. Is the data you want incomplete or in need of cleaning? Are you struggling to figure out what the best question is, or how to start? Describe the issue and what you've tried to do so far to address it.
 
