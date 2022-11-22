@@ -70,9 +70,26 @@ cleaned_wbb_rosters <- cleaned_wbb_rosters %>%
                                     position_clean == 'C' ~ 'CENTER',
          TRUE ~ position_clean))
 
-cleaned_wbb_rosters %>% group_by(position_clean) %>% summarise(count = n()) %>% arrange(desc(count))
+positions <- cleaned_wbb_rosters %>% group_by(position, position_clean) %>% summarise(count = n()) %>% arrange(desc(count))
+
+cleaned_wbb_rosters %>% filter(position == "Guard/Post")
+
+write_csv(positions, "~/Downloads/positions.csv")
 ```
 
+```{r}
+positions_cleaned <- read_csv("~/Documents/772/jour479x_fall_2022/data/wbb_positions.csv") %>%
+  select(-count)
+
+wbb_rosters <- wbb_rosters %>% inner_join(positions_cleaned, by = "position") 
+```
+
+```{r}
+wbb_rosters %>% 
+  group_by(position_clean) %>% 
+  summarise(count = n()) %>% 
+  arrange(desc(count))
+```
 
 
 
