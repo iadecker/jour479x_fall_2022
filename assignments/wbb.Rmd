@@ -91,5 +91,25 @@ wbb_rosters %>%
   arrange(desc(count))
 ```
 
+```{r}
+wbb_rosters21_22 <- read_csv("https://github.com/dwillis/wbb-rosters/raw/main/rosters_2021-22.csv")
 
+wbb_rosters21_22 %>% 
+  group_by(position) %>% 
+  summarise(count = n()) %>% 
+  arrange(desc(count))
+```
 
+What needs to be done to the positions column of this data is as follows:
+
+One of the main differences in this data set is that we have a bunch of players names. Thankfully, each one is listed only once, so they should be easy to remove. 
+
+We also have around 12-15 results for class year and four results for Combo, but again, those shouldn't take too long to remove. 
+
+The only additional entries we have seem to be positions that are thrice listed. For example, PG/SG/SF. We also have entries that are as follows: FWD/C. But we don't have anything that would be hard to distinguish if we went through and cleaned the data.
+
+Those are the main issues with the position information I saw from 21-22 data.
+
+In total, I would say this impacts no more than 30 rows — again, a lot of the funky stuff has just one entry.
+
+In terms of the other roster data — hometown, year, high school, previous school and height — those all need to be standardized, but that's the main concern.

@@ -17,6 +17,17 @@ library(dplyr)
 ```{r}
 #Loading the referee data
 refs <- read_csv("~/Downloads/officials_2021-22.csv")
+
+unique_games <- refs %>% 
+  select(-ncaa_id, -game_id) %>% 
+  distinct()
+
+games_with_refs <- unique_games %>% 
+  separate(officials, c('ref1', 'ref2', 'ref3'), sep=",", fill="right")
+
+md_refs <- refs %>%
+  filter(ncaa_id == 392) %>%
+  distinct() 
 ```
 
 #Describe the data's scope to me - what time period or range of teams, etc, that it covers. What's included in the data and what isn't. Write the code to do this and then summarize it in text.
@@ -25,14 +36,12 @@ refs <- read_csv("~/Downloads/officials_2021-22.csv")
 maryland_home_fouls <- refs %>%
   filter(home == 'Maryland') %>%
   group_by(home_fouls) %>%
-  arrange(desc(home_fouls)) %>%
-  distinct() 
+  arrange(desc(home_fouls))
 
 maryland_away_fouls <- refs %>%
   filter(visitor == 'Maryland') %>%
   group_by(visitor_fouls) %>%
-  arrange(desc(visitor_fouls)) %>%
-  distinct()
+  arrange(desc(visitor_fouls))
 ```
 
 In this data, we have basic information about home and away teams, number of fouls (regular and technical) committed by each team and the names of the officials who were in charge of the game from last year's women's college basketball season. What we don't have is game outcome, which would be interesting to know to figure out how much fouls called either for or against a team impacts the game's outcome.
