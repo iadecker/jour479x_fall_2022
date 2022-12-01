@@ -227,6 +227,9 @@ division_recruiting <- wbb_rosters23 %>%
   group_by(division, team_state, pm.state) %>%
   summarise(count = n()) %>%
   arrange(desc(count))
+
+wbb_rosters23 %>% group_by(team_state) %>% summarise(count = n()) %>% arrange(desc(count))
 ```
 
+In a lot of cases, we got NA as a result for the pm.state. In the cases of the DI schools, this meant that someone was an international player. 
 
