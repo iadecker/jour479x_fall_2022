@@ -113,3 +113,16 @@ Those are the main issues with the position information I saw from 21-22 data.
 In total, I would say this impacts no more than 30 rows — again, a lot of the funky stuff has just one entry.
 
 In terms of the other roster data — hometown, year, high school, previous school and height — those all need to be standardized, but that's the main concern.
+
+
+# Data exploration: which teams/conferences/divisions have the most/least in-state players?
+```{r}
+
+```
+
+
+
+
+
+
+

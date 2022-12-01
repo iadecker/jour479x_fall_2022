@@ -12,6 +12,7 @@ knitr::opts_chunk$set(echo = TRUE)
 #Loading our libraries
 library(tidyverse)
 library(dplyr)
+library(lubridate)
 ```
 
 ```{r}
@@ -23,11 +24,20 @@ unique_games <- refs %>%
   distinct()
 
 games_with_refs <- unique_games %>% 
-  separate(officials, c('ref1', 'ref2', 'ref3'), sep=",", fill="right")
+  separate(officials, c('ref1', 'ref2', 'ref3'), sep=",", fill="right") %>%
+  pivot_longer(cols = c('ref1', 'ref2', 'ref3'), values_to = 'ref') %>%
+  mutate(ref = str_squish(ref)) %>%
+  filter(!is.na(ref)) %>%
+  filter(ref != '') %>%
+  mutate(total_fouls = home_fouls + visitor_fouls, total_techs = home_technicals + visitor_technicals)
+  
 
-md_refs <- refs %>%
-  filter(ncaa_id == 392) %>%
-  distinct() 
+md_refs <- games_with_refs %>%
+  filter(home == 'Maryland' | visitor == 'Maryland')
+
+dinstinct_refs <- games_with_refs %>%
+  group_by(ref) %>%
+  summarise(count = n())
 ```
 
 #Describe the data's scope to me - what time period or range of teams, etc, that it covers. What's included in the data and what isn't. Write the code to do this and then summarize it in text.
@@ -82,3 +92,16 @@ I think this line of investigation is interesting because it can show us which t
 The crews dataframe generates a whole host of additional questions, but the main one is that there are tons of records without any information about who the referees were. I also played around with grouping by the officials and the two schools to see if there was anything there, but the data isn't great. Looks like this data needs to be cleaned.
 
 My second biggest question is dealing with the officials column itself. In most cases, we have three refs per row, but some have two or one and some are empty. It might be beneficial to either alphabetize the columns so we can see how many times a crew worked together, or maybe we should separate them into distinct columns. I'm just not sure how this would work with multiple elements after the comma. Would I need to run two separates?
+
+
+
+
+Stuff to do
+
+-go through and clean the top 75 refs a bit
+-Run a regression
+-min/max number of fouls for refs as well as averages
+-use lubridate to change date into the correct format, m/d/y --  group_by(month(date)) use code from 
+-How busy are some refs? Does that impact how they call games?
+
+
