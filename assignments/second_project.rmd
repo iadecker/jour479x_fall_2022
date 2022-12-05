@@ -13,31 +13,17 @@ knitr::opts_chunk$set(echo = TRUE)
 library(tidyverse)
 library(dplyr)
 library(lubridate)
+library(ggbeeswarm)
+library(ggrepel)
+```
+
+```{r}
+set.seed(1234)
 ```
 
 ```{r}
 #Loading the referee data
 refs <- read_csv("~/Downloads/officials_2021-22.csv")
-
-unique_games <- refs %>% 
-  select(-ncaa_id, -game_id) %>% 
-  distinct()
-
-games_with_refs <- unique_games %>% 
-  separate(officials, c('ref1', 'ref2', 'ref3'), sep=",", fill="right") %>%
-  pivot_longer(cols = c('ref1', 'ref2', 'ref3'), values_to = 'ref') %>%
-  mutate(ref = str_squish(ref)) %>%
-  filter(!is.na(ref)) %>%
-  filter(ref != '') %>%
-  mutate(total_fouls = home_fouls + visitor_fouls, total_techs = home_technicals + visitor_technicals)
-  
-
-md_refs <- games_with_refs %>%
-  filter(home == 'Maryland' | visitor == 'Maryland')
-
-dinstinct_refs <- games_with_refs %>%
-  group_by(ref) %>%
-  summarise(count = n())
 ```
 
 #Describe the data's scope to me - what time period or range of teams, etc, that it covers. What's included in the data and what isn't. Write the code to do this and then summarize it in text.
@@ -93,15 +79,109 @@ The crews dataframe generates a whole host of additional questions, but the main
 
 My second biggest question is dealing with the officials column itself. In most cases, we have three refs per row, but some have two or one and some are empty. It might be beneficial to either alphabetize the columns so we can see how many times a crew worked together, or maybe we should separate them into distinct columns. I'm just not sure how this would work with multiple elements after the comma. Would I need to run two separates?
 
+```{r}
+unique_games <- refs %>% 
+  select(-ncaa_id, -game_id) %>% 
+  distinct()
 
+games_with_refs <- unique_games %>% 
+  separate(officials, c('ref1', 'ref2', 'ref3'), sep=",", fill="right") %>%
+  pivot_longer(cols = c('ref1', 'ref2', 'ref3'), values_to = 'ref') %>%
+  mutate(ref = str_squish(ref)) %>%
+  filter(!is.na(ref)) %>%
+  filter(ref != '') %>%
+  mutate(total_fouls = home_fouls + visitor_fouls, total_techs = home_technicals + visitor_technicals)
+  
 
+md_refs <- games_with_refs %>%
+  filter(home == 'Maryland' | visitor == 'Maryland')
+
+md_refs_by_game <- md_refs %>% 
+  group_by(ref) %>%
+  summarise(games = n()) %>%
+  arrange(desc(games))
+
+md_refs_more_than_3_games <- md_refs_by_game %>%
+  filter(games > 2)
+
+dinstinct_refs <- games_with_refs %>%
+  group_by(ref) %>%
+  summarise(count = n())
+```
 
 Stuff to do
 
 -go through and clean the top 75 refs a bit
--Run a regression
 -min/max number of fouls for refs as well as averages
 -use lubridate to change date into the correct format, m/d/y --  group_by(month(date)) use code from 
 -How busy are some refs? Does that impact how they call games?
+
+
+#Run a regression - How realted are wins and fouls?
+```{r}
+logs <- read_csv("http://dwillis.github.io/sports-data-files/wbb_game_logs_2022.csv")
+
+logs %>% summarise(correlation = cor(win, pf, method="pearson"))
+
+fit <- lm(win ~ pf, data = logs)
+summary(fit)
+
+newcorrelations <- logs %>% 
+  mutate(differential = pts - opp_pts)
+
+fit2 <- lm(differential ~ pf, data = newcorrelations)
+summary(fit2)
+
+wins_and_fouls <- logs %>%
+  group_by(team) %>%
+  summarise(total_wins = sum(win), avg_fouls = mean(pf), total_games = n()) %>%
+  filter(total_games > 16)
+
+ggplot() + geom_point(data=wins_and_fouls, aes(x=avg_fouls, y=total_wins)) +
+  geom_smooth(data=wins_and_fouls, aes(x=avg_fouls, y=total_wins), method="lm")
+
+fit3 <- lm(total_wins ~ avg_fouls, data = wins_and_fouls)
+summary(fit3)
+```
+
+```{r}
+fouls_by_refs <- games_with_refs %>%
+  group_by(ref) %>%
+  summarise(avg_fouls = mean(total_fouls), games = n()) %>%
+  filter(games > 10) %>%
+  arrange(desc(avg_fouls))
+
+top_avg_fouls_by_ref <- fouls_by_refs %>%
+  filter(avg_fouls > 38.3)
+
+ggplot() + geom_point(data=top_avg_fouls_by_ref, aes(x=games, y=avg_fouls)) +
+  geom_smooth(data=top_avg_fouls_by_ref, aes(x=games, y=avg_fouls), method="lm") +
+  geom_hline(yintercept=33.8)
+
+ggplot() + geom_point(data=fouls_by_refs, aes(x=games, y=avg_fouls)) +
+  geom_smooth(data=fouls_by_refs, aes(x=games, y=avg_fouls), method="lm") +
+  geom_hline(yintercept=33.8)
+
+ggplot() + 
+  geom_bar(
+    data=md_refs_more_than_3_games, 
+    aes(x=reorder(ref, `games`), weight=`games`)) + 
+  labs(
+    title="Referees Who Officiate Maryland Women's Basketball Most", 
+    x="Games", 
+    y="Referee") + 
+  theme_light() + 
+  coord_flip()
+
+```
+
+```{r}
+games_with_refs <- games_with_refs %>%
+  mdy_hms()
+```
+
+
+
+
 
 
