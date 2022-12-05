@@ -173,6 +173,19 @@ ggplot() +
   theme_light() + 
   coord_flip()
 
+all_refs_number_of_games <- dinstinct_refs %>%
+  filter(count > 76)
+
+ggplot() + 
+  geom_bar(
+    data=all_refs_number_of_games, 
+    aes(x=reorder(ref, `count`), weight=`count`)) + 
+  labs(
+    title="Referees Who Officiate Women's Basketball Most", 
+    x="Games", 
+    y="Referee") + 
+  theme_light() + 
+  coord_flip()
 ```
 
 ```{r}
