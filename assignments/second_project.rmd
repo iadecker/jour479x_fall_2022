@@ -181,8 +181,40 @@ ggplot() +
 ```
 
 ```{r}
-games_with_refs <- games_with_refs %>%
-  mdy_hms()
+fouls_by_month <- unique_games %>%
+  mutate(date = mdy(date)) %>%
+  group_by(month(date)) %>%
+  summarise(monthly_total = sum(home_fouls) + sum(visitor_fouls), games = n()) %>%
+  mutate(avg_fouls_per_month = monthly_total/games) %>%
+  filter(games > 25)
+
+big_10 <- c('Nebraska', 'Northwestern', 'Iowa', 'Illinois', 'Ohio St.', 'Maryland', 'Minnesota', 'Rutgers', 'Michigan', 'Michigan St.', 'Wisconsin', 'Purdue', 'Penn St.', 'Indiana')
+
+fouls_by_month_and_team <- unique_games %>%
+  filter(home %in% big_10) %>%
+  mutate(date = mdy(date)) %>%
+  group_by(month(date), home) %>%
+  summarise(monthly_total = sum(home_fouls) + sum(visitor_fouls), games = n()) %>%
+  mutate(avg_fouls_per_month = monthly_total/games)
+
+fouls_by_month_and_team_visitor <- unique_games %>%
+  filter(visitor %in% big_10) %>%
+  mutate(date = mdy(date)) %>%
+  group_by(month(date), visitor) %>%
+  summarise(monthly_total = sum(home_fouls) + sum(visitor_fouls), games = n()) %>%
+  mutate(avg_fouls_per_month = monthly_total/games)
+
+all_fouls_by_month_and_team <- unique_games %>%
+  mutate(date = mdy(date)) %>%
+  group_by(month(date), home) %>%
+  summarise(monthly_total = sum(home_fouls) + sum(visitor_fouls), games = n()) %>%
+  mutate(avg_fouls_per_month = monthly_total/games)
+
+all_fouls_by_month_and_team_visitor <- games_with_refs %>%
+  mutate(date = mdy(date)) %>%
+  group_by(month(date), visitor) %>%
+  summarise(monthly_total = sum(total_fouls), games = n()) %>%
+  mutate(avg_fouls_per_month = monthly_total/games)
 ```
 
 Stuff to do
