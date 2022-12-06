@@ -208,7 +208,7 @@ fouls_by_month_and_team <- refs_and_logs %>%
 
 fouls_by_month_and_team_visitor <- refs_and_logs %>%
   mutate(month = floor_date(date, unit="months")) %>%
-  filter(visitor %in% big_10) %>%
+  filter(away_team_name %in% big_10) %>%
   group_by(month, away_team_name) %>%
   summarise(monthly_total = sum(opp_pf), games = n()) %>%
   mutate(avg_fouls_per_month = monthly_total/games)
