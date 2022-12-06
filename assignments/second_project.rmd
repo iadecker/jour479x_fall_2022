@@ -102,7 +102,6 @@ games_with_refs <- unique_games %>%
   filter(ref != '') %>%
   mutate(total_fouls = pf + opp_pf)
   
-
 md_refs <- games_with_refs %>%
   filter(team == 'Maryland')
 
@@ -224,7 +223,8 @@ all_fouls_by_month_and_team_visitor <- refs_and_logs %>%
   group_by(month(date), away_team_name) %>%
   summarise(monthly_total = sum(opp_pf), games = n()) %>%
   mutate(avg_fouls_per_month = monthly_total/games) %>%
-  filter(games > 3)
+  filter(games > 3) %>%
+  arrange(desc(avg_fouls_per_month))
 
 maryland_home_fouls_by_month <- fouls_by_month_and_team %>%
   filter(home_team_name == 'Maryland')
