@@ -109,14 +109,6 @@ dinstinct_refs <- games_with_refs %>%
   summarise(count = n())
 ```
 
-Stuff to do
-
--go through and clean the top 75 refs a bit
--min/max number of fouls for refs as well as averages
--use lubridate to change date into the correct format, m/d/y --  group_by(month(date)) use code from 
--How busy are some refs? Does that impact how they call games?
-
-
 #Run a regression - How realted are wins and fouls?
 ```{r}
 logs <- read_csv("http://dwillis.github.io/sports-data-files/wbb_game_logs_2022.csv")
@@ -154,12 +146,12 @@ fouls_by_refs <- games_with_refs %>%
 top_avg_fouls_by_ref <- fouls_by_refs %>%
   filter(avg_fouls > 38.3)
 
-ggplot() + geom_point(data=top_avg_fouls_by_ref, aes(x=games, y=avg_fouls)) +
-  geom_smooth(data=top_avg_fouls_by_ref, aes(x=games, y=avg_fouls), method="lm") +
-  geom_hline(yintercept=33.8)
-
 ggplot() + geom_point(data=fouls_by_refs, aes(x=games, y=avg_fouls)) +
   geom_smooth(data=fouls_by_refs, aes(x=games, y=avg_fouls), method="lm") +
+  geom_hline(yintercept=33.8)
+
+ggplot() + geom_point(data=top_avg_fouls_by_ref, aes(x=games, y=avg_fouls)) +
+  geom_smooth(data=top_avg_fouls_by_ref, aes(x=games, y=avg_fouls), method="lm") +
   geom_hline(yintercept=33.8)
 
 ggplot() + 
@@ -193,7 +185,12 @@ games_with_refs <- games_with_refs %>%
   mdy_hms()
 ```
 
+Stuff to do
 
+-go through and clean the top 75 refs a bit
+-min/max number of fouls for refs as well as averages
+-use lubridate to change date into the correct format, m/d/y --  group_by(month(date)) use code from 
+-How busy are some refs? Does that impact how they call games?
 
 
 
