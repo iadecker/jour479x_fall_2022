@@ -24,6 +24,16 @@ set.seed(1234)
 ```{r}
 #Loading the referee data
 refs <- read_csv("~/Downloads/officials_2021-22.csv")
+
+refs <- refs %>%
+  mutate(date = mdy(date))
+
+logs_2022 <- read_csv("http://dwillis.github.io/sports-data-files/wbb_game_logs_2022.csv")
+
+refs_and_logs <- logs_2022 %>%
+  inner_join(refs, by = c('date', 'ncaa_id'))
+
+#pf (team), opp_pf
 ```
 
 #Describe the data's scope to me - what time period or range of teams, etc, that it covers. What's included in the data and what isn't. Write the code to do this and then summarize it in text.
@@ -80,7 +90,7 @@ The crews dataframe generates a whole host of additional questions, but the main
 My second biggest question is dealing with the officials column itself. In most cases, we have three refs per row, but some have two or one and some are empty. It might be beneficial to either alphabetize the columns so we can see how many times a crew worked together, or maybe we should separate them into distinct columns. I'm just not sure how this would work with multiple elements after the comma. Would I need to run two separates?
 
 ```{r}
-unique_games <- refs %>% 
+unique_games <- refs_and_logs %>% 
   select(-ncaa_id, -game_id) %>% 
   distinct()
 
@@ -90,11 +100,11 @@ games_with_refs <- unique_games %>%
   mutate(ref = str_squish(ref)) %>%
   filter(!is.na(ref)) %>%
   filter(ref != '') %>%
-  mutate(total_fouls = home_fouls + visitor_fouls, total_techs = home_technicals + visitor_technicals)
+  mutate(total_fouls = pf + opp_pf)
   
 
 md_refs <- games_with_refs %>%
-  filter(home == 'Maryland' | visitor == 'Maryland')
+  filter(team == 'Maryland')
 
 md_refs_by_game <- md_refs %>% 
   group_by(ref) %>%
@@ -166,7 +176,7 @@ ggplot() +
   coord_flip()
 
 all_refs_number_of_games <- dinstinct_refs %>%
-  filter(count > 76)
+  filter(count > 126)
 
 ggplot() + 
   geom_bar(
@@ -181,40 +191,60 @@ ggplot() +
 ```
 
 ```{r}
-fouls_by_month <- unique_games %>%
-  mutate(date = mdy(date)) %>%
+fouls_by_month <- refs_and_logs %>%
   group_by(month(date)) %>%
-  summarise(monthly_total = sum(home_fouls) + sum(visitor_fouls), games = n()) %>%
+  summarise(monthly_total = sum(pf) + sum(opp_pf), games = n()) %>%
   mutate(avg_fouls_per_month = monthly_total/games) %>%
   filter(games > 25)
 
 big_10 <- c('Nebraska', 'Northwestern', 'Iowa', 'Illinois', 'Ohio St.', 'Maryland', 'Minnesota', 'Rutgers', 'Michigan', 'Michigan St.', 'Wisconsin', 'Purdue', 'Penn St.', 'Indiana')
 
-fouls_by_month_and_team <- unique_games %>%
+fouls_by_month_and_team <- refs_and_logs %>%
+  mutate(month = floor_date(date, unit="months")) %>% 
   filter(home %in% big_10) %>%
-  mutate(date = mdy(date)) %>%
-  group_by(month(date), home) %>%
-  summarise(monthly_total = sum(home_fouls) + sum(visitor_fouls), games = n()) %>%
+  group_by(month, home_team_name) %>%
+  summarise(monthly_total = sum(pf), games = n()) %>%
   mutate(avg_fouls_per_month = monthly_total/games)
 
-fouls_by_month_and_team_visitor <- unique_games %>%
+fouls_by_month_and_team_visitor <- refs_and_logs %>%
+  mutate(month = floor_date(date, unit="months")) %>%
   filter(visitor %in% big_10) %>%
-  mutate(date = mdy(date)) %>%
-  group_by(month(date), visitor) %>%
-  summarise(monthly_total = sum(home_fouls) + sum(visitor_fouls), games = n()) %>%
+  group_by(month, away_team_name) %>%
+  summarise(monthly_total = sum(opp_pf), games = n()) %>%
   mutate(avg_fouls_per_month = monthly_total/games)
 
-all_fouls_by_month_and_team <- unique_games %>%
-  mutate(date = mdy(date)) %>%
-  group_by(month(date), home) %>%
-  summarise(monthly_total = sum(home_fouls) + sum(visitor_fouls), games = n()) %>%
-  mutate(avg_fouls_per_month = monthly_total/games)
+all_fouls_by_month_and_team <- refs_and_logs %>%
+  group_by(month(date), home_team_name) %>%
+  summarise(monthly_total = sum(pf), games = n()) %>%
+  mutate(avg_fouls_per_month = monthly_total/games) %>%
+  filter(games > 3)
 
-all_fouls_by_month_and_team_visitor <- games_with_refs %>%
-  mutate(date = mdy(date)) %>%
-  group_by(month(date), visitor) %>%
-  summarise(monthly_total = sum(total_fouls), games = n()) %>%
-  mutate(avg_fouls_per_month = monthly_total/games)
+all_fouls_by_month_and_team_visitor <- refs_and_logs %>%
+  group_by(month(date), away_team_name) %>%
+  summarise(monthly_total = sum(opp_pf), games = n()) %>%
+  mutate(avg_fouls_per_month = monthly_total/games) %>%
+  filter(games > 3)
+
+maryland_home_fouls_by_month <- fouls_by_month_and_team %>%
+  filter(home_team_name == 'Maryland')
+
+ggplot() + geom_bar(data=fouls_by_month_and_team, aes(x=month, weight=avg_fouls_per_month, fill=home_team_name)) + theme_minimal() + coord_polar()
+
+ggplot() + 
+  geom_hline(yintercept=16.3, color="green") + 
+  geom_line(data=fouls_by_month_and_team, aes(x=month, y=avg_fouls_per_month, group=home_team_name)) + 
+  scale_y_continuous(limits = c(10, 25)) + 
+  facet_wrap(~home_team_name)
+
+fouls_by_month_and_team %>% summarise(mean(avg_fouls_per_month))
+
+ggplot() + 
+  geom_hline(yintercept=16.5, color="red") + 
+  geom_line(data=fouls_by_month_and_team_visitor, aes(x=month, y=avg_fouls_per_month, group=away_team_name)) + 
+  scale_y_continuous(limits = c(10, 25)) + 
+  facet_wrap(~away_team_name)
+
+fouls_by_month_and_team_visitor %>% summarise(mean(avg_fouls_per_month))
 ```
 
 Stuff to do
