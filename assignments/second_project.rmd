@@ -260,13 +260,154 @@ ggplot() +
   theme_light()
 ```
 
-Stuff to do
+```{r}
+sec <- c('Alabama', 'Arkansas', 'Auburn', 'LSU', 'Mississippi St.', 'Texas A&M', 'Ole Miss', 'Florida', 'Georgia', 'Kentucky', 'Missouri', 'Tennessee', 'Vanderbilt', 'South Carolina')
 
--go through and clean the top 75 refs a bit
--min/max number of fouls for refs as well as averages
--use lubridate to change date into the correct format, m/d/y --  group_by(month(date)) use code from 
--How busy are some refs? Does that impact how they call games?
+sec_fouls_by_month_and_team <- refs_and_logs %>%
+  mutate(month = floor_date(date, unit="months")) %>% 
+  filter(home_team_name %in% sec) %>%
+  group_by(month, home_team_name) %>%
+  summarise(monthly_total = sum(pf), games = n()) %>%
+  mutate(avg_fouls_per_month = monthly_total/games) %>%
+  filter(games > 1)
 
+sec_fouls_by_month_and_team_visitor <- refs_and_logs %>%
+  mutate(month = floor_date(date, unit="months")) %>%
+  filter(away_team_name %in% sec) %>%
+  group_by(month, away_team_name) %>%
+  summarise(monthly_total = sum(opp_pf), games = n()) %>%
+  mutate(avg_fouls_per_month = monthly_total/games)
 
+ggplot() + 
+  geom_hline(yintercept=16.3, color="green") + 
+  geom_line(data=sec_fouls_by_month_and_team, aes(x=month, y=avg_fouls_per_month, group=home_team_name)) + 
+  scale_y_continuous(limits = c(10, 25)) + 
+  facet_wrap(~home_team_name)
 
+ggplot() + 
+  geom_hline(yintercept=16.5, color="red") + 
+  geom_line(data=sec_fouls_by_month_and_team_visitor, aes(x=month, y=avg_fouls_per_month, group=away_team_name)) + 
+  scale_y_continuous(limits = c(10, 25)) + 
+  facet_wrap(~away_team_name)
+```
+
+```{r}
+big_12 <- c('Baylor', 'Iowa St.', 'Kansas', 'Kansas St.', 'Oklahoma', 'Oklahoma St.', 'Texas Tech', 'West Virginia', 'TCU', 'Texas')
+
+big_12_fouls_by_month_and_team <- refs_and_logs %>%
+  mutate(month = floor_date(date, unit="months")) %>% 
+  filter(home_team_name %in% big_12) %>%
+  group_by(month, home_team_name) %>%
+  summarise(monthly_total = sum(pf), games = n()) %>%
+  mutate(avg_fouls_per_month = monthly_total/games)
+
+big_12_fouls_by_month_and_team_visitor <- refs_and_logs %>%
+  mutate(month = floor_date(date, unit="months")) %>%
+  filter(away_team_name %in% big_12) %>%
+  group_by(month, away_team_name) %>%
+  summarise(monthly_total = sum(opp_pf), games = n()) %>%
+  mutate(avg_fouls_per_month = monthly_total/games)
+
+ggplot() + 
+  geom_hline(yintercept=16.3, color="green") + 
+  geom_line(data=big_12_fouls_by_month_and_team, aes(x=month, y=avg_fouls_per_month, group=home_team_name)) + 
+  scale_y_continuous(limits = c(10, 25)) + 
+  facet_wrap(~home_team_name)
+
+ggplot() + 
+  geom_hline(yintercept=16.5, color="red") + 
+  geom_line(data=big_12_fouls_by_month_and_team_visitor, aes(x=month, y=avg_fouls_per_month, group=away_team_name)) + 
+  scale_y_continuous(limits = c(10, 25)) + 
+  facet_wrap(~away_team_name)
+```
+
+```{r}
+big_east <- c('Butler', 'UConn', 'Creighton', 'Seton Hall', 'DePaul', 'Marquette', 'Providence', 'Villanova', 'Georgetown', 'Xavier', "St. John's (NY)")
+
+big_east_fouls_by_month_and_team <- refs_and_logs %>%
+  mutate(month = floor_date(date, unit="months")) %>% 
+  filter(home_team_name %in% big_east) %>%
+  group_by(month, home_team_name) %>%
+  summarise(monthly_total = sum(pf), games = n()) %>%
+  mutate(avg_fouls_per_month = monthly_total/games)
+
+big_east_fouls_by_month_and_team_visitor <- refs_and_logs %>%
+  mutate(month = floor_date(date, unit="months")) %>%
+  filter(away_team_name %in% big_east) %>%
+  group_by(month, away_team_name) %>%
+  summarise(monthly_total = sum(opp_pf), games = n()) %>%
+  mutate(avg_fouls_per_month = monthly_total/games)
+
+ggplot() + 
+  geom_hline(yintercept=16.3, color="green") + 
+  geom_line(data=big_east_fouls_by_month_and_team, aes(x=month, y=avg_fouls_per_month, group=home_team_name)) + 
+  scale_y_continuous(limits = c(10, 25)) + 
+  facet_wrap(~home_team_name)
+
+ggplot() + 
+  geom_hline(yintercept=16.5, color="red") + 
+  geom_line(data=big_east_fouls_by_month_and_team_visitor, aes(x=month, y=avg_fouls_per_month, group=away_team_name)) + 
+  scale_y_continuous(limits = c(10, 25)) + 
+  facet_wrap(~away_team_name)
+```
+
+```{r}
+pac_12 <- c('Arizona', 'Arizona St.', 'UCLA', 'Southern California', 'Oregon St.', 'Oregon', 'Washington St.', 'Washington', 'Colorado', 'Utah', 'Stanford')
+
+pac_12_fouls_by_month_and_team <- refs_and_logs %>%
+  mutate(month = floor_date(date, unit="months")) %>% 
+  filter(home_team_name %in% pac_12) %>%
+  group_by(month, home_team_name) %>%
+  summarise(monthly_total = sum(pf), games = n()) %>%
+  mutate(avg_fouls_per_month = monthly_total/games)
+
+pac_12_fouls_by_month_and_team_visitor <- refs_and_logs %>%
+  mutate(month = floor_date(date, unit="months")) %>%
+  filter(away_team_name %in% pac_12) %>%
+  group_by(month, away_team_name) %>%
+  summarise(monthly_total = sum(opp_pf), games = n()) %>%
+  mutate(avg_fouls_per_month = monthly_total/games)
+
+ggplot() + 
+  geom_hline(yintercept=16.3, color="green") + 
+  geom_line(data=pac_12_fouls_by_month_and_team, aes(x=month, y=avg_fouls_per_month, group=home_team_name)) + 
+  scale_y_continuous(limits = c(10, 25)) + 
+  facet_wrap(~home_team_name)
+
+ggplot() + 
+  geom_hline(yintercept=16.5, color="red") + 
+  geom_line(data=pac_12_fouls_by_month_and_team_visitor, aes(x=month, y=avg_fouls_per_month, group=away_team_name)) + 
+  scale_y_continuous(limits = c(10, 25)) + 
+  facet_wrap(~away_team_name)
+```
+
+```{r}
+acc <- c('Boston College', 'Boston U.', 'Clemson', 'Duke', 'Florida St.', 'Syracuse', 'Louisville', "Miami (FL)", 'NC State', 'Virginia Tech', 'North Carolina', 'Pittsburgh', 'Virginia', 'Wake Forest', 'Georgia Tech')
+
+acc_fouls_by_month_and_team <- refs_and_logs %>%
+  mutate(month = floor_date(date, unit="months")) %>% 
+  filter(home_team_name %in% acc) %>%
+  group_by(month, home_team_name) %>%
+  summarise(monthly_total = sum(pf), games = n()) %>%
+  mutate(avg_fouls_per_month = monthly_total/games)
+
+acc_fouls_by_month_and_team_visitor <- refs_and_logs %>%
+  mutate(month = floor_date(date, unit="months")) %>%
+  filter(away_team_name %in% acc) %>%
+  group_by(month, away_team_name) %>%
+  summarise(monthly_total = sum(opp_pf), games = n()) %>%
+  mutate(avg_fouls_per_month = monthly_total/games)
+
+ggplot() + 
+  geom_hline(yintercept=16.3, color="green") + 
+  geom_line(data=acc_fouls_by_month_and_team, aes(x=month, y=avg_fouls_per_month, group=home_team_name)) + 
+  scale_y_continuous(limits = c(10, 25)) + 
+  facet_wrap(~home_team_name)
+
+ggplot() + 
+  geom_hline(yintercept=16.5, color="red") + 
+  geom_line(data=acc_fouls_by_month_and_team_visitor, aes(x=month, y=avg_fouls_per_month, group=away_team_name)) + 
+  scale_y_continuous(limits = c(10, 25)) + 
+  facet_wrap(~away_team_name)
+```
 
