@@ -222,12 +222,31 @@ all_fouls_by_month_and_team_visitor <- refs_and_logs %>%
   arrange(desc(avg_fouls_per_month))
 
 maryland_home_fouls_by_month <- fouls_by_month_and_team %>%
+  mutate(month = floor_date(date, unit="months")) %>%
   filter(home_team_name == 'Maryland')
 
 maryland_away_fouls_by_month <- fouls_by_month_and_team_visitor %>%
   filter(away_team_name == 'Maryland')
 
+ggplot() + 
+  geom_bar(
+    data=maryland_home_fouls_by_month, 
+    aes(x=reorder(month, `avg_fouls_per_month`), weight=`avg_fouls_per_month`)) + 
+  labs(
+    title="Referees Who Officiate Women's Basketball Most", 
+    x="Games", 
+    y="Referee") + 
+  theme_light()
 
+ggplot() + 
+  geom_bar(
+    data=all_refs_number_of_games, 
+    aes(x=reorder(ref, `count`), weight=`count`)) + 
+  labs(
+    title="Referees Who Officiate Women's Basketball Most", 
+    x="Games", 
+    y="Referee") + 
+  theme_light()
 
 ggplot() + geom_bar(data=fouls_by_month_and_team, aes(x=month, weight=avg_fouls_per_month, fill=home_team_name)) + theme_minimal() + coord_polar()
 
