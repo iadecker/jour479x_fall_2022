@@ -18,10 +18,6 @@ library(ggrepel)
 ```
 
 ```{r}
-set.seed(1234)
-```
-
-```{r}
 #Loading the referee data
 refs <- read_csv("~/Downloads/officials_2021-22.csv")
 
@@ -31,9 +27,8 @@ refs <- refs %>%
 logs_2022 <- read_csv("http://dwillis.github.io/sports-data-files/wbb_game_logs_2022.csv")
 
 refs_and_logs <- logs_2022 %>%
-  inner_join(refs, by = c('date', 'ncaa_id'))
-
-#pf (team), opp_pf
+  inner_join(refs, by = c('date', 'ncaa_id')) %>%
+  mutate(total_fouls = pf + opp_pf)
 ```
 
 #Describe the data's scope to me - what time period or range of teams, etc, that it covers. What's included in the data and what isn't. Write the code to do this and then summarize it in text.
@@ -228,6 +223,11 @@ all_fouls_by_month_and_team_visitor <- refs_and_logs %>%
 
 maryland_home_fouls_by_month <- fouls_by_month_and_team %>%
   filter(home_team_name == 'Maryland')
+
+maryland_away_fouls_by_month <- fouls_by_month_and_team_visitor %>%
+  filter(away_team_name == 'Maryland')
+
+
 
 ggplot() + geom_bar(data=fouls_by_month_and_team, aes(x=month, weight=avg_fouls_per_month, fill=home_team_name)) + theme_minimal() + coord_polar()
 
