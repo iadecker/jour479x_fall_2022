@@ -95,7 +95,7 @@ ggplot() + geom_point(data=fouls_by_refs, aes(x=games, y=avg_fouls)) +
   geom_smooth(data=fouls_by_refs, aes(x=games, y=avg_fouls), method="lm") +
   geom_hline(yintercept=33.8) +
   labs(
-    title="The More Games One Officiate, The Less Fouls One Calls")
+    title="The More Games One Officiates, The Less Fouls One Calls")
 
 ggplot() + 
   geom_bar(
