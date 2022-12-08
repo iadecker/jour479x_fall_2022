@@ -114,6 +114,7 @@ fouls_by_refs <- games_with_refs %>%
 top_avg_fouls_by_ref <- fouls_by_refs %>%
   filter(avg_fouls > 38.3)
 
+#Looking at the relationship of fouls by refs and number of games officiated
 ggplot() + geom_point(data=fouls_by_refs, aes(x=games, y=avg_fouls)) +
   geom_smooth(data=fouls_by_refs, aes(x=games, y=avg_fouls), method="lm") +
   geom_hline(yintercept=33.8)
@@ -145,6 +146,7 @@ ggplot() +
 ```
 
 ```{r}
+#Creating a dataframe with home and away foul information for the Big Ten with charts
 fouls_by_month <- refs_and_logs %>%
   mutate(month = floor_date(date, unit="months")) %>%
   group_by(month) %>%
@@ -182,6 +184,7 @@ ggplot() +
 ```
 
 ```{r}
+#Creating a dataframe with home and away foul information for the Big Ten with charts
 big_east <- c('Butler', 'UConn', 'Creighton', 'Seton Hall', 'DePaul', 'Marquette', 'Providence', 'Villanova', 'Georgetown', 'Xavier', "St. John's (NY)")
 
 big_east_fouls_by_month_and_team <- refs_and_logs %>%
@@ -204,7 +207,6 @@ ggplot() +
   scale_y_continuous(limits = c(10, 25)) + 
   facet_wrap(~home_team_name)
 
-
 ggplot() + 
   geom_hline(yintercept=15, color="red") + 
   geom_line(data=big_east_fouls_by_month_and_team_visitor, aes(x=month, y=avg_fouls_per_month, group=away_team_name)) + 
@@ -212,8 +214,8 @@ ggplot() +
   facet_wrap(~away_team_name)
 ```
 
-
 ```{r}
+#Maryland home and away fouls by month with charts
 maryland_home_fouls_by_month <- fouls_by_month_and_team %>%
   filter(home_team_name == 'Maryland')
 
@@ -244,13 +246,14 @@ ggplot() +
 ```
 
 ```{r}
+#Overall average fouls per month in WBB
 ggplot() + 
   geom_bar(
     data=fouls_by_month, 
     aes(x=month, weight=`avg_fouls_per_month`)) + 
   labs(
     title="Average Fouls Per Month", 
-    subtitle="The Terps had some b",
+    subtitle="Even if you think referees are bungling calls, they're actually pretty consistent",
     x="Month", 
     y="Average Fouls") + 
   theme_light() +
