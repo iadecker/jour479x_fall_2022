@@ -242,6 +242,13 @@ ggplot() +
   theme_light() + 
   coord_flip()
 ```
+Our first graph shows bucks the traditional wisdom that the more games a referee presides over the more likely they are to have an elevated average foul count. However, our graph shows the opposite; it appears that the more games a referee works, they fewer fouls they call. This is important because it tells us that officials are actually fairly consistent. The following chart shows the top-25 refs in terms of games worked and plots their games by average fouls. And low and behold, we see the same result as we did in the overall referees graph — we get another downward trendline, which tells us that the top-25 officials also seem to be pretty consistent.
+
+I was also curious to see which officials worked Maryland games the most last season. This would allow me to see if the Terps were perhaps victims of "whistle-happy" refs. And if we look at the top-25 average fouls chart and this one, we see some familiar names — including but not limited to Michael McConnell, Gina Cross and Felicia Grinter. 
+
+The last chart shows which referees worked the most games last season. This might be able to tell us if certain refs were overworked or how often they traveled. It's also interesting to see who the "full-time" referees are, for while some officials probably work part-time, there seem to be individuals whose full-time job is to officiate college basketball.
+
+Cameron Inoyue must have some serious frequent-flyer miles.
 
 ```{r}
 #Creating a dataframe with home and away foul information for the Big Ten with charts
