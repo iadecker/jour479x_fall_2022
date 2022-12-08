@@ -1,0 +1,90 @@
+---
+title: "second_project_presentation"
+output: html_document
+date: "2022-12-08"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+#Loading our libraries
+library(tidyverse)
+library(dplyr)
+library(lubridate)
+library(ggrepel)
+```
+
+```{r}
+#Loading the referee data
+refs <- read_csv("~/Downloads/officials_2021-22.csv")
+
+refs <- refs %>%
+  mutate(date = mdy(date))
+
+logs_2022 <- read_csv("http://dwillis.github.io/sports-data-files/wbb_game_logs_2022.csv")
+
+refs_and_logs <- logs_2022 %>%
+  inner_join(refs, by = c('date', 'ncaa_id')) %>%
+  mutate(total_fouls = pf + opp_pf)
+```
+
+```{r}
+unique_games <- refs_and_logs %>% 
+  select(-ncaa_id, -game_id) %>% 
+  distinct()
+
+games_with_refs <- unique_games %>% 
+  separate(officials, c('ref1', 'ref2', 'ref3'), sep=",", fill="right") %>%
+  pivot_longer(cols = c('ref1', 'ref2', 'ref3'), values_to = 'ref') %>%
+  mutate(ref = str_squish(ref)) %>%
+  filter(!is.na(ref)) %>%
+  filter(ref != '') %>%
+  mutate(total_fouls = pf + opp_pf)
+  
+md_refs <- games_with_refs %>%
+  filter(team == 'Maryland')
+
+md_refs_by_game <- md_refs %>% 
+  group_by(ref) %>%
+  summarise(games = n()) %>%
+  arrange(desc(games))
+
+md_refs_more_than_3_games <- md_refs_by_game %>%
+  filter(games > 2)
+
+dinstinct_refs <- games_with_refs %>%
+  group_by(ref) %>%
+  summarise(count = n())
+```
+
+```{r}
+fit <- lm(win ~ pf, data = logs_2022)
+summary(fit)
+
+newcorrelations <- logs_2022 %>% 
+  mutate(differential = pts - opp_pts)
+
+fit2 <- lm(differential ~ pf, data = newcorrelations)
+summary(fit2)
+
+wins_and_fouls <- logs_2022 %>%
+  group_by(team) %>%
+  summarise(total_wins = sum(win), avg_fouls = mean(pf), total_games = n()) %>%
+  filter(total_games > 16)
+
+fit3 <- lm(total_wins ~ avg_fouls, data = wins_and_fouls)
+summary(fit3)
+
+ggplot() + geom_point(data=wins_and_fouls, aes(x=avg_fouls, y=total_wins)) +
+  geom_smooth(data=wins_and_fouls, aes(x=avg_fouls, y=total_wins), method="lm")
+
+```
+
+```{r}
+
+```
+
+
+
