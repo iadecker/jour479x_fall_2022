@@ -80,31 +80,6 @@ ggplot() +
 ```
 
 ```{r}
-#Running several models to see the relationship between fouls, wins and point-differential
-fit <- lm(win ~ pf, data = logs_2022)
-summary(fit)
-
-newcorrelations <- logs_2022 %>% 
-  mutate(differential = pts - opp_pts)
-
-fit2 <- lm(differential ~ pf, data = newcorrelations)
-summary(fit2)
-
-wins_and_fouls <- logs_2022 %>%
-  group_by(team) %>%
-  summarise(total_wins = sum(win), avg_fouls = mean(pf), total_games = n()) %>%
-  filter(total_games > 16)
-
-fit3 <- lm(total_wins ~ avg_fouls, data = wins_and_fouls)
-summary(fit3)
-
-#Charting the relaionship of wins and avg fouls using a scatterplot
-ggplot() + geom_point(data=wins_and_fouls, aes(x=avg_fouls, y=total_wins)) +
-  geom_smooth(data=wins_and_fouls, aes(x=avg_fouls, y=total_wins), method="lm")
-
-```
-
-```{r}
 #Creating more dataframes with information on individual refs and charting them
 fouls_by_refs <- games_with_refs %>%
   group_by(ref) %>%
