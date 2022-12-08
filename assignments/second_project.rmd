@@ -33,6 +33,8 @@ refs_and_logs <- logs_2022 %>%
 
 #Describe the data's scope to me - what time period or range of teams, etc, that it covers. What's included in the data and what isn't. Write the code to do this and then summarize it in text.
 
+#Initial Investigation
+
 ```{r}
 #This was my first attempt at creating a dataframe of MD fouls
 maryland_home_fouls <- refs %>%
@@ -85,6 +87,13 @@ I think this line of investigation is interesting because it can show us which t
 The crews dataframe generates a whole host of additional questions, but the main one is that there are tons of records without any information about who the referees were. I also played around with grouping by the officials and the two schools to see if there was anything there, but the data isn't great. Looks like this data needs to be cleaned.
 
 My second biggest question is dealing with the officials column itself. In most cases, we have three refs per row, but some have two or one and some are empty. It might be beneficial to either alphabetize the columns so we can see how many times a crew worked together, or maybe we should separate them into distinct columns. I'm just not sure how this would work with multiple elements after the comma. Would I need to run two separates?
+
+
+#A More Thorough Run-Through
+
+When I covered Maryland Women's Basketball last season, I began seeing familiar faces among the referees at home games. This prompted me to wonder about if there were certain officials that officiated Maryland games more than others and whether or not that might impact a game. In other words, can we quantify how much a game fundamentally changes based on who the referees are?
+
+I encountered some early issues when first starting off. First, the referee data had one single column for officials, which contained 
 
 ```{r}
 #Creating dataframes that will be easier to work with than the original data.
