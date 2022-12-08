@@ -174,6 +174,21 @@ summary(fit3)
 ggplot() + geom_point(data=wins_and_fouls, aes(x=avg_fouls, y=total_wins)) +
   geom_smooth(data=wins_and_fouls, aes(x=avg_fouls, y=total_wins), method="lm")
 ```
+One of the driving thoughts behind this investigation was that the number of fouls a team commits in a game has some kind of impact on the game's outcome — a team that commits fewer fouls has a better chance to win than an undisciplined team. I ran several regressions to test this theory. What I found was less than encouraging. None of the regressions indicated much of a relationship between personal fouls and wins, point differential or total wins, but I wanted to be extra sure, so I charted a scatterplot to see the relationship between average fouls and total wins. The plot was all over the place and we had a negative trendline, so this just confirmed what our regressions told us.
+
+STILL, fouls are an integral part of basketball, and while these models might not value them super highly, players who get in fouls trouble hurt their team by having to sit on the bench. Conversely, a player who can get to the free-throw line can offset a poor shooting game from the field. To put it succinctly, fouls are important. Thus, onward in our investigation!
+
+1. fit <- lm(win ~ pf, data = logs_2022)
+summary(fit)
+-p-value that indicates statistical significance, but an adjusted r-squared of 0.03... In other words, personal fouls are 3% predictive of a win.
+
+2. fit2 <- lm(differential ~ pf, data = newcorrelations)
+summary(fit2)
+-p-value that indicates statistical significance, but an adjusted r-squared of 0.02, so fouls is even less predictive with regards to point differential.
+
+3. fit3 <- lm(total_wins ~ avg_fouls, data = wins_and_fouls)
+summary(fit3)
+-p-value that indicates statistical significance, but an adjusted r-squared of 0.04, so not a lot here.
 
 ```{r}
 #Creating more dataframes with information on individual refs and charting them
