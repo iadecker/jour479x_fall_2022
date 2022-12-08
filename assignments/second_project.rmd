@@ -108,9 +108,25 @@ md_refs_by_game <- md_refs %>%
 md_refs_more_than_3_games <- md_refs_by_game %>%
   filter(games > 2)
 
-dinstinct_refs <- games_with_refs %>%
+distinct_refs <- games_with_refs %>%
   group_by(ref) %>%
-  summarise(count = n())
+  summarise(total_fouls = sum(total_fouls), games = n()) %>%
+  mutate(average_fouls = total_fouls/games) %>%
+  arrange(desc(games))
+
+top_25_refs_fouls_per_game <- distinct_refs %>%
+  filter(games > 126)
+
+ggplot() + 
+  geom_bar(
+    data=top_25_refs_fouls_per_game, 
+    aes(x=reorder(ref, `average_fouls`), weight=`average_fouls`)) + 
+  labs(
+    title="Which Referees Call The Most Fouls?", 
+    x="Referee", 
+    y="Average Fouls") + 
+  theme_light() + 
+  coord_flip()
 ```
 
 #Run a regression - How realted are wins and fouls?

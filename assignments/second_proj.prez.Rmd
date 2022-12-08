@@ -17,7 +17,7 @@ library(ggrepel)
 ```
 
 ```{r}
-#Loading the referee data
+#Loading the referee data and creating a dataframe with game-level data
 refs <- read_csv("~/Downloads/officials_2021-22.csv")
 
 refs <- refs %>%
@@ -31,6 +31,7 @@ refs_and_logs <- logs_2022 %>%
 ```
 
 ```{r}
+#Creating dataframes that will be easier to work with than the original data.
 unique_games <- refs_and_logs %>% 
   select(-ncaa_id, -game_id) %>% 
   distinct()
@@ -43,6 +44,7 @@ games_with_refs <- unique_games %>%
   filter(ref != '') %>%
   mutate(total_fouls = pf + opp_pf)
   
+#Maryland specific data and refs
 md_refs <- games_with_refs %>%
   filter(team == 'Maryland')
 
@@ -54,6 +56,7 @@ md_refs_by_game <- md_refs %>%
 md_refs_more_than_3_games <- md_refs_by_game %>%
   filter(games > 2)
 
+#Refs dataframe with games and avg fouls (and then the top-25 referees by game) + bar chart graph
 distinct_refs <- games_with_refs %>%
   group_by(ref) %>%
   summarise(total_fouls = sum(total_fouls), games = n()) %>%
@@ -76,6 +79,7 @@ ggplot() +
 ```
 
 ```{r}
+#Running several models to see the relationship between fouls, wins and point-differential
 fit <- lm(win ~ pf, data = logs_2022)
 summary(fit)
 
@@ -93,12 +97,14 @@ wins_and_fouls <- logs_2022 %>%
 fit3 <- lm(total_wins ~ avg_fouls, data = wins_and_fouls)
 summary(fit3)
 
+#Charting the relaionship of wins and avg fouls using a scatterplot
 ggplot() + geom_point(data=wins_and_fouls, aes(x=avg_fouls, y=total_wins)) +
   geom_smooth(data=wins_and_fouls, aes(x=avg_fouls, y=total_wins), method="lm")
 
 ```
 
 ```{r}
+#Creating more dataframes with information on individual refs and charting them
 fouls_by_refs <- games_with_refs %>%
   group_by(ref) %>%
   summarise(avg_fouls = mean(total_fouls), games = n()) %>%
