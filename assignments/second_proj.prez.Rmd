@@ -228,13 +228,9 @@ ggplot() +
     aes(x=month, weight=`avg_fouls_per_month`)) + 
   labs(
     title="Average Fouls Per Month", 
+    subtitle="The Terps had some b",
     x="Month", 
     y="Average Fouls") + 
   theme_light() +
   ylim(0, 50)
 ```
-
-
-
-
-
