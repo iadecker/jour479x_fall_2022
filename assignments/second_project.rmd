@@ -347,9 +347,11 @@ ggplot() +
 
 fouls_by_month_and_team_visitor %>% summarise(mean(avg_fouls_per_month))
 ```
-The first two charts show Maryland's average fouls by month when at home and on the road. 
+The first two charts show Maryland's average fouls by month when at home and on the road. Both graphs show an unfortunate trend of the Terps committing less average fouls in November than December and January than December but jumping up in February and March, tournament season. I think it's also interesting to point out that Maryland commits more average fouls on the road than at home. Could this perhaps speak to the importance of home-court advantage?
 
+While the third chart is nice and colorful, it doens't tell us a whole lot. If anything, my goal was to see how many fouls teams committed by month to see if there was a period of the season in which refs were either better or worse. It seems like fouls slightly decrease after November, but again, not the most helpful.
 
+Which brings us to graphs four and five. Using a facet wrap allowed me to see each Big Ten school's average fouls per month to see which teams improved or worsened in committing fouls as the season went on. The facet wrap is a more succinct way of demonstrating what I was hoping to achieve in graph three and a team-by-team view of what the first two charts (both of which were Maryland-specific) relayed.
 
 
 ```{r}
