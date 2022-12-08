@@ -18,7 +18,7 @@ library(ggrepel)
 ```
 
 ```{r}
-#Loading the referee data
+#Loading the referee data and creating a dataframe with game-level data
 refs <- read_csv("~/Downloads/officials_2021-22.csv")
 
 refs <- refs %>%
@@ -34,6 +34,7 @@ refs_and_logs <- logs_2022 %>%
 #Describe the data's scope to me - what time period or range of teams, etc, that it covers. What's included in the data and what isn't. Write the code to do this and then summarize it in text.
 
 ```{r}
+#This was my first attempt at creating a dataframe of MD fouls
 maryland_home_fouls <- refs %>%
   filter(home == 'Maryland') %>%
   group_by(home_fouls) %>%
@@ -54,6 +55,7 @@ To fix this issue, I ran the distinct function to get rid of the duplicate game 
 #Next, I want to see that you've begun digging into your analysis, so that means writing code and summarizing the results of your explorations. The more detail you can provide, the better.
 
 ```{r}
+#This is me doing a surface-level look at the referee data
 refs %>%
   arrange(desc(home_fouls))
 
@@ -85,6 +87,7 @@ The crews dataframe generates a whole host of additional questions, but the main
 My second biggest question is dealing with the officials column itself. In most cases, we have three refs per row, but some have two or one and some are empty. It might be beneficial to either alphabetize the columns so we can see how many times a crew worked together, or maybe we should separate them into distinct columns. I'm just not sure how this would work with multiple elements after the comma. Would I need to run two separates?
 
 ```{r}
+#Creating dataframes that will be easier to work with than the original data.
 unique_games <- refs_and_logs %>% 
   select(-ncaa_id, -game_id) %>% 
   distinct()
@@ -96,7 +99,8 @@ games_with_refs <- unique_games %>%
   filter(!is.na(ref)) %>%
   filter(ref != '') %>%
   mutate(total_fouls = pf + opp_pf)
-  
+
+#Maryland specific data and refs  
 md_refs <- games_with_refs %>%
   filter(team == 'Maryland')
 
@@ -108,6 +112,7 @@ md_refs_by_game <- md_refs %>%
 md_refs_more_than_3_games <- md_refs_by_game %>%
   filter(games > 2)
 
+#Refs dataframe with games and avg fouls (and then the top-25 referees by game) + bar chart graph
 distinct_refs <- games_with_refs %>%
   group_by(ref) %>%
   summarise(total_fouls = sum(total_fouls), games = n()) %>%
@@ -122,7 +127,8 @@ ggplot() +
     data=top_25_refs_fouls_per_game, 
     aes(x=reorder(ref, `average_fouls`), weight=`average_fouls`)) + 
   labs(
-    title="Which Referees Call The Most Fouls?", 
+    title="Who Are The Most Whistle-Happy Officials?",
+    subtitle = "There Are Some Referees Your Team Might Not Want To See On The Docket",
     x="Referee", 
     y="Average Fouls") + 
   theme_light() + 
@@ -155,6 +161,7 @@ ggplot() + geom_point(data=wins_and_fouls, aes(x=avg_fouls, y=total_wins)) +
 ```
 
 ```{r}
+#Creating more dataframes with information on individual refs and charting them
 fouls_by_refs <- games_with_refs %>%
   group_by(ref) %>%
   summarise(avg_fouls = mean(total_fouls), games = n()) %>%
@@ -164,13 +171,22 @@ fouls_by_refs <- games_with_refs %>%
 top_avg_fouls_by_ref <- fouls_by_refs %>%
   filter(avg_fouls > 38.3)
 
+#Looking at the relationship of fouls by refs and number of games officiated
 ggplot() + geom_point(data=fouls_by_refs, aes(x=games, y=avg_fouls)) +
   geom_smooth(data=fouls_by_refs, aes(x=games, y=avg_fouls), method="lm") +
-  geom_hline(yintercept=33.8)
+  geom_hline(yintercept=33.8) +
+  labs(
+    title="The More Games One Officiates, The Less Fouls One Calls", 
+    x="Games", 
+    y="Average Fouls")
 
 ggplot() + geom_point(data=top_avg_fouls_by_ref, aes(x=games, y=avg_fouls)) +
   geom_smooth(data=top_avg_fouls_by_ref, aes(x=games, y=avg_fouls), method="lm") +
-  geom_hline(yintercept=33.8)
+  geom_hline(yintercept=33.8) +
+  labs(
+    title="How Consistent Are The Most-Used Refs?", 
+    x="Games", 
+    y="Average Fouls")
 
 ggplot() + 
   geom_bar(
@@ -178,8 +194,8 @@ ggplot() +
     aes(x=reorder(ref, `games`), weight=`games`)) + 
   labs(
     title="Referees Who Officiate Maryland Women's Basketball Most", 
-    x="Games", 
-    y="Referee") + 
+    x="Referee", 
+    y="Games") + 
   theme_light() + 
   coord_flip()
 
@@ -192,13 +208,14 @@ ggplot() +
     aes(x=reorder(ref, `count`), weight=`count`)) + 
   labs(
     title="Referees Who Officiate Women's Basketball Most", 
-    x="Games", 
-    y="Referee") + 
+    x="Referee", 
+    y="Games") + 
   theme_light() + 
   coord_flip()
 ```
 
 ```{r}
+#Creating a dataframe with home and away foul information for the Big Ten with charts
 fouls_by_month <- refs_and_logs %>%
   mutate(month = floor_date(date, unit="months")) %>%
   group_by(month) %>%
@@ -234,7 +251,10 @@ all_fouls_by_month_and_team_visitor <- refs_and_logs %>%
   mutate(avg_fouls_per_month = monthly_total/games) %>%
   filter(games > 3) %>%
   arrange(desc(avg_fouls_per_month))
+```
 
+```{r}
+#Maryland home and away fouls by month with charts
 maryland_home_fouls_by_month <- fouls_by_month_and_team %>%
   filter(home_team_name == 'Maryland')
 
@@ -283,6 +303,7 @@ fouls_by_month_and_team_visitor %>% summarise(mean(avg_fouls_per_month))
 ```
 
 ```{r}
+#Overall average fouls per month in WBB
 ggplot() + 
   geom_bar(
     data=fouls_by_month, 
@@ -292,10 +313,11 @@ ggplot() +
     x="Month", 
     y="Average Fouls") + 
   theme_light() +
-  ylim(0, 55)
+  ylim(0, 50)
 ```
 
 ```{r}
+#Creating a dataframe with home and away foul information for the SEC with charts
 sec <- c('Alabama', 'Arkansas', 'Auburn', 'LSU', 'Mississippi St.', 'Texas A&M', 'Ole Miss', 'Florida', 'Georgia', 'Kentucky', 'Missouri', 'Tennessee', 'Vanderbilt', 'South Carolina')
 
 sec_fouls_by_month_and_team <- refs_and_logs %>%
@@ -331,6 +353,7 @@ sec_fouls_by_month_and_team_visitor %>% summarise(mean(avg_fouls_per_month))
 ```
 
 ```{r}
+#Creating a dataframe with home and away foul information for the Big Twelve with charts
 big_12 <- c('Baylor', 'Iowa St.', 'Kansas', 'Kansas St.', 'Oklahoma', 'Oklahoma St.', 'Texas Tech', 'West Virginia', 'TCU', 'Texas')
 
 big_12_fouls_by_month_and_team <- refs_and_logs %>%
@@ -361,6 +384,7 @@ ggplot() +
 ```
 
 ```{r}
+#Creating a dataframe with home and away foul information for the Big East with charts
 big_east <- c('Butler', 'UConn', 'Creighton', 'Seton Hall', 'DePaul', 'Marquette', 'Providence', 'Villanova', 'Georgetown', 'Xavier', "St. John's (NY)")
 
 big_east_fouls_by_month_and_team <- refs_and_logs %>%
@@ -395,6 +419,7 @@ big_east_fouls_by_month_and_team_visitor %>% summarise(mean(avg_fouls_per_month)
 ```
 
 ```{r}
+#Creating a dataframe with home and away foul information for the Pac 12 with charts
 pac_12 <- c('Arizona', 'Arizona St.', 'UCLA', 'Southern California', 'Oregon St.', 'Oregon', 'Washington St.', 'Washington', 'Colorado', 'Utah', 'Stanford')
 
 pac_12_fouls_by_month_and_team <- refs_and_logs %>%
@@ -425,6 +450,7 @@ ggplot() +
 ```
 
 ```{r}
+#Creating a dataframe with home and away foul information for the ACC with charts
 acc <- c('Boston College', 'Boston U.', 'Clemson', 'Duke', 'Florida St.', 'Syracuse', 'Louisville', "Miami (FL)", 'NC State', 'Virginia Tech', 'North Carolina', 'Pittsburgh', 'Virginia', 'Wake Forest', 'Georgia Tech')
 
 acc_fouls_by_month_and_team <- refs_and_logs %>%
@@ -453,6 +479,7 @@ ggplot() +
   scale_y_continuous(limits = c(10, 25)) + 
   facet_wrap(~away_team_name)
 ```
+
 #Here is the link to my in-class presentation
 
 https://github.com/iadecker/jour479x_fall_2022/blob/main/assignments/second_proj.prez.Rmd

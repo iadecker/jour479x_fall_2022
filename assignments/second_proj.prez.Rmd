@@ -95,7 +95,9 @@ ggplot() + geom_point(data=fouls_by_refs, aes(x=games, y=avg_fouls)) +
   geom_smooth(data=fouls_by_refs, aes(x=games, y=avg_fouls), method="lm") +
   geom_hline(yintercept=33.8) +
   labs(
-    title="The More Games One Officiates, The Less Fouls One Calls")
+    title="The More Games One Officiates, The Less Fouls One Calls", 
+    x="Games", 
+    y="Average Fouls")
 
 ggplot() + 
   geom_bar(
@@ -103,8 +105,8 @@ ggplot() +
     aes(x=reorder(ref, `games`), weight=`games`)) + 
   labs(
     title="Referees Who Officiate Maryland Women's Basketball Most", 
-    x="Games", 
-    y="Referee") + 
+    x="Referee", 
+    y="Games") + 
   theme_light() + 
   coord_flip()
 
@@ -117,8 +119,8 @@ ggplot() +
     aes(x=reorder(ref, `count`), weight=`count`)) + 
   labs(
     title="Referees Who Officiate Women's Basketball Most", 
-    x="Games", 
-    y="Referee") + 
+    x="Referee", 
+    y="Games") + 
   theme_light() + 
   coord_flip()
 ```
