@@ -300,16 +300,20 @@ sec_fouls_by_month_and_team_visitor <- refs_and_logs %>%
   mutate(avg_fouls_per_month = monthly_total/games)
 
 ggplot() + 
-  geom_hline(yintercept=16.3, color="green") + 
+  geom_hline(yintercept=17, color="green") + 
   geom_line(data=sec_fouls_by_month_and_team, aes(x=month, y=avg_fouls_per_month, group=home_team_name)) + 
   scale_y_continuous(limits = c(10, 25)) + 
   facet_wrap(~home_team_name)
+
+sec_fouls_by_month_and_team %>% summarise(mean(avg_fouls_per_month))
 
 ggplot() + 
   geom_hline(yintercept=16.5, color="red") + 
   geom_line(data=sec_fouls_by_month_and_team_visitor, aes(x=month, y=avg_fouls_per_month, group=away_team_name)) + 
   scale_y_continuous(limits = c(10, 25)) + 
   facet_wrap(~away_team_name)
+
+sec_fouls_by_month_and_team_visitor %>% summarise(mean(avg_fouls_per_month))
 ```
 
 ```{r}
@@ -365,11 +369,15 @@ ggplot() +
   scale_y_continuous(limits = c(10, 25)) + 
   facet_wrap(~home_team_name)
 
+big_east_fouls_by_month_and_team %>% summarise(mean(avg_fouls_per_month))
+
 ggplot() + 
   geom_hline(yintercept=16.5, color="red") + 
   geom_line(data=big_east_fouls_by_month_and_team_visitor, aes(x=month, y=avg_fouls_per_month, group=away_team_name)) + 
   scale_y_continuous(limits = c(10, 25)) + 
   facet_wrap(~away_team_name)
+
+big_east_fouls_by_month_and_team_visitor %>% summarise(mean(avg_fouls_per_month))
 ```
 
 ```{r}
