@@ -71,7 +71,8 @@ ggplot() +
     data=top_25_refs_fouls_per_game, 
     aes(x=reorder(ref, `average_fouls`), weight=`average_fouls`)) + 
   labs(
-    title="Which Referees Call The Most Fouls?", 
+    title="Who Are The Most Whistle-Happy Officials?",
+    subtitle = "There Are Some Referees Your Team Might Not Want To See On The Docket",
     x="Referee", 
     y="Average Fouls") + 
   theme_light() + 
@@ -117,7 +118,9 @@ top_avg_fouls_by_ref <- fouls_by_refs %>%
 #Looking at the relationship of fouls by refs and number of games officiated
 ggplot() + geom_point(data=fouls_by_refs, aes(x=games, y=avg_fouls)) +
   geom_smooth(data=fouls_by_refs, aes(x=games, y=avg_fouls), method="lm") +
-  geom_hline(yintercept=33.8)
+  geom_hline(yintercept=33.8) +
+  labs(
+    title="The More Games One Officiate, The Less Fouls One Calls")
 
 ggplot() + 
   geom_bar(
@@ -239,6 +242,7 @@ ggplot() +
     aes(x=month, weight=`avg_fouls_per_month`)) + 
   labs(
     title="Maryland Average Away Fouls Per Month", 
+    subtitle="The Terps saw an uptick in fouls late last season",
     x="Month", 
     y="Average Fouls") + 
   theme_light() +
@@ -253,7 +257,7 @@ ggplot() +
     aes(x=month, weight=`avg_fouls_per_month`)) + 
   labs(
     title="Average Fouls Per Month", 
-    subtitle="Even if you think referees are bungling calls, they're actually pretty consistent",
+    subtitle="Referees are more consistent than you think",
     x="Month", 
     y="Average Fouls") + 
   theme_light() +
