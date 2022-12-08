@@ -93,7 +93,11 @@ My second biggest question is dealing with the officials column itself. In most 
 
 When I covered Maryland Women's Basketball last season, I began seeing familiar faces among the referees at home games. This prompted me to wonder about if there were certain officials that officiated Maryland games more than others and whether or not that might impact a game. In other words, can we quantify how much a game fundamentally changes based on who the referees are?
 
-I encountered some early issues when first starting off. First, the referee data had one single column for officials, which contained 
+I encountered some early issues when first starting off. First, the referee data had one single column for officials, which contained three different referees. The order of the officials also was not alphabetical, which would have helped us see how many times certain crews appeared in a game together, rather it was based on who was the first, second and third official on the scoresheet. We ran a line of code to separate the three officials, getting three columns with a single name.
+
+I feel like within this discussion it is necessary to talk about the limitations of the data. First off, we do not have how many fouls each individual referee called — that data is nearly impossible to find unless you went through each game and noted which ref called what fouls. So for the sake of this assignment, we have total fouls called and have assigned that output to each individual referee. Still, this gives us an idea of how many fouls were called in a game in which certain officials appeared, which is useful to know and essential to answering some of our investigative questions. 
+
+Another limitation in this data is that when we split up the referees for each game, we get three records and a lot of duplicate games. To remedy this, we used selected on ncaa_id and game_id to eliminate any duplicates and used str_squish to help standardize the refs to have cleaner data. It's also important to note that we joined the referee data with play-by-play data to improve our dataset and have more information with which to work. The last thing we did to improve the quality of our data was to create a total_fouls column for the games — we previously only had home and away fouls.
 
 ```{r}
 #Creating dataframes that will be easier to work with than the original data.
