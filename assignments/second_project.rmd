@@ -248,7 +248,7 @@ I was also curious to see which officials worked Maryland games the most last se
 
 The last chart shows which referees worked the most games last season. This might be able to tell us if certain refs were overworked or how often they traveled. It's also interesting to see who the "full-time" referees are, for while some officials probably work part-time, there seem to be individuals whose full-time job is to officiate college basketball.
 
-Cameron Inoyue must have some serious frequent-flyer miles.
+Cameron Inouye must have some serious frequent-flyer miles.
 
 ```{r}
 #Creating a dataframe with home and away foul information for the Big Ten with charts
