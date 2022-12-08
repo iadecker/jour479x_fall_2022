@@ -272,12 +272,13 @@ fouls_by_month_and_team_visitor %>% summarise(mean(avg_fouls_per_month))
 ggplot() + 
   geom_bar(
     data=fouls_by_month, 
-    aes(x=reorder(month, -`avg_fouls_per_month`), weight=`avg_fouls_per_month`)) + 
+    aes(x=month, weight=`avg_fouls_per_month`)) + 
   labs(
-    title="Referees Who Officiate Women's Basketball Most", 
+    title="Average Fouls Per Month", 
     x="Month", 
     y="Average Fouls") + 
-  theme_light()
+  theme_light() +
+  ylim(0, 55)
 ```
 
 ```{r}
