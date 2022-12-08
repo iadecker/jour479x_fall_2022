@@ -347,6 +347,10 @@ ggplot() +
 
 fouls_by_month_and_team_visitor %>% summarise(mean(avg_fouls_per_month))
 ```
+The first two charts show Maryland's average fouls by month when at home and on the road. 
+
+
+
 
 ```{r}
 #Overall average fouls per month in WBB
