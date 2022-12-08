@@ -180,9 +180,9 @@ ggplot() + geom_point(data=fouls_by_refs, aes(x=games, y=avg_fouls)) +
     x="Games", 
     y="Average Fouls")
 
-ggplot() + geom_point(data=top_avg_fouls_by_ref, aes(x=games, y=avg_fouls)) +
+ggplot() + geom_point(data=all_refs_number_of_games, aes(x=games, y=average_fouls)) +
   geom_smooth(data=top_avg_fouls_by_ref, aes(x=games, y=avg_fouls), method="lm") +
-  geom_hline(yintercept=33.8) +
+  geom_hline(yintercept=33) +
   labs(
     title="How Consistent Are The Most-Used Refs?", 
     x="Games", 
