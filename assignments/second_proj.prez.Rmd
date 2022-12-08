@@ -110,13 +110,13 @@ ggplot() +
   theme_light() + 
   coord_flip()
 
-all_refs_number_of_games <- dinstinct_refs %>%
-  filter(count > 126)
+all_refs_number_of_games <- distinct_refs %>%
+  filter(games > 126)
 
 ggplot() + 
   geom_bar(
     data=all_refs_number_of_games, 
-    aes(x=reorder(ref, `count`), weight=`count`)) + 
+    aes(x=reorder(ref, `games`), weight=`games`)) + 
   labs(
     title="Referees Who Officiate Women's Basketball Most", 
     x="Referee", 
@@ -154,13 +154,21 @@ ggplot() +
   geom_hline(yintercept=16.3, color="green") + 
   geom_line(data=fouls_by_month_and_team, aes(x=month, y=avg_fouls_per_month, group=home_team_name)) + 
   scale_y_continuous(limits = c(10, 25)) + 
-  facet_wrap(~home_team_name)
+  facet_wrap(~home_team_name) + 
+  labs(
+    title="Big Ten Average Home Fouls Per Month", 
+    x="Month", 
+    y="Average Fouls")
 
 ggplot() + 
   geom_hline(yintercept=16.5, color="red") + 
   geom_line(data=fouls_by_month_and_team_visitor, aes(x=month, y=avg_fouls_per_month, group=away_team_name)) + 
   scale_y_continuous(limits = c(10, 25)) + 
-  facet_wrap(~away_team_name)
+  facet_wrap(~away_team_name) + 
+  labs(
+    title="Big Ten Average Away Fouls Per Month", 
+    x="Month", 
+    y="Average Fouls")
 ```
 
 ```{r}
@@ -185,13 +193,21 @@ ggplot() +
   geom_hline(yintercept=14.8, color="green") + 
   geom_line(data=big_east_fouls_by_month_and_team, aes(x=month, y=avg_fouls_per_month, group=home_team_name)) + 
   scale_y_continuous(limits = c(10, 25)) + 
-  facet_wrap(~home_team_name)
+  facet_wrap(~home_team_name) + 
+  labs(
+    title="Big East Average Home Fouls Per Month", 
+    x="Month", 
+    y="Average Fouls")
 
 ggplot() + 
   geom_hline(yintercept=15, color="red") + 
   geom_line(data=big_east_fouls_by_month_and_team_visitor, aes(x=month, y=avg_fouls_per_month, group=away_team_name)) + 
   scale_y_continuous(limits = c(10, 25)) + 
-  facet_wrap(~away_team_name)
+  facet_wrap(~away_team_name) + 
+  labs(
+    title="Big East Average Away Fouls Per Month", 
+    x="Month", 
+    y="Average Fouls")
 ```
 
 ```{r}
@@ -207,7 +223,8 @@ ggplot() +
     data=maryland_home_fouls_by_month, 
     aes(x=month, weight=`avg_fouls_per_month`)) + 
   labs(
-    title="Maryland Average Home Fouls Per Month", 
+    title="Maryland Average Home Fouls Per Month",
+    subtitle="The Terps saw an uptick in fouls later in the season",
     x="Month", 
     y="Average Fouls") + 
   theme_light() +
@@ -219,7 +236,7 @@ ggplot() +
     aes(x=month, weight=`avg_fouls_per_month`)) + 
   labs(
     title="Maryland Average Away Fouls Per Month", 
-    subtitle="The Terps saw an uptick in fouls late last season",
+    subtitle="The Terps fouled more late last season",
     x="Month", 
     y="Average Fouls") + 
   theme_light() +
