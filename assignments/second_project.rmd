@@ -230,22 +230,24 @@ maryland_away_fouls_by_month <- fouls_by_month_and_team_visitor %>%
 ggplot() + 
   geom_bar(
     data=maryland_home_fouls_by_month, 
-    aes(x=reorder(month, -`avg_fouls_per_month`), weight=`avg_fouls_per_month`)) + 
+    aes(x=month, weight=`avg_fouls_per_month`)) + 
   labs(
     title="Maryland Average Home Fouls Per Month", 
     x="Month", 
     y="Average Fouls") + 
-  theme_light()
+  theme_light() +
+  ylim(0, 35)
 
 ggplot() + 
   geom_bar(
     data=maryland_away_fouls_by_month, 
-    aes(x=reorder(month, -`avg_fouls_per_month`), weight=`avg_fouls_per_month`)) + 
+    aes(x=month, weight=`avg_fouls_per_month`)) + 
   labs(
     title="Maryland Average Away Fouls Per Month", 
     x="Month", 
     y="Average Fouls") + 
-  theme_light()
+  theme_light() +
+  ylim(0, 35)
 
 ggplot() + geom_bar(data=fouls_by_month_and_team, aes(x=month, weight=avg_fouls_per_month, fill=home_team_name)) + theme_minimal() + coord_polar()
 
