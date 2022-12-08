@@ -148,6 +148,8 @@ ggplot() +
   coord_flip()
 ```
 
+One of the earliest questions I wanted to ask was how certain refs impact the game. Should teams be weary of a certain official? To answer this question, I graphed the top-25 refs in terms of games worked and looked at their average fouls. I found that the Triple G Crew is one nasty bunch. Overall, the top three referees in terms of average fouls were Roy Gulbeyan, Felicia Grinter and Brian Garland, so fans watching a game in which these three worked would probaly hear a lot of the whistle. Interestingly enough, the fourth official, Talisa Green, also has a last name that begins with G... weird.
+
 #Run a regression - How realted are wins and fouls?
 ```{r}
 #Running several models to see the relationship between fouls, wins and point-differential
