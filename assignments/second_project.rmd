@@ -439,4 +439,6 @@ ggplot() +
   scale_y_continuous(limits = c(10, 25)) + 
   facet_wrap(~away_team_name)
 ```
+#Here is the link to my in-class presentation
 
+https://github.com/iadecker/jour479x_fall_2022/blob/main/assignments/second_proj.prez.Rmd
