@@ -424,6 +424,9 @@ ggplot() +
 
 sec_fouls_by_month_and_team_visitor %>% summarise(mean(avg_fouls_per_month))
 ```
+For the following five conferences, I won't go through every team. Rather, I will highlight the most interesting points. 
+
+Starting with the SEC, take a look at South Carolina, the national champion, which saw an increase in average fouls later in the season at home. We see again one of the limitations of this data in the awa dataframe — the graph didn't pull in SC's results for either March or April. Still, in looking at February, the Gamecocks seemed to be averaging fewer fouls than the previous month.
 
 ```{r}
 #Creating a dataframe with home and away foul information for the Big Twelve with charts
@@ -463,6 +466,8 @@ ggplot() +
     x="Month", 
     y="Average Fouls")
 ```
+
+
 
 ```{r}
 #Creating a dataframe with home and away foul information for the Big East with charts
