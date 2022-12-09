@@ -515,7 +515,9 @@ ggplot() +
 
 big_east_fouls_by_month_and_team_visitor %>% summarise(mean(avg_fouls_per_month))
 ```
-Here, I want to postulate as to the realtionship between average fouls later in the season and a team's success the following year. 
+Is there anything to the idea that there is a realtionship between average fouls later in the season and a team's success the following year? If we look at some of the Big East teams that are doing well this season — No. 6 UConn, No. 18 Creighton, No. 25 Villanova and Marquette, St. John's, Seton Hall receiving votes — most of those teams ended last season either averaging fewer fouls or under the average for both home and away games.
+
+Now, there is a lot more that goes into what makes a team better from one season to the next, but I think it's fair to say that discipline is in the mix of contributing factors.
 
 ```{r}
 #Creating a dataframe with home and away foul information for the Pac 12 with charts
