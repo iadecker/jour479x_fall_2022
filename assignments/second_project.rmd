@@ -88,7 +88,6 @@ The crews dataframe generates a whole host of additional questions, but the main
 
 My second biggest question is dealing with the officials column itself. In most cases, we have three refs per row, but some have two or one and some are empty. It might be beneficial to either alphabetize the columns so we can see how many times a crew worked together, or maybe we should separate them into distinct columns. I'm just not sure how this would work with multiple elements after the comma. Would I need to run two separates?
 
-
 #A More Thorough Run-Through
 
 When I covered Maryland Women's Basketball last season, I began seeing familiar faces among the referees at home games. This prompted me to wonder about if there were certain officials that officiated Maryland games more than others and whether or not that might impact a game. In other words, can we quantify how much a game fundamentally changes based on who the referees are?
@@ -148,7 +147,7 @@ ggplot() +
   coord_flip()
 ```
 
-One of the earliest questions I wanted to ask was how certain refs impact the game. Should teams be weary of a certain official? To answer this question, I graphed the top-25 refs in terms of games worked and looked at their average fouls. I found that the Triple G Crew is one nasty bunch. Overall, the top three referees in terms of average fouls were Roy Gulbeyan, Felicia Grinter and Brian Garland, so fans watching a game in which these three worked would probaly hear a lot of the whistle. Interestingly enough, the fourth official, Talisa Green, also has a last name that begins with G... weird.
+One of the earliest questions I wanted to ask was how certain refs impact the game. Should teams be wary of a certain official? To answer this question, I graphed the top-25 refs in terms of games worked and looked at their average fouls. I found that the Triple G Crew is one nasty bunch. Overall, the top three referees in terms of average fouls were Roy Gulbeyan, Felicia Grinter and Brian Garland, so fans watching a game in which these three worked would probably hear a lot of the whistle. Interestingly enough, the fourth official, Talisa Green, also has a last name that begins with G... weird.
 
 #Run a regression - How realted are wins and fouls?
 ```{r}
@@ -349,17 +348,17 @@ fouls_by_month_and_team_visitor %>% summarise(mean(avg_fouls_per_month))
 ```
 The first two charts show Maryland's average fouls by month when at home and on the road. Both graphs show an unfortunate trend of the Terps committing less average fouls in November than December and January than December but jumping up in February and March, tournament season. I think it's also interesting to point out that Maryland commits more average fouls on the road than at home. Could this perhaps speak to the importance of home-court advantage?
 
-While the third chart is nice and colorful, it doens't tell us a whole lot. If anything, my goal was to see how many fouls teams committed by month to see if there was a period of the season in which refs were either better or worse. It seems like fouls slightly decrease after November, but again, not the most helpful.
+While the third chart is nice and colorful, it doesn't tell us a whole lot. If anything, my goal was to see how many fouls teams committed by month to see if there was a period of the season in which refs were either better or worse. It seems like fouls slightly decrease after November, but again, not the most helpful.
 
 Which brings us to graphs four and five. Using a facet wrap allowed me to see each Big Ten school's average fouls per month to see which teams improved or worsened in committing fouls as the season went on. The facet wrap is a more succinct way of demonstrating what I was hoping to achieve in graph three and a team-by-team view of what the first two charts (both of which were Maryland-specific) relayed.
 
 Now, let's look at some of the individual Big Ten teams. We know Maryland commits more fouls in away games than in home games. We also know that the Terps committed more fouls in February and March. 
 
-Here are the teams who averaged less fouls as the season went on: Indiana, Iowa, Michigan, Nebraska, Ohio State, Purdue and Wisconsin. 
+Here are the teams who averaged fewer fouls as the season went on: Indiana, Iowa, Michigan, Nebraska, Ohio State, Purdue and Wisconsin. 
 That left Illinois, Maryland, Michigan State, Minnesota Northwestern, Penn State and Rutgers as the teams who averaged more fouls.
 
 In terms of away games, here's how the teams looked. 
-Less fouls: Illinois, Michigan, Michigan State, Minnesota, Northwestern, 
+Fewer fouls: Illinois, Michigan, Michigan State, Minnesota, Northwestern, 
 More fouls: Indiana, Iowa, Maryland, Nebraska, Ohio State, Penn State, Purdue, Rutgers, Wisconsin
 
 That makes Maryland one of three teams (the other two being Penn State and Rutgers) with more fouls later in the season both at home and on the road...
@@ -379,7 +378,7 @@ ggplot() +
   ylim(0, 50)
 ```
 
-Again, I wanted to see how consistent referees are. It's easy as a fan to get caught up in the homerism of supporting your school/team — and scapegoat the refs for poor play — but according to this graph, referees are pretty consistent when it comes to officiating and calling fouls. It's also important to note that referees are human too, and it appears as if they, just like players and coaches, need a little time to knock off the rust early in the season; the month with the highest average number of fouls was November, the first month of the college season.
+Again, I wanted to see how consistent referees are. It's easy as a fan to be a homer and get caught up in supporting your school/team — and scapegoat the refs for poor play — but according to this graph, referees are pretty consistent when it comes to officiating and calling fouls. It's also important to note that referees are human too, and it appears as if they, just like players and coaches, need a little time to knock off the rust early in the season; the month with the highest average number of fouls was November, the first month of the college season.
 
 ```{r}
 #Creating a dataframe with home and away foul information for the SEC with charts
@@ -426,7 +425,7 @@ sec_fouls_by_month_and_team_visitor %>% summarise(mean(avg_fouls_per_month))
 ```
 For the following five conferences, I won't go through every team. Rather, I will highlight the most interesting points. 
 
-Starting with the SEC, take a look at South Carolina, the national champion, which saw an increase in average fouls later in the season at home. We see again one of the limitations of this data in the awa dataframe — the graph didn't pull in SC's results for either March or April. Still, in looking at February, the Gamecocks seemed to be averaging fewer fouls than the previous month.
+Starting with the SEC, take a look at South Carolina, the national champion, which saw an increase in average fouls later in the season at home. We see again one of the limitations of this data in the away dataframe — the graph didn't pull in SC's results for either March or April. Still, in looking at February, the Gamecocks seemed to be averaging fewer fouls than the previous month.
 
 ```{r}
 #Creating a dataframe with home and away foul information for the Big Twelve with charts
@@ -468,7 +467,7 @@ ggplot() +
 ```
 
 Who do you want to be at home?: Iowa State, one of the only teams to consistently be under the average.
-Who don't you want to be at home?: Everyone else...? Seriously, though, I wouldn't want to be Kansas or TCU — both above the average and getting worse as the season goes on
+Who don't you want to be at home?: Everyone else...? Seriously, though, I wouldn't want to be Kansas or TCU — both above the average and getting worse as the season goes on.
 
 Who do you want to be away?: Kansas, Oklahoma State. Nice job, team!
 Who don't you want to be away?: WVU, Baylor, Texas. C'mon, now!
@@ -515,7 +514,7 @@ ggplot() +
 
 big_east_fouls_by_month_and_team_visitor %>% summarise(mean(avg_fouls_per_month))
 ```
-Is there anything to the idea that there is a realtionship between average fouls later in the season and a team's success the following year? If we look at some of the Big East teams that are doing well this season — No. 6 UConn, No. 18 Creighton, No. 25 Villanova and Marquette, St. John's, Seton Hall receiving votes — most of those teams ended last season either averaging fewer fouls or under the average for both home and away games.
+Is there anything to the idea that there is a relationship between average fouls later in the season and a team's success the following year? If we look at some of the Big East teams that are doing well this season — No. 6 UConn, No. 18 Creighton, No. 25 Villanova and Marquette, St. John's, Seton Hall receiving votes — most of those teams ended last season either averaging fewer fouls or under the average for both home and away games.
 
 Now, there is a lot more that goes into what makes a team better from one season to the next, but I think it's fair to say that discipline is in the mix of contributing factors.
 
@@ -600,7 +599,7 @@ ggplot() +
     x="Month", 
     y="Average Fouls")
 ```
-I swear there was no reason to me doing the ACC last... seriously! The main school I want to point out is Louisville, another final four team. The Cardinals grade out pretty well both at home and away, which contributed to their success. I also want to look at two teams (Clemson and Florida State) because they aren't so great at home and go against this home-court advatnage theory I've got cooking. In fact, both teams are closer to league average in their away games... interesting. Also, let's look at Miami, which is pretty solid at home but starts the season below average in away games before going way above but finishes the season back below the avergae. The ACC also probably has the most teams hovering around average of all six conferences at home, wihch may suggest it is the conference, for better (competitive play and integrity of the game) or worse (for fans and individual teams), that has the most consistent officiating.
+I swear there was no reason to me doing the ACC last... seriously! The main school I want to point out is Louisville, another final four team. The Cardinals grade out pretty well both at home and away, which contributed to their success. I also want to look at two teams (Clemson and Florida State) because they aren't so great at home and go against this home-court advantage theory I've got cooking. In fact, both teams are closer to league average in their away games... interesting. Also, let's look at Miami, which is pretty solid at home but starts the season below average in away games before going way above but finishes the season back below the average. The ACC also probably has the most teams hovering around average of all six conferences at home, which may suggest it is the conference, for better (competitive play and integrity of the game) or worse (for fans and individual teams), that has the most consistent officiating.
 
 #Here is the link to my in-class presentation
 
