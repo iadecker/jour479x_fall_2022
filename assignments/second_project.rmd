@@ -248,7 +248,7 @@ I was also curious to see which officials worked Maryland games the most last se
 
 The last chart shows which referees worked the most games last season. This might be able to tell us if certain refs were overworked or how often they traveled. It's also interesting to see who the "full-time" referees are, for while some officials probably work part-time, there seem to be individuals whose full-time job is to officiate college basketball.
 
-Cameron Inouye must have some serious frequent-flyer miles.
+Also, Cameron Inouye must have some serious frequent-flyer miles.
 
 ```{r}
 #Creating a dataframe with home and away foul information for the Big Ten with charts
@@ -600,7 +600,7 @@ ggplot() +
     x="Month", 
     y="Average Fouls")
 ```
-I swear there was no reason to me doing the ACC last... seriously! The main school I want to point out is Louisville, another final four team. The Cardinals grade out pretty well both at home and away, which contributed to their success. I also want to look at two teams (Clemson and Florida State) because they aren't so great at home and go against this home-court advatnage theory I've got cooking. In fact, both teams are closer to league average in their away games...
+I swear there was no reason to me doing the ACC last... seriously! The main school I want to point out is Louisville, another final four team. The Cardinals grade out pretty well both at home and away, which contributed to their success. I also want to look at two teams (Clemson and Florida State) because they aren't so great at home and go against this home-court advatnage theory I've got cooking. In fact, both teams are closer to league average in their away games... interesting. Also, let's look at Miami, which is pretty solid at home but starts the season below average in away games before going way above but finishes the season back below the avergae. The ACC also probably has the most teams hovering around average of all six conferences at home, wihch may suggest it is the conference, for better (competitive play and integrity of the game) or worse (for fans and individual teams), that has the most consistent officiating.
 
 #Here is the link to my in-class presentation
 
