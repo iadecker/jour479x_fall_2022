@@ -558,6 +558,10 @@ ggplot() +
     y="Average Fouls")
 ```
 
+Stanford, the 2021 champion and a final four team last year, ranks decently at home but doesn't come out that well away. Is it possible that referees call elite teams harder away than at home? And this brings us back to our idea of referees potentially calling games differently for home teams than away due to home pressure, although I'm sure they would highly refute that idea.
+
+While all teams enjoy playing at home, one team that does well regardless of where it plays is Washington State. Even when they average more fouls, they are still below the average. Well done, Cougars.
+
 ```{r}
 #Creating a dataframe with home and away foul information for the ACC with charts
 acc <- c('Boston College', 'Boston U.', 'Clemson', 'Duke', 'Florida St.', 'Syracuse', 'Louisville', "Miami (FL)", 'NC State', 'Virginia Tech', 'North Carolina', 'Pittsburgh', 'Virginia', 'Wake Forest', 'Georgia Tech')
@@ -596,6 +600,7 @@ ggplot() +
     x="Month", 
     y="Average Fouls")
 ```
+I swear there was no reason to me doing the ACC last... seriously! The main school I want to point out is Louisville, another final four team. The Cardinals grade out pretty well both at home and away, which contributed to their success. I also want to look at two teams (Clemson and Florida State) because they aren't so great at home and go against this home-court advatnage theory I've got cooking. In fact, both teams are closer to league average in their away games...
 
 #Here is the link to my in-class presentation
 
