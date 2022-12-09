@@ -467,7 +467,11 @@ ggplot() +
     y="Average Fouls")
 ```
 
+Who do you want to be at home?: Iowa State, one of the only teams to consistently be under the average.
+Who don't you want to be at home?: Everyone else...? Seriously, though, I wouldn't want to be Kansas or TCU — both above the average and getting worse as the season goes on
 
+Who do you want to be away?: Kansas, Oklahoma State. Nice job, team!
+Who don't you want to be away?: WVU, Baylor, Texas. C'mon, now!
 
 ```{r}
 #Creating a dataframe with home and away foul information for the Big East with charts
