@@ -209,6 +209,9 @@ ggplot() + geom_point(data=fouls_by_refs, aes(x=games, y=avg_fouls)) +
     x="Games", 
     y="Average Fouls")
 
+all_refs_number_of_games <- distinct_refs %>%
+  filter(games > 126)
+
 ggplot() + geom_point(data=all_refs_number_of_games, aes(x=games, y=average_fouls)) +
   geom_smooth(data=all_refs_number_of_games, aes(x=games, y=average_fouls), method="lm") +
   labs(
@@ -226,9 +229,6 @@ ggplot() +
     y="Games") + 
   theme_light() + 
   coord_flip()
-
-all_refs_number_of_games <- distinct_refs %>%
-  filter(games > 126)
 
 ggplot() + 
   geom_bar(
