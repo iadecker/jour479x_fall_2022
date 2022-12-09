@@ -353,6 +353,16 @@ While the third chart is nice and colorful, it doens't tell us a whole lot. If a
 
 Which brings us to graphs four and five. Using a facet wrap allowed me to see each Big Ten school's average fouls per month to see which teams improved or worsened in committing fouls as the season went on. The facet wrap is a more succinct way of demonstrating what I was hoping to achieve in graph three and a team-by-team view of what the first two charts (both of which were Maryland-specific) relayed.
 
+Now, let's look at some of the individual Big Ten teams. We know Maryland commits more fouls in away games than in home games. We also know that the Terps committed more fouls in February and March. 
+
+Here are the teams who averaged less fouls as the season went on: Indiana, Iowa, Michigan, Nebraska, Ohio State, Purdue and Wisconsin. 
+That left Illinois, Maryland, Michigan State, Minnesota Northwestern, Penn State and Rutgers as the teams who averaged more fouls.
+
+In terms of away games, here's how the teams looked. 
+Less fouls: Illinois, Michigan, Michigan State, Minnesota, Northwestern, 
+More fouls: Indiana, Iowa, Maryland, Nebraska, Ohio State, Penn State, Purdue, Rutgers, Wisconsin
+
+That makes Maryland one of three teams (the other two being Penn State and Rutgers) with more fouls later in the season both at home and on the road...
 
 ```{r}
 #Overall average fouls per month in WBB
@@ -368,6 +378,8 @@ ggplot() +
   theme_light() +
   ylim(0, 50)
 ```
+
+Again, I wanted to see how consistent referees are. It's easy as a fan to get caught up in the homerism of supporting your school/team — and scapegoat the refs for poor play — but according to this graph, referees are pretty consistent when it comes to officiating and calling fouls. It's also important to note that referees are human too, and it appears as if they, just like players and coaches, need a little time to knock off the rust early in the season; the month with the highest average number of fouls was November, the first month of the college season.
 
 ```{r}
 #Creating a dataframe with home and away foul information for the SEC with charts
