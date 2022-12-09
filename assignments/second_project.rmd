@@ -515,6 +515,7 @@ ggplot() +
 
 big_east_fouls_by_month_and_team_visitor %>% summarise(mean(avg_fouls_per_month))
 ```
+Here, I want to postulate as to the realtionship between average fouls later in the season and a team's success the following year. 
 
 ```{r}
 #Creating a dataframe with home and away foul information for the Pac 12 with charts
